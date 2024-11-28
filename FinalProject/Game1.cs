@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FinalProject.Managers;
+using FinalProject.Screens;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -6,19 +8,26 @@ namespace FinalProject
 {
     public class Game1 : Game
     {
+        public static int ScreenWidth = 1280;
+        public static int ScreenHeight = 720;
+
+        public ScreenManager _screenManager;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
+
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            _graphics.PreferredBackBufferWidth = ScreenWidth;
+            _graphics.PreferredBackBufferHeight = ScreenHeight;
+            _graphics.ApplyChanges();
 
             base.Initialize();
         }
@@ -27,7 +36,11 @@ namespace FinalProject
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            _screenManager = new ScreenManager(new IScreen[]
+            {
+                new MenuScreen(this),
+            });
+            _screenManager.SwitchToNextScreen();
         }
 
         protected override void Update(GameTime gameTime)
@@ -35,7 +48,10 @@ namespace FinalProject
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            //Seconds since the last frame.
+            float deltaFrameTime = gameTime.ElapsedGameTime.Milliseconds / 1000f;
+
+            _screenManager.Update(deltaFrameTime);
 
             base.Update(gameTime);
         }
@@ -44,9 +60,9 @@ namespace FinalProject
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
-
-            base.Draw(gameTime);
+            _spriteBatch.Begin();
+            _screenManager.Draw(_spriteBatch);
+            _spriteBatch.End();
         }
     }
 }
