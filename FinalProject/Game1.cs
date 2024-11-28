@@ -40,6 +40,7 @@ namespace FinalProject
             {
                 new MenuScreen(this),
             });
+            _screenManager.SetScreen(ScreenType.Menu);
             _screenManager.SwitchToNextScreen();
         }
 

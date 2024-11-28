@@ -21,11 +21,8 @@ namespace FinalProject.Screens
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
 
             //spriteBatch.Draw(null, null, null);
-
-            spriteBatch.End();
         }
 
         public void Update(float delta)
