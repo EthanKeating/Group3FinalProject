@@ -8,6 +8,6 @@ namespace FinalProject.Screens
 {
     public enum ScreenType
     {
-        Menu,
+        Menu, Level1
     }
 }
