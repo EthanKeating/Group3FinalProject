@@ -77,10 +77,6 @@ namespace FinalProject.Animations
             if (delayCounter > delay)
             {
                 frameIndex++;
-                if (frameIndex > ROWS * COLS - 1)
-                {
-                    frameIndex = -1;
-                }
                 delayCounter = 0;
             }
 
@@ -92,7 +88,7 @@ namespace FinalProject.Animations
             if (frameIndex >= 0)
             {
                 sb.Begin();
-                sb.Draw(tex, Position, frames[frameIndex], Color.White);
+                sb.Draw(tex, Position, frames[frameIndex % 2], Color.White);
                 sb.End();
             }
 
