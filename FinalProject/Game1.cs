@@ -1,4 +1,5 @@
-﻿using FinalProject.Managers;
+﻿using FinalProject.Entities;
+using FinalProject.Managers;
 using FinalProject.Screens;
 using FinalProject.Animations;
 using Microsoft.Xna.Framework;
@@ -17,8 +18,7 @@ namespace FinalProject
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private Texture2D crabWalkTexture;
-        private CrabWalkAnimation crabWalkAnimation;
+        //private Player player = new Player(6);
 
         public Game1()
         {
@@ -40,6 +40,8 @@ namespace FinalProject
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            //player.Texture = Content.Load<Texture2D>("black_box");
 
             _screenManager = new ScreenManager(new IScreen[]
             {
@@ -64,21 +66,7 @@ namespace FinalProject
             float deltaFrameTime = gameTime.ElapsedGameTime.Milliseconds / 1000f;
             _screenManager.Update(deltaFrameTime);
 
-            //Crab walking test
-            MouseState ms = Mouse.GetState();
-            if (ms.LeftButton == ButtonState.Pressed)
-            {
-                Vector2 pos = new Vector2(ms.X, ms.Y);
-                //explosion.Position = pos;
-                //explosion.show();
-
-                CrabWalkAnimation crabFrame = new CrabWalkAnimation(this, _spriteBatch, crabWalkTexture,
-                    pos, 10);
-                crabFrame.show();
-                this.Components.Add(crabFrame);
-
-
-            }
+            //player.Move();
 
             base.Update(gameTime);
         }
@@ -89,6 +77,7 @@ namespace FinalProject
 
             _spriteBatch.Begin();
             _screenManager.Draw(_spriteBatch);
+            //_spriteBatch.Draw(player.Texture, player.Position, Color.White);
             _spriteBatch.End();
 
             base.Draw(gameTime);
