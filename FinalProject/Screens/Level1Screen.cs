@@ -1,4 +1,5 @@
-﻿using FinalProject.Managers;
+﻿using FinalProject.Animations;
+using FinalProject.Managers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -16,19 +17,29 @@ namespace FinalProject.Screens
         private Game _game;
 
         Texture2D backgroundSprite;
+        Texture2D crab;
+
+        CrabIdleAnimation idleCrab;
 
         public Vector2 backgroundPosition = new Vector2(0, 0);
 
-        public Level1Screen(Game game)
+        public Level1Screen(Game game, SpriteBatch spriteBatch)
         {
             _game = game;
 
             backgroundSprite = _game.Content.Load<Texture2D>("images/background");
+            crab = _game.Content.Load<Texture2D>("images/idle");
+
+            idleCrab = new CrabIdleAnimation(this._game, spriteBatch, crab, new Vector2(400, 400), 10);
+            _game.Components.Add(idleCrab);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(backgroundSprite, backgroundPosition, Color.White);
+
+            idleCrab.show();
+
             //spriteBatch.Draw(null, null, null);
         }
 

@@ -46,7 +46,7 @@ namespace FinalProject
             _screenManager = new ScreenManager(new IScreen[]
             {
                 new MenuScreen(this, _spriteBatch),
-                new Level1Screen(this)
+                new Level1Screen(this, _spriteBatch)
             });
             _screenManager.SetScreen(ScreenType.Level1);
             _screenManager.SwitchToNextScreen();
