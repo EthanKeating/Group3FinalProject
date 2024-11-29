@@ -1,4 +1,5 @@
-﻿using FinalProject.Managers;
+﻿using FinalProject.Entities;
+using FinalProject.Managers;
 using FinalProject.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,6 +15,8 @@ namespace FinalProject
         public ScreenManager _screenManager;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        //private Player player = new Player(6);
 
         public Game1()
         {
@@ -36,6 +39,8 @@ namespace FinalProject
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            //player.Texture = Content.Load<Texture2D>("black_box");
+
             _screenManager = new ScreenManager(new IScreen[]
             {
                 new MenuScreen(this),
@@ -54,6 +59,8 @@ namespace FinalProject
 
             _screenManager.Update(deltaFrameTime);
 
+            //player.Move();
+
             base.Update(gameTime);
         }
 
@@ -63,6 +70,7 @@ namespace FinalProject
 
             _spriteBatch.Begin();
             _screenManager.Draw(_spriteBatch);
+            //_spriteBatch.Draw(player.Texture, player.Position, Color.White);
             _spriteBatch.End();
         }
     }
