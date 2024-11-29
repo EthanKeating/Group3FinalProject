@@ -80,11 +80,7 @@ namespace FinalProject.Animations
                 if (frameIndex > ROWS * COLS - 1)
                 {
                     frameIndex = -1;
-                    hide();
-                    g.Components.Remove(this);
                 }
-
-
                 delayCounter = 0;
             }
 

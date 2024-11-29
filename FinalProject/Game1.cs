@@ -46,15 +46,10 @@ namespace FinalProject
             _screenManager = new ScreenManager(new IScreen[]
             {
                 new MenuScreen(this, _spriteBatch),
+                new Level1Screen(this)
             });
-            _screenManager.SetScreen(ScreenType.Menu);
+            _screenManager.SetScreen(ScreenType.Level1);
             _screenManager.SwitchToNextScreen();
-
-
-            //Crab walking test
-            crabWalkTexture = this.Content.Load<Texture2D>("images/walk");
-            crabWalkAnimation = new CrabWalkAnimation(this, _spriteBatch, crabWalkTexture, Vector2.Zero, 3);
-            this.Components.Add(crabWalkAnimation);
         }
 
         protected override void Update(GameTime gameTime)
