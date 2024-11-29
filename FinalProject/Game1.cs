@@ -1,9 +1,11 @@
 ﻿using FinalProject.Entities;
 using FinalProject.Managers;
 using FinalProject.Screens;
+using FinalProject.Animations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace FinalProject
 {
@@ -43,10 +45,16 @@ namespace FinalProject
 
             _screenManager = new ScreenManager(new IScreen[]
             {
-                new MenuScreen(this),
+                new MenuScreen(this, _spriteBatch),
             });
             _screenManager.SetScreen(ScreenType.Menu);
             _screenManager.SwitchToNextScreen();
+
+
+            //Crab walking test
+            crabWalkTexture = this.Content.Load<Texture2D>("images/walk");
+            crabWalkAnimation = new CrabWalkAnimation(this, _spriteBatch, crabWalkTexture, Vector2.Zero, 3);
+            this.Components.Add(crabWalkAnimation);
         }
 
         protected override void Update(GameTime gameTime)
@@ -56,7 +64,6 @@ namespace FinalProject
 
             //Seconds since the last frame.
             float deltaFrameTime = gameTime.ElapsedGameTime.Milliseconds / 1000f;
-
             _screenManager.Update(deltaFrameTime);
 
             //player.Move();
@@ -72,6 +79,8 @@ namespace FinalProject
             _screenManager.Draw(_spriteBatch);
             //_spriteBatch.Draw(player.Texture, player.Position, Color.White);
             _spriteBatch.End();
+
+            base.Draw(gameTime);
         }
     }
 }

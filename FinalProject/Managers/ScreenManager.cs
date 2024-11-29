@@ -29,7 +29,6 @@ namespace FinalProject.Managers
             _activeScreen = _nextScreen;
         }
 
-
         public void Update(float delta)
         {
             _activeScreen.Update(delta);
