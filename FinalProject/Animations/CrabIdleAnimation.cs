@@ -62,7 +62,6 @@ namespace FinalProject.Animations
         {
             this.Enabled = false;
             this.Visible = false;
-
         }
 
         public void show()
