@@ -23,7 +23,7 @@ namespace FinalProject.Screens
             _spriteBatch = spriteBatch;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
         }
 

@@ -1,4 +1,5 @@
 ﻿using FinalProject.Animations;
+using FinalProject.Entities;
 using FinalProject.Managers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -17,9 +18,8 @@ namespace FinalProject.Screens
         private Game _game;
 
         Texture2D backgroundSprite;
-        Texture2D crab;
 
-        CrabIdleAnimation idleCrab;
+        Player player;
 
         public Vector2 backgroundPosition = new Vector2(0, 0);
 
@@ -28,17 +28,23 @@ namespace FinalProject.Screens
             _game = game;
 
             backgroundSprite = _game.Content.Load<Texture2D>("images/background");
-            crab = _game.Content.Load<Texture2D>("images/idle");
 
-            idleCrab = new CrabIdleAnimation(this._game, spriteBatch, crab, new Vector2(400, 400), 10);
-            _game.Components.Add(idleCrab);
+            player = new Player(6);
+
+            player.IdleTexture = _game.Content.Load<Texture2D>("images/idle");
+            player.WalkTexture = _game.Content.Load<Texture2D>("images/walk");
+
+            player.IdleAnimation = new CrabIdleAnimation(_game, spriteBatch, player.IdleTexture, player.Position, 30);
+            _game.Components.Add(player.IdleAnimation);
+            player.WalkAnimation = new CrabWalkAnimation(_game, spriteBatch, player.WalkTexture, player.Position, 10);
+            _game.Components.Add(player.WalkAnimation);
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             spriteBatch.Draw(backgroundSprite, backgroundPosition, Color.White);
 
-            idleCrab.show();
+            player.Draw(gameTime);
 
             //spriteBatch.Draw(null, null, null);
         }
@@ -46,6 +52,7 @@ namespace FinalProject.Screens
         public void Update(float delta)
         {
             backgroundPosition.X -= delta * 20; //Temporary scroll speed (20 units per second)
+            player.Update();
         }
     }
 }

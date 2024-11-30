@@ -1,4 +1,5 @@
 ﻿using FinalProject.Screens;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,9 +35,9 @@ namespace FinalProject.Managers
             _activeScreen.Update(delta);
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            _activeScreen.Draw(spriteBatch);
+            _activeScreen.Draw(spriteBatch, gameTime);
         }
 
     }

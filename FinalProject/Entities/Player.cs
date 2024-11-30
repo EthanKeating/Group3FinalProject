@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FinalProject.Animations;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace FinalProject.Entities
@@ -12,6 +14,12 @@ namespace FinalProject.Entities
 
         private float velocity;
         private bool isJumping;
+        private bool isMoving;
+
+        public Texture2D IdleTexture { get; set; }
+        public Texture2D WalkTexture { get; set; }
+        public CrabIdleAnimation IdleAnimation { get; set; }
+        public CrabWalkAnimation WalkAnimation { get; set; }
 
         public Player (int speed) : base(new Vector2(20, Game1.ScreenHeight / 5 * 4), speed)
         {
@@ -24,9 +32,13 @@ namespace FinalProject.Entities
         {
             KeyboardState keyboardState = Keyboard.GetState();
 
+            isMoving = false;
+
             // Move player left
             if (keyboardState.IsKeyDown(Keys.A))
             {
+                isMoving = true;
+
                 if (LockedToCenter)
                 {
                     // TODO: Move background left
@@ -41,48 +53,73 @@ namespace FinalProject.Entities
                     {
                         Position = new Vector2(Position.X - Speed, Position.Y);
                     }
-                }
             }
+        }
 
             // Move player right
             if (keyboardState.IsKeyDown(Keys.D))
             {
+                isMoving = true;
+
                 if (LockedToCenter)
                 {
                     // TODO: Move background right
                 }
                 else
                 {
-                    if (Position.X + Texture.Width >= Game1.ScreenWidth)
+                    if (Position.X + IdleAnimation.frames[0].Width >= Game1.ScreenWidth)
                     {
-                        Position = new Vector2(Game1.ScreenWidth - Texture.Width, Position.Y);
+                        Position = new Vector2(Game1.ScreenWidth - IdleAnimation.frames[0].Width, Position.Y);
                     }
                     else
                     {
                         Position = new Vector2(Position.X + Speed, Position.Y);
                     }
-                }
             }
+        }
 
             // Temporary fix to stop player falling off the bottom of the screen
-            if (Position.Y + Texture.Height >= Game1.ScreenHeight)
+            if (Position.Y + IdleAnimation.frames[0].Height >= Game1.ScreenHeight)
             {
-                Position = new Vector2(Position.X, Game1.ScreenHeight -  Texture.Height);
+                Position = new Vector2(Position.X, Game1.ScreenHeight - IdleAnimation.frames[0].Height);
                 isJumping = false;
             }
 
-            // Begin jumping if pressing space
+            // Begin jumping
             if (!isJumping && keyboardState.IsKeyDown(Keys.Space))
             {
+                isMoving = true;
                 isJumping = true;
                 velocity = JUMP_HEIGHT;
             }
 
-            // Move player vertically according to velocity
+            // Move player vertically
             if (isJumping)
             {
+                isMoving = true;
                 Position = new Vector2(Position.X, Position.Y - velocity);
                 velocity -= GRAVITY;
+            }
+        }
+
+        public void Update()
+        {
+            Move();
+            IdleAnimation.UpdatePosition(Position);
+            WalkAnimation.UpdatePosition(Position);
+        }
+
+        public void Draw(GameTime gameTime)
+        {
+            if (isMoving)
+            {
+                IdleAnimation.hide();
+                WalkAnimation.show();
+            }
+            else
+            {
+                WalkAnimation.hide();
+                IdleAnimation.show();
             }
         }
     }
