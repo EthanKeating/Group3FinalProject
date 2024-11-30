@@ -13,7 +13,6 @@ namespace FinalProject.Managers
         private IScreen _activeScreen;
         private IScreen _nextScreen;
 
-
         public ScreenManager(IReadOnlyCollection<IScreen> screens)
         {
             _screens = screens;
