@@ -50,9 +50,31 @@ namespace FinalProject.Screens
         }
 
         public void Update(float delta)
-        {
-            backgroundPosition.X -= delta * 20; //Temporary scroll speed (20 units per second)
+        {//Temporary scroll speed (20 units per second)
+
+            int startX = (int)player.Position.X;
             player.Update();
+            int deltaX = (int)player.Position.X - startX;
+
+            int rightBound = (int)Game1.ScreenWidth / 4;
+
+            if (player.Position.X + player.Hitbox.Width * 2 > rightBound)
+            {
+                player.Position = new Vector2(startX, player.Position.Y);
+                backgroundPosition.X -= deltaX;
+                //player.LockedToCenter = true;
+            }
+
+            if (player.Position.X < 0)
+            {
+                player.Position = new Vector2(startX, player.Position.Y);
+                backgroundPosition.X -= deltaX;
+
+                if (backgroundPosition.X > 0)
+                {
+                    backgroundPosition.X = 0;
+                }
+            }
         }
     }
 }
