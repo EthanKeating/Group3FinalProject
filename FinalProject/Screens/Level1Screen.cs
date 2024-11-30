@@ -20,6 +20,7 @@ namespace FinalProject.Screens
         Texture2D backgroundSprite;
 
         Player player;
+        Enemy shark;
 
         public Vector2 backgroundPosition = new Vector2(0, 0);
 
@@ -30,6 +31,7 @@ namespace FinalProject.Screens
             backgroundSprite = _game.Content.Load<Texture2D>("images/background");
 
             player = new Player(6);
+            shark = new Enemy(2);
 
             player.IdleTexture = _game.Content.Load<Texture2D>("images/idle");
             player.WalkTexture = _game.Content.Load<Texture2D>("images/walk");
@@ -38,6 +40,8 @@ namespace FinalProject.Screens
             _game.Components.Add(player.IdleAnimation);
             player.WalkAnimation = new CrabWalkAnimation(_game, spriteBatch, player.WalkTexture, player.Position, 10);
             _game.Components.Add(player.WalkAnimation);
+
+            shark.Texture = _game.Content.Load<Texture2D>("black_box");
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -45,6 +49,8 @@ namespace FinalProject.Screens
             spriteBatch.Draw(backgroundSprite, backgroundPosition, Color.White);
 
             player.Draw(gameTime);
+
+            spriteBatch.Draw(shark.Texture, shark.Position, Color.White);
 
             //spriteBatch.Draw(null, null, null);
         }
@@ -55,6 +61,7 @@ namespace FinalProject.Screens
             int startX = (int)player.Position.X;
             player.Update();
             int deltaX = (int)player.Position.X - startX;
+            shark.Move();
 
             int rightBound = (int)Game1.ScreenWidth / 4;
 
@@ -62,6 +69,7 @@ namespace FinalProject.Screens
             {
                 player.Position = new Vector2(startX, player.Position.Y);
                 backgroundPosition.X -= deltaX;
+                shark.UpdateBounds(deltaX);
                 //player.LockedToCenter = true;
             }
 
@@ -69,6 +77,7 @@ namespace FinalProject.Screens
             {
                 player.Position = new Vector2(startX, player.Position.Y);
                 backgroundPosition.X -= deltaX;
+                shark.UpdateBounds(deltaX);
 
                 if (backgroundPosition.X > 0)
                 {

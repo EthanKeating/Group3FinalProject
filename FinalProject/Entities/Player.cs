@@ -11,6 +11,7 @@ namespace FinalProject.Entities
 
         private const int JUMP_HEIGHT = 30;
         private const int GRAVITY = 2;
+        private const int FLOOR_HEIGHT = 70;
 
         private float velocity;
         private bool isJumping;
@@ -21,7 +22,7 @@ namespace FinalProject.Entities
         public CrabIdleAnimation IdleAnimation { get; set; }
         public CrabWalkAnimation WalkAnimation { get; set; }
 
-        public Player (int speed) : base(new Vector2(20, Game1.ScreenHeight / 5 * 4), speed)
+        public Player(int speed) : base(new Vector2(20, FLOOR_HEIGHT + 1), speed)
         {
             velocity = 0;
             isJumping = true;
@@ -53,8 +54,8 @@ namespace FinalProject.Entities
                     {
                         Position = new Vector2(Position.X - Speed, Position.Y);
                     }
+                }
             }
-        }
 
             // Move player right
             if (keyboardState.IsKeyDown(Keys.D))
@@ -75,13 +76,13 @@ namespace FinalProject.Entities
                     {
                         Position = new Vector2(Position.X + Speed, Position.Y);
                     }
+                }
             }
-        }
 
-            // Temporary fix to stop player falling off the bottom of the screen
-            if (Position.Y + IdleAnimation.frames[0].Height >= Game1.ScreenHeight)
+            // Stop player falling off the bottom of the screen
+            if (Position.Y + IdleAnimation.frames[0].Height >= Game1.ScreenHeight - FLOOR_HEIGHT)
             {
-                Position = new Vector2(Position.X, Game1.ScreenHeight - IdleAnimation.frames[0].Height);
+                Position = new Vector2(Position.X, Game1.ScreenHeight - IdleAnimation.frames[0].Height - FLOOR_HEIGHT);
                 isJumping = false;
             }
 

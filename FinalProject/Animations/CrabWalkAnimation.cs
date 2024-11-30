@@ -62,7 +62,6 @@ namespace FinalProject.Animations
         {
             this.Enabled = false;
             this.Visible = false;
-
         }
 
         public void show()
@@ -82,7 +81,6 @@ namespace FinalProject.Animations
                     frameIndex = 0;
                 }
 
-
                 delayCounter = 0;
             }
 
@@ -99,7 +97,7 @@ namespace FinalProject.Animations
             if (frameIndex >= 0)
             {
                 sb.Begin();
-                sb.Draw(tex, Position, frames[frameIndex], Color.White);
+                sb.Draw(tex, Position, frames[frameIndex], Color.White, 0, Vector2.Zero, 0.9f, SpriteEffects.None, 0);
                 sb.End();
             }
 
