@@ -10,7 +10,7 @@ namespace FinalProject.Entities
 
         private bool isMovingLeft = true;
 
-        public Enemy(int speed) : base(new Vector2(Game1.ScreenWidth / 5 * 4, Game1.ScreenHeight - 150), speed)
+        public Enemy(int speed) : base(new Vector2(Game1.ScreenWidth / 5 * 4, Game1.ScreenHeight - 300), speed)
         {
             leftBounds = Game1.ScreenWidth / 5 * 3;
             rightBounds = Game1.ScreenWidth / 5 * 4;

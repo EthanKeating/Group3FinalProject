@@ -9,7 +9,7 @@ namespace FinalProject.Entities
     {
         public bool LockedToCenter { get; set; }
 
-        private const int JUMP_HEIGHT = 30;
+        private const int JUMP_HEIGHT = 35;
         private const int GRAVITY = 2;
         private const int FLOOR_HEIGHT = 70;
 
@@ -19,8 +19,10 @@ namespace FinalProject.Entities
 
         public Texture2D IdleTexture { get; set; }
         public Texture2D WalkTexture { get; set; }
+        public Texture2D ClawTexture { get; set; }
         public CrabIdleAnimation IdleAnimation { get; set; }
         public CrabWalkAnimation WalkAnimation { get; set; }
+        public CrabAttackAnimation AttackAnimation { get; set; }
 
         public Player(int speed) : base(new Vector2(20, FLOOR_HEIGHT + 1), speed)
         {
