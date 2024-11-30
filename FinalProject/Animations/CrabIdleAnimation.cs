@@ -16,7 +16,7 @@ namespace FinalProject.Animations
         private int delay;
 
         private Vector2 dimension;
-        private List<Rectangle> frames;
+        public List<Rectangle> frames;
         private int frameIndex = -1;
 
         private int delayCounter;
@@ -81,6 +81,11 @@ namespace FinalProject.Animations
             }
 
             base.Update(gameTime);
+        }
+
+        public void UpdatePosition(Vector2 _position)
+        {
+            Position = _position;
         }
 
         public override void Draw(GameTime gameTime)

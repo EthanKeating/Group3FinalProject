@@ -41,8 +41,6 @@ namespace FinalProject
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            //player.Texture = Content.Load<Texture2D>("black_box");
-
             _screenManager = new ScreenManager(new IScreen[]
             {
                 new MenuScreen(this, _spriteBatch),
@@ -61,8 +59,6 @@ namespace FinalProject
             float deltaFrameTime = gameTime.ElapsedGameTime.Milliseconds / 1000f;
             _screenManager.Update(deltaFrameTime);
 
-            //player.Move();
-
             base.Update(gameTime);
         }
 
@@ -71,8 +67,7 @@ namespace FinalProject
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
-            _screenManager.Draw(_spriteBatch);
-            //_spriteBatch.Draw(player.Texture, player.Position, Color.White);
+            _screenManager.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
 
             base.Draw(gameTime);

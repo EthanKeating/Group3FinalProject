@@ -79,9 +79,7 @@ namespace FinalProject.Animations
                 frameIndex++;
                 if (frameIndex > ROWS * COLS - 1)
                 {
-                    frameIndex = -1;
-                    hide();
-                    g.Components.Remove(this);
+                    frameIndex = 0;
                 }
 
 
@@ -89,6 +87,11 @@ namespace FinalProject.Animations
             }
 
             base.Update(gameTime);
+        }
+
+        public void UpdatePosition(Vector2 _position)
+        {
+            Position = _position;
         }
 
         public override void Draw(GameTime gameTime)
