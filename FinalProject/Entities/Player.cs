@@ -7,28 +7,35 @@ namespace FinalProject.Entities
 {
     internal class Player : BasicEntity
     {
-        public bool LockedToCenter { get; set; }
-
-        private const int JUMP_HEIGHT = 35;
-        private const int GRAVITY = 2;
+        private const int JUMP_HEIGHT = 25;
+        private const int GRAVITY = 1;
         private const int FLOOR_HEIGHT = 70;
+
+        private readonly int animationWidth;
+        private readonly int animationHeight;
 
         private float velocity;
         private bool isJumping;
         private bool isMoving;
 
-        public Texture2D IdleTexture { get; set; }
-        public Texture2D WalkTexture { get; set; }
-        public Texture2D ClawTexture { get; set; }
         public CrabIdleAnimation IdleAnimation { get; set; }
         public CrabWalkAnimation WalkAnimation { get; set; }
         public CrabAttackAnimation AttackAnimation { get; set; }
 
-        public Player(int speed) : base(new Vector2(20, FLOOR_HEIGHT + 1), speed)
+        public Player(Game game, SpriteBatch spriteBatch, int speed) : base(new Vector2(20, FLOOR_HEIGHT + 1), speed)
         {
             velocity = 0;
             isJumping = true;
-            LockedToCenter = false;
+
+            IdleAnimation = new CrabIdleAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/idle"), Position, 30);
+            game.Components.Add(IdleAnimation);
+            WalkAnimation = new CrabWalkAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/walk"), Position, 10);
+            game.Components.Add(WalkAnimation);
+            AttackAnimation = new CrabAttackAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/claw"), Position, 40);
+            game.Components.Add(AttackAnimation);
+
+            animationWidth = IdleAnimation.frames[0].Width;
+            animationHeight = IdleAnimation.frames[0].Height;
         }
 
         public void Move()
@@ -42,20 +49,13 @@ namespace FinalProject.Entities
             {
                 isMoving = true;
 
-                if (LockedToCenter)
+                if (Position.X <= 0)
                 {
-                    // TODO: Move background left
+                    Position = new Vector2(0, Position.Y);
                 }
                 else
                 {
-                    if (Position.X <= 0)
-                    {
-                        Position = new Vector2(0, Position.Y);
-                    }
-                    else
-                    {
-                        Position = new Vector2(Position.X - Speed, Position.Y);
-                    }
+                    Position = new Vector2(Position.X - Speed, Position.Y);
                 }
             }
 
@@ -64,27 +64,20 @@ namespace FinalProject.Entities
             {
                 isMoving = true;
 
-                if (LockedToCenter)
+                if (Position.X + animationWidth >= Game1.ScreenWidth)
                 {
-                    // TODO: Move background right
+                    Position = new Vector2(Game1.ScreenWidth - animationWidth, Position.Y);
                 }
                 else
                 {
-                    if (Position.X + IdleAnimation.frames[0].Width >= Game1.ScreenWidth)
-                    {
-                        Position = new Vector2(Game1.ScreenWidth - IdleAnimation.frames[0].Width, Position.Y);
-                    }
-                    else
-                    {
-                        Position = new Vector2(Position.X + Speed, Position.Y);
-                    }
+                    Position = new Vector2(Position.X + Speed, Position.Y);
                 }
             }
 
             // Stop player falling off the bottom of the screen
-            if (Position.Y + IdleAnimation.frames[0].Height >= Game1.ScreenHeight - FLOOR_HEIGHT)
+            if (Position.Y + animationHeight >= Game1.ScreenHeight - FLOOR_HEIGHT)
             {
-                Position = new Vector2(Position.X, Game1.ScreenHeight - IdleAnimation.frames[0].Height - FLOOR_HEIGHT);
+                Position = new Vector2(Position.X, Game1.ScreenHeight - animationHeight - FLOOR_HEIGHT);
                 isJumping = false;
             }
 
@@ -112,7 +105,7 @@ namespace FinalProject.Entities
             WalkAnimation.UpdatePosition(Position);
         }
 
-        public void Draw(GameTime gameTime)
+        public void Draw()
         {
             if (isMoving)
             {
