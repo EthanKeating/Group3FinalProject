@@ -61,6 +61,11 @@ namespace FinalProject.Screens
                 backgroundPosition.X -= deltaX;
                 shark.UpdateBounds(deltaX);
             }
+            if (backgroundPosition.X < -backgroundSprite.Width + 1280)
+            {
+                backgroundPosition.X = -backgroundSprite.Width + 1280;
+                player.Position = new Vector2(startX, player.Position.Y);
+            }
 
             if (player.Position.X < 0)
             {
