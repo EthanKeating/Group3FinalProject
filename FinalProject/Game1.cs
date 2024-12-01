@@ -43,8 +43,9 @@ namespace FinalProject
 
             _screenManager = new ScreenManager(new IScreen[]
             {
-                new MenuScreen(this, _spriteBatch),
-                new Level1Screen(this, _spriteBatch)
+                new StartMenuScreen(this, _spriteBatch),
+                new Level1Screen(this, _spriteBatch),
+                new GameOverMenuScreen(this, _spriteBatch)
             });
             _screenManager.SetScreen(ScreenType.Level1);
             _screenManager.SwitchToNextScreen();
@@ -67,7 +68,7 @@ namespace FinalProject
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
-            _screenManager.Draw(_spriteBatch, gameTime);
+            _screenManager.Draw(_spriteBatch);
             _spriteBatch.End();
 
             base.Draw(gameTime);

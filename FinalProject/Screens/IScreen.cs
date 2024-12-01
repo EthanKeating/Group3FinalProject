@@ -8,7 +8,7 @@ namespace FinalProject.Screens
         ScreenType ScreenType { get; }
 
         void Update(float delta);
-        void Draw(SpriteBatch spriteBatch, GameTime gameTime);
+        void Draw(SpriteBatch spriteBatch);
 
     }
 }

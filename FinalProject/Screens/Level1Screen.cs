@@ -30,34 +30,23 @@ namespace FinalProject.Screens
 
             backgroundSprite = _game.Content.Load<Texture2D>("images/background");
 
-            player = new Player(9);
+            player = new Player(_game, spriteBatch, 9);
             shark = new Enemy(2);
-
-            player.IdleTexture = _game.Content.Load<Texture2D>("images/idle");
-            player.WalkTexture = _game.Content.Load<Texture2D>("images/walk");
-            player.ClawTexture = _game.Content.Load<Texture2D>("images/shark");
-
-            player.IdleAnimation = new CrabIdleAnimation(_game, spriteBatch, player.IdleTexture, player.Position, 30);
-            _game.Components.Add(player.IdleAnimation);
-            player.WalkAnimation = new CrabWalkAnimation(_game, spriteBatch, player.WalkTexture, player.Position, 10);
-            _game.Components.Add(player.WalkAnimation);
 
             shark.Texture = _game.Content.Load<Texture2D>("images/shark");
         }
 
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+        public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(backgroundSprite, backgroundPosition, Color.White);
 
-            player.Draw(gameTime);
+            player.Draw();
 
             spriteBatch.Draw(shark.Texture, shark.Position, shark.Texture.Bounds, Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 1f);
-
-            //spriteBatch.Draw(null, null, null);
         }
 
         public void Update(float delta)
-        {//Temporary scroll speed (20 units per second)
+        {
 
             int startX = (int)player.Position.X;
             player.Update();
@@ -71,7 +60,6 @@ namespace FinalProject.Screens
                 player.Position = new Vector2(startX, player.Position.Y);
                 backgroundPosition.X -= deltaX;
                 shark.UpdateBounds(deltaX);
-                //player.LockedToCenter = true;
             }
 
             if (player.Position.X < 0)

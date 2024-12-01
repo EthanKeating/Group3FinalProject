@@ -34,9 +34,9 @@ namespace FinalProject.Managers
             _activeScreen.Update(delta);
         }
 
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+        public void Draw(SpriteBatch spriteBatch)
         {
-            _activeScreen.Draw(spriteBatch, gameTime);
+            _activeScreen.Draw(spriteBatch);
         }
 
     }
