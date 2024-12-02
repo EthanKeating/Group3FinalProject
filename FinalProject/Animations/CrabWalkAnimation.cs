@@ -96,7 +96,7 @@ namespace FinalProject.Animations
             if (frameIndex >= 0)
             {
                 sb.Begin();
-                sb.Draw(tex, Position, frames[frameIndex], Color.White, 0, Vector2.Zero, 0.9f, SpriteEffects.None, 0);
+                sb.Draw(tex, Position, frames[frameIndex], Color.White, 0, Vector2.Zero, 1.0f, SpriteEffects.None, 0);
                 sb.End();
             }
 
