@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FinalProject.Managers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -12,6 +13,7 @@ namespace FinalProject.Screens
 
         private Vector2 playButtonPosition;
         private Texture2D playButtonTexture;
+        private Rectangle playButtonBounds;
         private bool mouseDown = false;
 
         public StartMenuScreen(Game game, SpriteBatch spriteBatch)
@@ -21,6 +23,7 @@ namespace FinalProject.Screens
 
             playButtonTexture = _game.Content.Load<Texture2D>("images/play");
             playButtonPosition = new Vector2((Game1.ScreenWidth / 2) - (playButtonTexture.Width / 2), Game1.ScreenHeight / 3 * 2);
+            playButtonBounds = new Rectangle((int)playButtonPosition.X, (int)playButtonPosition.Y, playButtonTexture.Width, playButtonTexture.Height);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -28,20 +31,23 @@ namespace FinalProject.Screens
             _spriteBatch.Draw(playButtonTexture, playButtonPosition, Color.White);
         }
 
-        public void Update(float delta)
+        public void Update(ScreenManager _screenManager, float delta)
         {
             MouseState mouseState = Mouse.GetState();
             KeyboardState keyboardState = Keyboard.GetState();
 
             if (keyboardState.IsKeyDown(Keys.Enter))
             {
-                // TODO: change screen to level1
+                _screenManager.SetScreen(ScreenType.Level1);
+                _screenManager.SwitchToNextScreen();
             }
-            else if (mouseState.LeftButton == ButtonState.Pressed && !mouseDown)
+            
+            if (mouseState.LeftButton == ButtonState.Pressed && !mouseDown)
             {
-                if (playButtonTexture.Bounds.Contains(mouseState.Position))
+                if (playButtonBounds.Contains(mouseState.Position))
                 {
-                    // TODO: change screen to level1
+                    _screenManager.SetScreen(ScreenType.Level1);
+                    _screenManager.SwitchToNextScreen();
                 }
 
                 mouseDown = true;

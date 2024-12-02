@@ -50,8 +50,7 @@ namespace FinalProject.Animations
                 {
                     int x = j * (int)dimension.X;
                     int y = i * (int)dimension.Y;
-                    Rectangle r = new Rectangle(x, y, (int)dimension.X,
-                        (int)dimension.Y);
+                    Rectangle r = new Rectangle(x, y, (int)dimension.X, (int)dimension.Y);
                     frames.Add(r);
 
                 }

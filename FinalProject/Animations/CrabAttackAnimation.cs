@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Audio;
+using FinalProject.Entities;
 
 namespace FinalProject.Animations
 {
@@ -10,6 +12,8 @@ namespace FinalProject.Animations
         private Texture2D tex;
         private Vector2 position;
         private int delay;
+
+        private SoundEffect attackSound;
 
         private Vector2 dimension;
         public List<Rectangle> frames;
@@ -23,6 +27,7 @@ namespace FinalProject.Animations
         public Vector2 Position { get => position; set => position = value; }
 
         private Game g;
+        private Player player;
 
         public CrabAttackAnimation(Game game, SpriteBatch sb,
             Texture2D tex, Vector2 position, int delay) : base(game)
@@ -33,6 +38,9 @@ namespace FinalProject.Animations
             this.Position = position;
             this.delay = delay;
             this.dimension = new Vector2(tex.Width / COLS, tex.Height / ROWS);
+
+            attackSound = game.Content.Load<SoundEffect>("soundEffects/snap");
+
             createFrames();
             hide();
         }
@@ -46,10 +54,8 @@ namespace FinalProject.Animations
                 {
                     int x = j * (int)dimension.X;
                     int y = i * (int)dimension.Y;
-                    Rectangle r = new Rectangle(x, y, (int)dimension.X,
-                        (int)dimension.Y);
+                    Rectangle r = new Rectangle(x, y, (int)dimension.X, (int)dimension.Y);
                     frames.Add(r);
-
                 }
             }
         }
@@ -58,20 +64,35 @@ namespace FinalProject.Animations
         {
             this.Enabled = false;
             this.Visible = false;
+
         }
 
         public void show()
         {
             this.Enabled = true;
             this.Visible = true;
+            frameIndex = 0;
         }
 
         public override void Update(GameTime gameTime)
         {
             delayCounter++;
+
             if (delayCounter > delay)
             {
                 frameIndex++;
+
+                if (frameIndex % 2 == 1)
+                {
+                    attackSound.Play();
+                }
+
+                if (frameIndex >= ROWS * COLS)
+                {
+                    frameIndex = 0;
+
+                    hide();
+                }
                 delayCounter = 0;
             }
 

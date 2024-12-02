@@ -1,5 +1,6 @@
 ﻿using FinalProject.Animations;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -7,45 +8,79 @@ namespace FinalProject.Entities
 {
     internal class Player : BasicEntity
     {
-        private const int JUMP_HEIGHT = 25;
-        private const int GRAVITY = 1;
-        private const int FLOOR_HEIGHT = 70;
-
-        private readonly int animationWidth;
-        private readonly int animationHeight;
-
-        private float velocity;
-        private bool isJumping;
-        private bool isMoving;
-
         public CrabIdleAnimation IdleAnimation { get; set; }
         public CrabWalkAnimation WalkAnimation { get; set; }
         public CrabAttackAnimation AttackAnimation { get; set; }
 
-        public Player(Game game, SpriteBatch spriteBatch, int speed) : base(new Vector2(20, FLOOR_HEIGHT + 1), speed)
+        public bool IsAttacking { get; set; }
+
+        public override Rectangle Hitbox { get { return new Rectangle((int)Position.X, (int)Position.Y + 10, animationWidth - 10, animationHeight); } }
+        public Rectangle AttackHitbox { get { return new(); } }
+
+        private const int JUMP_HEIGHT = 25;
+        private const int GRAVITY = 1;
+        private const int FLOOR_HEIGHT = 70;
+        private const int IDLE_ANIM_SPEED = 30;
+        private const int WALK_ANIM_SPEED = 5;
+        private const int ATTACK_ANIM_SPEED = 10;
+
+        private readonly int animationWidth;
+        private readonly int animationHeight;
+        private readonly int floorHeight = Game1.ScreenHeight - FLOOR_HEIGHT;
+
+        private float velocity;
+        private bool isJumping;
+        private bool isMoving;
+        private Vector2 clawPosition { get { return new Vector2(Position.X + animationWidth - 35, Position.Y + animationHeight - 53); } }
+
+        public Player(Game game, SpriteBatch spriteBatch, int speed) : base(new Vector2(20, Game1.ScreenHeight - FLOOR_HEIGHT), speed)
         {
             velocity = 0;
-            isJumping = true;
+            isJumping = false;
 
-            IdleAnimation = new CrabIdleAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/idle"), Position, 30);
+            IdleAnimation = new CrabIdleAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/idle"), Position, IDLE_ANIM_SPEED);
             game.Components.Add(IdleAnimation);
-            WalkAnimation = new CrabWalkAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/walk"), Position, 10);
+            WalkAnimation = new CrabWalkAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/walk"), Position, WALK_ANIM_SPEED);
             game.Components.Add(WalkAnimation);
-            AttackAnimation = new CrabAttackAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/claw"), Position, 40);
+            AttackAnimation = new CrabAttackAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/claw"), clawPosition, ATTACK_ANIM_SPEED);
             game.Components.Add(AttackAnimation);
 
             animationWidth = IdleAnimation.frames[0].Width;
             animationHeight = IdleAnimation.frames[0].Height;
         }
 
-        public void Move()
+        public void Update()
+        {
+            IdleAnimation.UpdatePosition(Position);
+            WalkAnimation.UpdatePosition(Position);
+            AttackAnimation.UpdatePosition(clawPosition);
+
+            Move();
+            Attack();
+        }
+
+        public void Draw()
+        {
+            if (isMoving)
+            {
+                IdleAnimation.hide();
+                WalkAnimation.show();
+            }
+            else
+            {
+                WalkAnimation.hide();
+                IdleAnimation.show();
+            }
+        }
+
+        private void Move()
         {
             KeyboardState keyboardState = Keyboard.GetState();
 
             isMoving = false;
 
             // Move player left
-            if (keyboardState.IsKeyDown(Keys.A))
+            if (keyboardState.IsKeyDown(Keys.A) || keyboardState.IsKeyDown(Keys.Left))
             {
                 isMoving = true;
 
@@ -60,7 +95,7 @@ namespace FinalProject.Entities
             }
 
             // Move player right
-            if (keyboardState.IsKeyDown(Keys.D))
+            if (keyboardState.IsKeyDown(Keys.D) || keyboardState.IsKeyDown(Keys.Right))
             {
                 isMoving = true;
 
@@ -75,9 +110,9 @@ namespace FinalProject.Entities
             }
 
             // Stop player falling off the bottom of the screen
-            if (Position.Y + animationHeight >= Game1.ScreenHeight - FLOOR_HEIGHT)
+            if (Position.Y + animationHeight >= floorHeight)
             {
-                Position = new Vector2(Position.X, Game1.ScreenHeight - animationHeight - FLOOR_HEIGHT);
+                Position = new Vector2(Position.X, floorHeight - animationHeight);
                 isJumping = false;
             }
 
@@ -98,24 +133,14 @@ namespace FinalProject.Entities
             }
         }
 
-        public void Update()
+        private void Attack()
         {
-            Move();
-            IdleAnimation.UpdatePosition(Position);
-            WalkAnimation.UpdatePosition(Position);
-        }
+            KeyboardState keyboardState = Keyboard.GetState();
 
-        public void Draw()
-        {
-            if (isMoving)
+            if (keyboardState.IsKeyDown(Keys.F))
             {
-                IdleAnimation.hide();
-                WalkAnimation.show();
-            }
-            else
-            {
-                WalkAnimation.hide();
-                IdleAnimation.show();
+                IsAttacking = true;
+                AttackAnimation.show();
             }
         }
     }

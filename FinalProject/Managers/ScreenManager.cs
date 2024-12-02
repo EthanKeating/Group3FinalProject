@@ -31,7 +31,7 @@ namespace FinalProject.Managers
 
         public void Update(float delta)
         {
-            _activeScreen.Update(delta);
+            _activeScreen.Update(this, delta);
         }
 
         public void Draw(SpriteBatch spriteBatch)
