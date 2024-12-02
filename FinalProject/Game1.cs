@@ -47,7 +47,7 @@ namespace FinalProject
                 new Level1Screen(this, _spriteBatch),
                 new GameOverMenuScreen(this, _spriteBatch)
             });
-            _screenManager.SetScreen(ScreenType.Level1);
+            _screenManager.SetScreen(ScreenType.StartMenu);
             _screenManager.SwitchToNextScreen();
         }
 
