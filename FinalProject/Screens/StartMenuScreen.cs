@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FinalProject.Managers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -13,7 +14,7 @@ namespace FinalProject.Screens
 
         private Vector2 playButtonPosition;
         private Texture2D playButtonTexture;
-        private Texture2D backgroundSprite;
+        private Rectangle playButtonBounds;
         private bool mouseDown = false;
 
         private float baseYPosition;
@@ -32,8 +33,7 @@ namespace FinalProject.Screens
             playButtonTexture = _game.Content.Load<Texture2D>("images/play");
             backgroundSprite = _game.Content.Load<Texture2D>("images/background");
             playButtonPosition = new Vector2((Game1.ScreenWidth / 2) - (playButtonTexture.Width / 2), Game1.ScreenHeight / 3 * 2);
-
-            baseYPosition = playButtonPosition.Y;
+            playButtonBounds = new Rectangle((int)playButtonPosition.X, (int)playButtonPosition.Y, playButtonTexture.Width, playButtonTexture.Height);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -43,7 +43,7 @@ namespace FinalProject.Screens
            
         }
 
-        public void Update(float delta)
+        public void Update(ScreenManager _screenManager, float delta)
         {
             MouseState mouseState = Mouse.GetState();
             KeyboardState keyboardState = Keyboard.GetState();
@@ -55,18 +55,16 @@ namespace FinalProject.Screens
 
             if (keyboardState.IsKeyDown(Keys.Enter))
             {
-                Game1 game1 = _game as Game1;
-                game1._screenManager.SetScreen(ScreenType.Level1);
-                game1._screenManager.SwitchToNextScreen();
+                _screenManager.SetScreen(ScreenType.Level1);
+                _screenManager.SwitchToNextScreen();
             }
-            else if (mouseState.LeftButton == ButtonState.Pressed && !mouseDown)
+            
+            if (mouseState.LeftButton == ButtonState.Pressed && !mouseDown)
             {
-                Rectangle playButtonBound = new Rectangle((int)playButtonPosition.X, (int)playButtonPosition.Y, playButtonTexture.Width, playButtonTexture.Height);
-                if (playButtonBound.Intersects(new Rectangle(mouseState.Position.X, mouseState.Position.Y, 1, 1)))
+                if (playButtonBounds.Contains(mouseState.Position))
                 {
-                    Game1 game1 = _game as Game1;
-                    game1._screenManager.SetScreen(ScreenType.Level1);
-                    game1._screenManager.SwitchToNextScreen();
+                    _screenManager.SetScreen(ScreenType.Level1);
+                    _screenManager.SwitchToNextScreen();
                 }
 
                 mouseDown = true;

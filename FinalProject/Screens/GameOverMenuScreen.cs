@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using FinalProject.Managers;
+
 using System;
 
 namespace FinalProject.Screens
@@ -13,7 +15,7 @@ namespace FinalProject.Screens
 
         private Vector2 replayButtonPosition;
         private Texture2D replayButtonTexture;
-        private Texture2D backgroundSprite;
+        private Rectangle replayButtonBounds;
         private bool mouseDown = false;
 
         private float baseYPosition;
@@ -31,6 +33,7 @@ namespace FinalProject.Screens
             replayButtonTexture = _game.Content.Load<Texture2D>("images/replay");
             backgroundSprite = _game.Content.Load<Texture2D>("images/background");
             replayButtonPosition = new Vector2((Game1.ScreenWidth / 2) - (replayButtonTexture.Width / 2), Game1.ScreenHeight / 3 * 2);
+            replayButtonBounds = new Rectangle((int)replayButtonPosition.X, (int)replayButtonPosition.Y, replayButtonTexture.Width, replayButtonTexture.Height);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -39,7 +42,7 @@ namespace FinalProject.Screens
             _spriteBatch.Draw(replayButtonTexture, replayButtonPosition, Color.White);
         }
 
-        public void Update(float delta)
+        public void Update(ScreenManager _screenManager, float delta)
         {
             MouseState mouseState = Mouse.GetState();
             KeyboardState keyboardState = Keyboard.GetState();
@@ -51,18 +54,15 @@ namespace FinalProject.Screens
 
             if (keyboardState.IsKeyDown(Keys.Enter))
             {
-                Game1 game1 = _game as Game1;
-                game1._screenManager.SetScreen(ScreenType.Level1);
-                game1._screenManager.SwitchToNextScreen();
+                _screenManager.SetScreen(ScreenType.Level1);
+                _screenManager.SwitchToNextScreen();
             }
             else if (mouseState.LeftButton == ButtonState.Pressed && !mouseDown)
             {
-                Rectangle playButtonBound = new Rectangle((int)replayButtonPosition.X, (int)replayButtonPosition.Y, replayButtonTexture.Width, replayButtonTexture.Height);
-                if (playButtonBound.Intersects(new Rectangle(mouseState.Position.X, mouseState.Position.Y, 1, 1)))
+                if (replayButtonBounds.Contains(mouseState.Position))
                 {
-                    Game1 game1 = _game as Game1;
-                    game1._screenManager.SetScreen(ScreenType.Level1);
-                    game1._screenManager.SwitchToNextScreen();
+                    _screenManager.SetScreen(ScreenType.Level1);
+                    _screenManager.SwitchToNextScreen();
                 }
 
                 mouseDown = true;

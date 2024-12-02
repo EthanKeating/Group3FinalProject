@@ -1,4 +1,4 @@
-﻿using FinalProject.Entities;
+using FinalProject.Entities;
 using FinalProject.Managers;
 using FinalProject.Screens;
 using FinalProject.Animations;
@@ -47,6 +47,7 @@ namespace FinalProject
                 new Level1Screen(this, _spriteBatch),
                 new GameOverMenuScreen(this, _spriteBatch)
             });
+
             _screenManager.SetScreen(ScreenType.StartMenu);
             _screenManager.SwitchToNextScreen();
         }

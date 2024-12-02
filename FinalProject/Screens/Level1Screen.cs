@@ -31,7 +31,7 @@ namespace FinalProject.Screens
             backgroundSprite = _game.Content.Load<Texture2D>("images/background");
 
             player = new Player(_game, spriteBatch, 9);
-            shark = new Enemy(2);
+            shark = new Enemy(new Vector2(Game1.ScreenWidth / 5 * 4, Game1.ScreenHeight - 200), 2);
 
             shark.Texture = _game.Content.Load<Texture2D>("images/shark");
         }
@@ -45,9 +45,9 @@ namespace FinalProject.Screens
             spriteBatch.Draw(shark.Texture, shark.Position, shark.Texture.Bounds, Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 1f);
         }
 
-        public void Update(float delta)
+        public void Update(ScreenManager _screenManager, float delta)
         {
-
+            // Calculate how much background moves
             int startX = (int)player.Position.X;
             player.Update();
             int deltaX = (int)player.Position.X - startX;
@@ -55,16 +55,22 @@ namespace FinalProject.Screens
 
             int rightBound = (int)Game1.ScreenWidth / 4;
 
-            if (player.Position.X + player.Hitbox.Width * 2 > rightBound)
+            // Move background
+            if (player.Position.X > rightBound)
             {
-                player.Position = new Vector2(startX, player.Position.Y);
-                backgroundPosition.X -= deltaX;
-                shark.UpdateBounds(deltaX);
+                if (backgroundPosition.X > -backgroundSprite.Width + 1280)
+                {
+                    player.Position = new Vector2(startX, player.Position.Y);
+                    backgroundPosition.X -= deltaX;
+                    shark.UpdateBounds(deltaX);
+                }
             }
+
+            // Stop background from moving past end
             if (backgroundPosition.X < -backgroundSprite.Width + 1280)
             {
                 backgroundPosition.X = -backgroundSprite.Width + 1280;
-                player.Position = new Vector2(startX, player.Position.Y);
+                //player.Position = new Vector2(startX, player.Position.Y);
             }
 
             if (player.Position.X < 0)

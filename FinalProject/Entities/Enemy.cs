@@ -5,12 +5,14 @@ namespace FinalProject.Entities
 {
     internal class Enemy : BasicEntity
     {
+        public override Rectangle Hitbox { get { return new Rectangle((int)Position.X + 10, (int)Position.Y + 10, Texture.Width - 10, Texture.Height - 10); } }
+
         private int leftBounds;
         private int rightBounds;
 
         private bool isMovingLeft = true;
 
-        public Enemy(int speed) : base(new Vector2(Game1.ScreenWidth / 5 * 4, Game1.ScreenHeight - 300), speed)
+        public Enemy(Vector2 position, int speed) : base(position, speed)
         {
             leftBounds = Game1.ScreenWidth / 5 * 3;
             rightBounds = Game1.ScreenWidth / 5 * 4;
