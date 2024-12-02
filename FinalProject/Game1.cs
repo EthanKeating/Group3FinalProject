@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using static System.Net.Mime.MediaTypeNames;
+using System.Xml.Linq;
 
 namespace FinalProject
 {
@@ -41,14 +42,16 @@ namespace FinalProject
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+
             //player.Texture = Content.Load<Texture2D>("black_box");
 
             _screenManager = new ScreenManager(new IScreen[]
             {
                 new MenuScreen(this, _spriteBatch),
-                new Level1Screen(this, _spriteBatch)
+                new Level1Screen(this, _spriteBatch),
+                new CutsceneScreen(this, _spriteBatch)
             });
-            _screenManager.SetScreen(ScreenType.Level1);
+            _screenManager.SetScreen(ScreenType.Cutscene);
             _screenManager.SwitchToNextScreen();
         }
 
