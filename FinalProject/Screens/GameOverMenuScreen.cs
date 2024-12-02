@@ -32,14 +32,14 @@ namespace FinalProject.Screens
             _spriteBatch = spriteBatch;
 
             replayButtonTexture = _game.Content.Load<Texture2D>("images/replay");
-            backgroundSprite = _game.Content.Load<Texture2D>("images/background");
+            //backgroundSprite = _game.Content.Load<Texture2D>("images/background");
             replayButtonPosition = new Vector2((Game1.ScreenWidth / 2) - (replayButtonTexture.Width / 2), Game1.ScreenHeight / 3 * 2);
             replayButtonBounds = new Rectangle((int)replayButtonPosition.X, (int)replayButtonPosition.Y, replayButtonTexture.Width, replayButtonTexture.Height);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            _spriteBatch.Draw(backgroundSprite, Vector2.Zero, Color.White);
+            //_spriteBatch.Draw(backgroundSprite, Vector2.Zero, Color.White);
             _spriteBatch.Draw(replayButtonTexture, replayButtonPosition, Color.White);
         }
 
