@@ -15,6 +15,7 @@ namespace FinalProject.Screens
 
         private Vector2 replayButtonPosition;
         private Texture2D replayButtonTexture;
+        private Texture2D backgroundSprite;
         private Rectangle replayButtonBounds;
         private bool mouseDown = false;
 

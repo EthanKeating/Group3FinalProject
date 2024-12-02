@@ -14,6 +14,7 @@ namespace FinalProject.Screens
 
         private Vector2 playButtonPosition;
         private Texture2D playButtonTexture;
+        private Texture2D backgroundSprite;
         private Rectangle playButtonBounds;
         private bool mouseDown = false;
 
