@@ -17,10 +17,10 @@ namespace FinalProject.Screens
         public ScreenType ScreenType => ScreenType.Level1;
         private Game _game;
 
-        Texture2D backgroundSprite;
+        private Texture2D backgroundSprite;
 
-        Player player;
-        Enemy shark;
+        private Player player;
+        private Enemy shark;
 
         public Vector2 backgroundPosition = new Vector2(0, 0);
 
