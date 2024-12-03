@@ -13,11 +13,20 @@ namespace FinalProject.Screens
         private Texture2D backgroundSprite;
 
         private Player player;
+
         private Shark shark1;
         private Shark shark2;
 
         private List<Enemy> enemies;
         private List<Shark> sharks;
+
+        private Pearl pearl1;
+        private Pearl pearl2;
+        private Pearl pearl3;
+        private Pearl pearl4;
+        private Pearl pearl5;
+
+        private List<Pearl> pearls;
 
         public Vector2 backgroundPosition = new Vector2(0, 0);
         public Vector2 playerStartingPosition = new Vector2(20, Game1.ScreenHeight - 70);
@@ -41,6 +50,14 @@ namespace FinalProject.Screens
 
             enemies = [shark1, shark2];
             sharks = [shark1, shark2];
+
+            pearl1 = new Pearl(new Vector2(100, 100));
+            pearl2 = new Pearl(new Vector2(200, 100));
+            pearl3 = new Pearl(new Vector2(300, 100));
+            pearl4 = new Pearl(new Vector2(400, 100));
+            pearl5 = new Pearl(new Vector2(500, 100));
+
+            pearls = [pearl1, pearl2, pearl3, pearl4, pearl5];
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -57,6 +74,13 @@ namespace FinalProject.Screens
                 }
             }
 
+            foreach (Pearl pearl in pearls)
+            {
+                if (!pearl.IsCollected)
+                {
+                    pearl.Draw();
+                }
+            }
         }
 
         public void Update(ScreenManager _screenManager, float delta)
@@ -134,14 +158,31 @@ namespace FinalProject.Screens
                     }
                 }
             }
+
+            // Check for pearl collisions
+            foreach (Pearl pearl in pearls)
+            {
+                if (player.Hitbox.Intersects(pearl.Hitbox))
+                {
+                    pearl.IsCollected = true;
+                }
+            }
         }
 
         public void Reset()
         {
             backgroundPosition = Vector2.Zero;
             player.Position = playerStartingPosition;
-            shark1.Position = shark1StartingPosition;
-            shark1.ResetBounds();
+
+            foreach (Enemy enemy in enemies)
+            {
+                enemy.Position = enemy.StartingPosition;
+            }
+
+            foreach (Shark shark in sharks)
+            {
+                shark.ResetBounds();
+            }
         }
     }
 }

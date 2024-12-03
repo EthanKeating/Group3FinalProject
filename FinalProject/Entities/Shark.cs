@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace FinalProject.Entities
+﻿namespace FinalProject.Entities
 {
     public class Shark : Enemy
     {
