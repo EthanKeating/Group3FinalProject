@@ -4,8 +4,12 @@
     {
         public bool IsHoming { get; set; }
 
+        private Game _game;
+        private const int HOMING_DISTANCE = 500;
+
         public Shark(Game game, Vector2 position, int speed) : base(game, position, speed)
         {
+            _game = game;
             Texture = game.Content.Load<Texture2D>("images/shark");
             Width = Texture.Width / 2;
             Height = Texture.Height;
@@ -24,7 +28,14 @@
 
         public override void Move()
         {
-            var distance = 0;
+            Game1 game = _game as Game1;
+            Vector2 playerPosition = game._screenManager.GetActiveScreen().Player.Position;
+            var distance = Vector2.Distance(Position, playerPosition);
+
+            if (distance < HOMING_DISTANCE && playerPosition.X < Position.X)
+            {
+                Position = new Vector2(Position.X - Speed, Position.Y);
+            }
         }
     }
 }
