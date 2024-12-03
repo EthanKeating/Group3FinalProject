@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using FinalProject.Entities;
+using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
@@ -59,15 +60,15 @@ namespace FinalProject.Screens
             sharks = [shark1, shark2];
             crabs = [crab1, crab2];
 
-            pearl1 = new Pearl(_game, spriteBatch, new Vector2(100, 100));
+            pearl1 = new Pearl(_game, spriteBatch, new Vector2(100, 500));
             pearl1.Initialize();
-            pearl2 = new Pearl(_game, spriteBatch, new Vector2(200, 100));
+            pearl2 = new Pearl(_game, spriteBatch, new Vector2(200, 500));
             pearl2.Initialize();
-            pearl3 = new Pearl(_game, spriteBatch, new Vector2(300, 100));
+            pearl3 = new Pearl(_game, spriteBatch, new Vector2(300, 500));
             pearl3.Initialize();
-            pearl4 = new Pearl(_game, spriteBatch, new Vector2(400, 100));
+            pearl4 = new Pearl(_game, spriteBatch, new Vector2(400, 500));
             pearl4.Initialize();
-            pearl5 = new Pearl(_game, spriteBatch, new Vector2(500, 100));
+            pearl5 = new Pearl(_game, spriteBatch, new Vector2(500, 500));
             pearl5.Initialize();
 
             pearls = [pearl1, pearl2, pearl3, pearl4, pearl5];
@@ -89,10 +90,7 @@ namespace FinalProject.Screens
 
             foreach (Pearl pearl in pearls)
             {
-                if (!pearl.IsCollected)
-                {
-                    pearl.Draw();
-                }
+                pearl.Draw();
             }
         }
 
@@ -117,10 +115,15 @@ namespace FinalProject.Screens
                 {
                     Player.Position = new Vector2(startX, Player.Position.Y);
                     backgroundPosition.X -= deltaX;
-                    
+
                     foreach (Crab crab in crabs)
                     {
                         crab.UpdateBounds(deltaX);
+                    }
+
+                    foreach (Pearl pearl in pearls)
+                    {
+                        pearl.Position = new Vector2(pearl.Position.X - deltaX, pearl.Position.Y);
                     }
                 }
             }
@@ -146,6 +149,10 @@ namespace FinalProject.Screens
                     foreach (Crab crab in crabs)
                     {
                         crab.UpdateBounds(deltaX);
+                    }
+                    foreach (Pearl pearl in pearls)
+                    {
+                        pearl.Position = new Vector2(pearl.Position.X - deltaX, pearl.Position.Y);
                     }
                 }
             }
@@ -195,6 +202,11 @@ namespace FinalProject.Screens
             foreach (Crab crab in crabs)
             {
                 crab.ResetBounds();
+            }
+
+            foreach(Pearl pearl in pearls)
+            {
+                pearl.Position = pearl.StartingPosition;
             }
         }
     }
