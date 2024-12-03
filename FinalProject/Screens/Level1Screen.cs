@@ -116,6 +116,11 @@ namespace FinalProject.Screens
                     Player.Position = new Vector2(startX, Player.Position.Y);
                     backgroundPosition.X -= deltaX;
 
+                    foreach (Shark shark in sharks)
+                    {
+                        shark.Position = new Vector2(shark.Position.X - deltaX, shark.Position.Y);
+                    }
+
                     foreach (Crab crab in crabs)
                     {
                         crab.UpdateBounds(deltaX);
@@ -146,10 +151,16 @@ namespace FinalProject.Screens
                 }
                 else
                 {
+                    foreach (Shark shark in sharks)
+                    {
+                        shark.Position = new Vector2(shark.Position.X - deltaX, shark.Position.Y);
+                    }
+
                     foreach (Crab crab in crabs)
                     {
                         crab.UpdateBounds(deltaX);
                     }
+
                     foreach (Pearl pearl in pearls)
                     {
                         pearl.Position = new Vector2(pearl.Position.X - deltaX, pearl.Position.Y);

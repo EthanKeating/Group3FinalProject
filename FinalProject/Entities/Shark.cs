@@ -5,7 +5,7 @@
         public bool IsHoming { get; set; }
 
         private Game _game;
-        private const int HOMING_DISTANCE = 400;
+        private const int HOMING_DISTANCE = 500;
 
         public Shark(Game game, Vector2 position, int speed) : base(game, position, speed)
         {
@@ -32,7 +32,7 @@
             Vector2 playerPosition = game._screenManager.GetActiveScreen().Player.Position;
             var distance = Vector2.Distance(Position, playerPosition);
 
-            if (distance < HOMING_DISTANCE && distance > 0)
+            if (distance < HOMING_DISTANCE && playerPosition.X < Position.X)
             {
                 Position = new Vector2(Position.X - Speed, Position.Y);
             }

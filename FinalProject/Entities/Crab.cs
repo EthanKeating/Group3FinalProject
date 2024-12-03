@@ -11,7 +11,7 @@
         public Crab(Game game, SpriteBatch spriteBatch, Vector2 position) : base(game, position, 1)
         {
             Texture = game.Content.Load<Texture2D>("images/idleEvilCrab");
-            IdleAnimation = new EvilCrabIdleAnimation(game, spriteBatch, Texture, position, 100);
+            IdleAnimation = new EvilCrabIdleAnimation(game, spriteBatch, Texture, position, 10);
             Width = Texture.Width / 2;
             Height = Texture.Height;
 
