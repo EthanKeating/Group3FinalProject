@@ -47,7 +47,6 @@ namespace FinalProject.Screens
 
             shark1 = new Shark(_game, shark1StartingPosition, 2);
             shark1.Initialize();
-
             shark2 = new Shark(_game, shark2StartingPosition, 2);
             shark2.Initialize();
 
