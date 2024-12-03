@@ -1,5 +1,4 @@
-﻿using FinalProject.Animations;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 
 namespace FinalProject.Entities
 {

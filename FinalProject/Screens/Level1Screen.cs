@@ -35,6 +35,8 @@ namespace FinalProject.Screens
 
         private List<Pearl> pearls;
 
+        private TestBox testBox;
+
         public Vector2 backgroundPosition = new Vector2(0, 0);
         public Vector2 playerStartingPosition = new Vector2(20, Game1.ScreenHeight - 70);
         public Vector2 shark1StartingPosition = new Vector2(Game1.ScreenWidth / 5 * 4, Game1.ScreenHeight - 200);
@@ -58,9 +60,9 @@ namespace FinalProject.Screens
             shark2 = new Shark(_game, shark2StartingPosition, 2);
             shark2.Initialize();
 
-            crab1 = new Crab(_game, spriteBatch, new Vector2(700, 400));
+            crab1 = new Crab(_game, spriteBatch, new Vector2(1700, 600));
             crab1.Initialize();
-            crab2 = new Crab(_game, spriteBatch, new Vector2(700, 400));
+            crab2 = new Crab(_game, spriteBatch, new Vector2(2000, 600));
             crab2.Initialize();
 
             enemies = [shark1, shark2, crab1, crab2];
@@ -80,6 +82,9 @@ namespace FinalProject.Screens
             pearl5.Initialize();
 
             pearls = [pearl1, pearl2, pearl3, pearl4, pearl5];
+
+            testBox = new TestBox(_game, new Vector2(400, 600), 0);
+            testBox.Initialize();
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -95,6 +100,7 @@ namespace FinalProject.Screens
                     enemy.Draw(spriteBatch);
                 }
             }
+
             foreach(Boss boss in bosses)
             {
                 boss.Draw(spriteBatch);
@@ -104,6 +110,8 @@ namespace FinalProject.Screens
             {
                 pearl.Draw();
             }
+
+            testBox.Draw(spriteBatch);
         }
 
         public void Update(ScreenManager _screenManager, float delta)
@@ -115,7 +123,7 @@ namespace FinalProject.Screens
             
             foreach (Enemy enemy in enemies)
             {
-                enemy.Move();
+                enemy.Update(deltaX);
             }
 
             foreach(Boss boss in bosses)
@@ -142,6 +150,7 @@ namespace FinalProject.Screens
                     {
                         shark.Position = new Vector2(shark.Position.X - deltaX, shark.Position.Y);
                     }
+
                     foreach (Crab crab in crabs)
                     {
                         crab.UpdateBounds(deltaX);
@@ -151,6 +160,8 @@ namespace FinalProject.Screens
                     {
                         pearl.Position = new Vector2(pearl.Position.X - deltaX, pearl.Position.Y);
                     }
+
+                    testBox.Position = new Vector2(testBox.Position.X - deltaX, testBox.Position.Y);
                 }
             }
 
@@ -181,6 +192,7 @@ namespace FinalProject.Screens
                     {
                         shark.Position = new Vector2(shark.Position.X - deltaX, shark.Position.Y);
                     }
+
                     foreach (Crab crab in crabs)
                     {
                         crab.UpdateBounds(deltaX);
@@ -190,6 +202,8 @@ namespace FinalProject.Screens
                     {
                         pearl.Position = new Vector2(pearl.Position.X - deltaX, pearl.Position.Y);
                     }
+
+                    testBox.Position = new Vector2(testBox.Position.X - deltaX, testBox.Position.Y);
                 }
             }
 
@@ -215,6 +229,11 @@ namespace FinalProject.Screens
                 }
             }
 
+            if (Player.IsAttacking && !testBox.IsDead && Player.AttackHitbox.Intersects(testBox.Hitbox))
+            {
+                testBox.IsDead = true;
+            }
+
             // Check for pearl collisions
             foreach (Pearl pearl in pearls)
             {
@@ -222,6 +241,12 @@ namespace FinalProject.Screens
                 {
                     pearl.IsCollected = true;
                 }
+            }
+
+            if (!testBox.IsDead && Player.Hitbox.Intersects(testBox.Hitbox))
+            {
+                _screenManager.SetScreen(ScreenType.GameOverMenu);
+                _screenManager.SwitchToNextScreen();
             }
         }
 
@@ -249,11 +274,11 @@ namespace FinalProject.Screens
             {
                 boss.Position = boss.StartingPosition;
             }
-
             Player.AttackAnimation.hide();
             Player.IdleAnimation.hide();
             Player.WalkAnimation.hide();
             seaHorseBoss.HPAnimation.hide();
+            testBox.Position = testBox.StartingPosition;
         }
     }
 }
