@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using static System.Net.Mime.MediaTypeNames;
+using System.Xml.Linq;
 
 namespace FinalProject
 {
@@ -17,9 +18,6 @@ namespace FinalProject
         public ScreenManager _screenManager;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-
-        //private Player player = new Player(6);
-
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -45,10 +43,11 @@ namespace FinalProject
             {
                 new StartMenuScreen(this, _spriteBatch),
                 new Level1Screen(this, _spriteBatch),
-                new GameOverMenuScreen(this, _spriteBatch)
-            });
+                new GameOverMenuScreen(this, _spriteBatch),
+                new CutsceneScreen(this, _spriteBatch)
 
-            _screenManager.SetScreen(ScreenType.StartMenu);
+            });
+            _screenManager.SetScreen(ScreenType.Cutscene);
             _screenManager.SwitchToNextScreen();
         }
 
