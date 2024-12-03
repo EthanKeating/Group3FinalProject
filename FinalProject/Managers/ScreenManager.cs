@@ -1,4 +1,5 @@
 ﻿using FinalProject.Screens;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,6 @@ namespace FinalProject.Managers
         private IReadOnlyCollection<IScreen> _screens;
         private IScreen _activeScreen;
         private IScreen _nextScreen;
-
 
         public ScreenManager(IReadOnlyCollection<IScreen> screens)
         {
@@ -31,7 +31,7 @@ namespace FinalProject.Managers
 
         public void Update(float delta)
         {
-            _activeScreen.Update(delta);
+            _activeScreen.Update(this, delta);
         }
 
         public void Draw(SpriteBatch spriteBatch)

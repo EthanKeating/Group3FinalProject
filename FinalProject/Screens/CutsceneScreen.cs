@@ -69,7 +69,6 @@ namespace FinalProject.Screens
 
             //static sprites
             backgroundSprite = _game.Content.Load<Texture2D>("images/background");
-            //seaHorse = _game.Content.Load<Texture2D>("images/seaHorse");
             textBox = _game.Content.Load<Texture2D>("images/textBox");
 
             //animations
@@ -110,7 +109,6 @@ namespace FinalProject.Screens
 
         }
 
-        public void Update(ScreenManager _screenManager, float delta)
         {
         }
     }
