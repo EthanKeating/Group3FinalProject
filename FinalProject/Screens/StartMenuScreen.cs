@@ -35,13 +35,14 @@ namespace FinalProject.Screens
             backgroundSprite = _game.Content.Load<Texture2D>("images/background");
             playButtonPosition = new Vector2((Game1.ScreenWidth / 2) - (playButtonTexture.Width / 2), Game1.ScreenHeight / 3 * 2);
             playButtonBounds = new Rectangle((int)playButtonPosition.X, (int)playButtonPosition.Y, playButtonTexture.Width, playButtonTexture.Height);
+
+            baseYPosition = playButtonPosition.Y;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             _spriteBatch.Draw(backgroundSprite, Vector2.Zero, Color.White);
             _spriteBatch.Draw(playButtonTexture, playButtonPosition, Color.White);
-           
         }
 
         public void Update(ScreenManager _screenManager, float delta)
@@ -74,6 +75,10 @@ namespace FinalProject.Screens
             {
                 mouseDown = false;
             }
+        }
+
+        public void Reset()
+        {
         }
     }
 }

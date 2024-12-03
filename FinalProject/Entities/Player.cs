@@ -1,4 +1,5 @@
 ﻿using FinalProject.Animations;
+using FinalProject.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,26 +15,21 @@ namespace FinalProject.Entities
 
         public bool IsAttacking { get; set; }
 
-        public override Rectangle Hitbox { get { return new Rectangle((int)Position.X, (int)Position.Y + 10, animationWidth - 10, animationHeight); } }
-        public Rectangle AttackHitbox { get { return new Rectangle((int)Position.X + animationWidth / 2, (int)Position.Y, animationWidth / 2 + 5, animationHeight); } }
-
-        private const int JUMP_HEIGHT = 25;
+        private const int JUMP_HEIGHT = 27;
         private const int GRAVITY = 1;
         private const int FLOOR_HEIGHT = 70;
         private const int IDLE_ANIM_SPEED = 30;
         private const int WALK_ANIM_SPEED = 5;
         private const int ATTACK_ANIM_SPEED = 10;
-        private const int ATTACK_ = 20;
+        private const int ATTACK_WIDTH = -25;
 
-        private readonly int animationWidth;
-        private readonly int animationHeight;
-        private readonly int floorHeight = Game1.ScreenHeight - FLOOR_HEIGHT;
+        public readonly int FloorHeight = Game1.ScreenHeight - FLOOR_HEIGHT;
 
         private float velocity;
         private bool isJumping;
         private bool isMoving;
 
-        public Player(Game game, SpriteBatch spriteBatch, int speed) : base(new Vector2(20, Game1.ScreenHeight - FLOOR_HEIGHT), speed)
+        public Player(Game game, SpriteBatch spriteBatch, Vector2 startingPosition, int speed) : base(startingPosition, speed)
         {
             velocity = 0;
             isJumping = false;
@@ -45,13 +41,15 @@ namespace FinalProject.Entities
             AttackAnimation = new CrabAttackAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/attack"), Position, ATTACK_ANIM_SPEED);
             game.Components.Add(AttackAnimation);
 
-            animationWidth = IdleAnimation.frames[0].Width;
-            animationHeight = IdleAnimation.frames[0].Height;
+            Width = IdleAnimation.frames[0].Width;
+            Height = IdleAnimation.frames[0].Height;
         }
 
         public void Initialize()
         {
             AttackAnimation.Player = this;
+            Hitbox = new Hitbox(this, 0, 20, 20, 0);
+            AttackHitbox = new Hitbox(this, Width / 2, 0, ATTACK_WIDTH, 0);
         }
 
         public void Update()
@@ -112,9 +110,9 @@ namespace FinalProject.Entities
             {
                 isMoving = true;
 
-                if (Position.X + animationWidth >= Game1.ScreenWidth)
+                if (Position.X + Width >= Game1.ScreenWidth)
                 {
-                    Position = new Vector2(Game1.ScreenWidth - animationWidth, Position.Y);
+                    Position = new Vector2(Game1.ScreenWidth - Width, Position.Y);
                 }
                 else
                 {
@@ -123,9 +121,9 @@ namespace FinalProject.Entities
             }
 
             // Stop player falling off the bottom of the screen
-            if (Position.Y + animationHeight >= floorHeight)
+            if (Position.Y + Height >= FloorHeight)
             {
-                Position = new Vector2(Position.X, floorHeight - animationHeight);
+                Position = new Vector2(Position.X, FloorHeight - Height);
                 isJumping = false;
             }
 

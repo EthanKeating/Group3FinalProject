@@ -113,6 +113,10 @@ namespace FinalProject.Screens
         public void Update(ScreenManager _screenManager, float delta)
         {
         }
+
+        public void Reset()
+        {
+        }
     }
 }
 

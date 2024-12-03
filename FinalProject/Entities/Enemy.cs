@@ -1,21 +1,31 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FinalProject.Utilities;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace FinalProject.Entities
 {
     public class Enemy : BasicEntity
     {
-        public override Rectangle Hitbox { get { return new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height); } }
+        public Texture2D Texture { get; set; }
+
+        public bool IsDead { get; set; } = false;
 
         private int leftBounds;
         private int rightBounds;
-
         private bool isMovingLeft = true;
 
-        public Enemy(Vector2 position, int speed) : base(position, speed)
+        public Enemy(Game game, Vector2 position, int speed) : base(position, speed)
         {
-            leftBounds = Game1.ScreenWidth / 5 * 3;
-            rightBounds = Game1.ScreenWidth / 5 * 4;
+            Texture = game.Content.Load<Texture2D>("images/shark");
+            Width = Texture.Width / 2;
+            Height = Texture.Height;
+            ResetBounds();
+        }
+
+        public void Initialize()
+        {
+            Hitbox = new Hitbox(this, 15, 80, 60, 0);
+            AttackHitbox = new Hitbox(this, 20, 80, 80, 0);
         }
 
         public void Move()
@@ -51,6 +61,12 @@ namespace FinalProject.Entities
             Position = new Vector2(Position.X - delta, Position.Y);
             leftBounds -= delta;
             rightBounds -= delta;
+        }
+
+        public void ResetBounds()
+        {
+            leftBounds = Game1.ScreenWidth / 5 * 3;
+            rightBounds = Game1.ScreenWidth / 5 * 4;
         }
     }
 }

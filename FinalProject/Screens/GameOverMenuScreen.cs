@@ -35,6 +35,8 @@ namespace FinalProject.Screens
             backgroundSprite = _game.Content.Load<Texture2D>("images/background");
             replayButtonPosition = new Vector2((Game1.ScreenWidth / 2) - (replayButtonTexture.Width / 2), Game1.ScreenHeight / 3 * 2);
             replayButtonBounds = new Rectangle((int)replayButtonPosition.X, (int)replayButtonPosition.Y, replayButtonTexture.Width, replayButtonTexture.Height);
+
+            baseYPosition = replayButtonPosition.Y;
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -72,6 +74,10 @@ namespace FinalProject.Screens
             {
                 mouseDown = false;
             }
+        }
+
+        public void Reset()
+        {
         }
     }
 }
