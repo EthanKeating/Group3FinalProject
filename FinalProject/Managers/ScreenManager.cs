@@ -27,6 +27,7 @@ namespace FinalProject.Managers
             if (_nextScreen == null) return;
 
             _activeScreen = _nextScreen;
+            _activeScreen.Reset();
         }
 
         public void Update(float delta)

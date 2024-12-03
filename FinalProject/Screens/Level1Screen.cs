@@ -25,6 +25,8 @@ namespace FinalProject.Screens
         private List<Enemy> enemies;
 
         public Vector2 backgroundPosition = new Vector2(0, 0);
+        public Vector2 playerStartingPosition = new Vector2(20, Game1.ScreenHeight - 70);
+        public Vector2 sharkStartingPosition = new Vector2(Game1.ScreenWidth / 5 * 4, Game1.ScreenHeight - 200);
 
         public Level1Screen(Game game, SpriteBatch spriteBatch)
         {
@@ -32,11 +34,11 @@ namespace FinalProject.Screens
 
             backgroundSprite = _game.Content.Load<Texture2D>("images/background");
 
-            player = new Player(_game, spriteBatch, 9);
+            player = new Player(_game, spriteBatch, playerStartingPosition, 9);
             player.Initialize();
 
-            shark = new Enemy(new Vector2(Game1.ScreenWidth / 5 * 4, Game1.ScreenHeight - 200), 2);
-            shark.Texture = _game.Content.Load<Texture2D>("images/shark");
+            shark = new Enemy(_game, sharkStartingPosition, 2);
+            shark.Initialize();
 
             enemies = [shark];
         }
@@ -47,7 +49,10 @@ namespace FinalProject.Screens
 
             player.Draw();
 
-            spriteBatch.Draw(shark.Texture, shark.Position, shark.Texture.Bounds, Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 1f);
+            if (!shark.IsDead)
+            {
+                spriteBatch.Draw(shark.Texture, shark.Position, shark.Texture.Bounds, Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 1f);
+            }
         }
 
         public void Update(ScreenManager _screenManager, float delta)
@@ -75,9 +80,9 @@ namespace FinalProject.Screens
             if (backgroundPosition.X < -backgroundSprite.Width + 1280)
             {
                 backgroundPosition.X = -backgroundSprite.Width + 1280;
-                //player.Position = new Vector2(startX, player.Position.Y);
             }
 
+            // Move background backwards
             if (player.Position.X < 0)
             {
                 player.Position = new Vector2(startX, player.Position.Y);
@@ -96,7 +101,7 @@ namespace FinalProject.Screens
             // Check for player / enemy collisions
             foreach (Enemy enemy in enemies)
             {
-                if (enemy.Hitbox.Contains(player.Hitbox))
+                if (!enemy.IsDead && player.Hitbox.Intersects(enemy.AttackHitbox))
                 {
                     _screenManager.SetScreen(ScreenType.GameOverMenu);
                     _screenManager.SwitchToNextScreen();
@@ -108,13 +113,20 @@ namespace FinalProject.Screens
             {
                 foreach (Enemy enemy in enemies)
                 {
-                    if (enemy.Hitbox.Contains(player.AttackHitbox))
+                    if (!enemy.IsDead && player.AttackHitbox.Intersects(enemy.Hitbox))
                     {
-                        _screenManager.SetScreen(ScreenType.GameOverMenu);
-                        _screenManager.SwitchToNextScreen();
+                        enemy.IsDead = true;
                     }
                 }
             }
+        }
+
+        public void Reset()
+        {
+            backgroundPosition = Vector2.Zero;
+            player.Position = playerStartingPosition;
+            shark.Position = sharkStartingPosition;
+            shark.ResetBounds();
         }
     }
 }
