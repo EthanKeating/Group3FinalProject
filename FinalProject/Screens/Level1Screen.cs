@@ -31,8 +31,9 @@ namespace FinalProject.Screens
             backgroundSprite = _game.Content.Load<Texture2D>("images/background");
 
             player = new Player(_game, spriteBatch, 9);
-            shark = new Enemy(new Vector2(Game1.ScreenWidth / 5 * 4, Game1.ScreenHeight - 200), 2);
+            player.Initialize();
 
+            shark = new Enemy(new Vector2(Game1.ScreenWidth / 5 * 4, Game1.ScreenHeight - 200), 2);
             shark.Texture = _game.Content.Load<Texture2D>("images/shark");
         }
 

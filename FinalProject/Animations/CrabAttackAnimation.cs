@@ -8,6 +8,12 @@ namespace FinalProject.Animations
 {
     public class CrabAttackAnimation : DrawableGameComponent
     {
+        public Player Player { get; set; }
+        public Vector2 Position { get => position; set => position = value; }
+
+        private const int ROWS = 1;
+        private const int COLS = 2;
+
         private SpriteBatch sb;
         private Texture2D tex;
         private Vector2 position;
@@ -21,13 +27,7 @@ namespace FinalProject.Animations
 
         private int delayCounter;
 
-        private const int ROWS = 1;
-        private const int COLS = 2;
-
-        public Vector2 Position { get => position; set => position = value; }
-
         private Game g;
-        private Player player;
 
         public CrabAttackAnimation(Game game, SpriteBatch sb,
             Texture2D tex, Vector2 position, int delay) : base(game)
@@ -42,7 +42,8 @@ namespace FinalProject.Animations
             attackSound = game.Content.Load<SoundEffect>("soundEffects/snap");
 
             createFrames();
-            hide();
+            this.Enabled = false;
+            this.Visible = false;
         }
 
         private void createFrames()
@@ -64,7 +65,7 @@ namespace FinalProject.Animations
         {
             this.Enabled = false;
             this.Visible = false;
-
+            Player.IsAttacking = false;
         }
 
         public void show()

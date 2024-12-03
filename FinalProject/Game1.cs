@@ -47,7 +47,7 @@ namespace FinalProject
                 new CutsceneScreen(this, _spriteBatch)
 
             });
-            _screenManager.SetScreen(ScreenType.Cutscene);
+            _screenManager.SetScreen(ScreenType.StartMenu);
             _screenManager.SwitchToNextScreen();
         }
 
