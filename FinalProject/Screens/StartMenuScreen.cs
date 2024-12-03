@@ -32,14 +32,14 @@ namespace FinalProject.Screens
             _spriteBatch = spriteBatch;
 
             playButtonTexture = _game.Content.Load<Texture2D>("images/play");
-            //backgroundSprite = _game.Content.Load<Texture2D>("images/background");
+            backgroundSprite = _game.Content.Load<Texture2D>("images/background");
             playButtonPosition = new Vector2((Game1.ScreenWidth / 2) - (playButtonTexture.Width / 2), Game1.ScreenHeight / 3 * 2);
             playButtonBounds = new Rectangle((int)playButtonPosition.X, (int)playButtonPosition.Y, playButtonTexture.Width, playButtonTexture.Height);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            //_spriteBatch.Draw(backgroundSprite, Vector2.Zero, Color.White);
+            _spriteBatch.Draw(backgroundSprite, Vector2.Zero, Color.White);
             _spriteBatch.Draw(playButtonTexture, playButtonPosition, Color.White);
            
         }
