@@ -16,9 +16,12 @@ namespace FinalProject.Screens
 
         private Shark shark1;
         private Shark shark2;
+        private Crab crab1;
+        private Crab crab2;
 
         private List<Enemy> enemies;
         private List<Shark> sharks;
+        private List<Crab> crabs;
 
         private Pearl pearl1;
         private Pearl pearl2;
@@ -48,8 +51,14 @@ namespace FinalProject.Screens
             shark2 = new Shark(_game, shark2StartingPosition, 2);
             shark2.Initialize();
 
-            enemies = [shark1, shark2];
+            crab1 = new Crab(_game, spriteBatch, new Vector2(700, 400));
+            crab1.Initialize();
+            crab2 = new Crab(_game, spriteBatch, new Vector2(700, 400));
+            crab2.Initialize();
+
+            enemies = [shark1, shark2, crab1, crab2];
             sharks = [shark1, shark2];
+            crabs = [crab1, crab2];
 
             pearl1 = new Pearl(_game, spriteBatch, new Vector2(100, 100));
             pearl1.Initialize();
@@ -110,9 +119,9 @@ namespace FinalProject.Screens
                     player.Position = new Vector2(startX, player.Position.Y);
                     backgroundPosition.X -= deltaX;
                     
-                    foreach (Shark shark in sharks)
+                    foreach (Crab crab in crabs)
                     {
-                        shark.UpdateBounds(deltaX);
+                        crab.UpdateBounds(deltaX);
                     }
                 }
             }
@@ -135,9 +144,9 @@ namespace FinalProject.Screens
                 }
                 else
                 {
-                    foreach (Shark shark in sharks)
+                    foreach (Crab crab in crabs)
                     {
-                        shark.UpdateBounds(deltaX);
+                        crab.UpdateBounds(deltaX);
                     }
                 }
             }
@@ -184,9 +193,9 @@ namespace FinalProject.Screens
                 enemy.Position = enemy.StartingPosition;
             }
 
-            foreach (Shark shark in sharks)
+            foreach (Crab crab in crabs)
             {
-                shark.ResetBounds();
+                crab.ResetBounds();
             }
         }
     }
