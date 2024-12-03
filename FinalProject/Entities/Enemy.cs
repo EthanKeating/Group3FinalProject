@@ -3,9 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace FinalProject.Entities
 {
-    internal class Enemy : BasicEntity
+    public class Enemy : BasicEntity
     {
-        public override Rectangle Hitbox { get { return new Rectangle((int)Position.X + 10, (int)Position.Y + 10, Texture.Width - 10, Texture.Height - 10); } }
+        public override Rectangle Hitbox { get { return new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height); } }
 
         private int leftBounds;
         private int rightBounds;

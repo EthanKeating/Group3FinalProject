@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace FinalProject.Entities
 {
-    internal class Player : BasicEntity
+    public class Player : BasicEntity
     {
         public CrabIdleAnimation IdleAnimation { get; set; }
         public CrabWalkAnimation WalkAnimation { get; set; }
@@ -15,7 +15,7 @@ namespace FinalProject.Entities
         public bool IsAttacking { get; set; }
 
         public override Rectangle Hitbox { get { return new Rectangle((int)Position.X, (int)Position.Y + 10, animationWidth - 10, animationHeight); } }
-        public Rectangle AttackHitbox { get { return new(); } }
+        public Rectangle AttackHitbox { get { return new Rectangle((int)Position.X + animationWidth / 2, (int)Position.Y, animationWidth / 2 + 5, animationHeight); } }
 
         private const int JUMP_HEIGHT = 25;
         private const int GRAVITY = 1;
@@ -23,6 +23,7 @@ namespace FinalProject.Entities
         private const int IDLE_ANIM_SPEED = 30;
         private const int WALK_ANIM_SPEED = 5;
         private const int ATTACK_ANIM_SPEED = 10;
+        private const int ATTACK_ = 20;
 
         private readonly int animationWidth;
         private readonly int animationHeight;
@@ -31,7 +32,6 @@ namespace FinalProject.Entities
         private float velocity;
         private bool isJumping;
         private bool isMoving;
-        private Vector2 clawPosition { get { return new Vector2(Position.X + animationWidth - 35, Position.Y + animationHeight - 53); } }
 
         public Player(Game game, SpriteBatch spriteBatch, int speed) : base(new Vector2(20, Game1.ScreenHeight - FLOOR_HEIGHT), speed)
         {
@@ -42,18 +42,23 @@ namespace FinalProject.Entities
             game.Components.Add(IdleAnimation);
             WalkAnimation = new CrabWalkAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/walk"), Position, WALK_ANIM_SPEED);
             game.Components.Add(WalkAnimation);
-            AttackAnimation = new CrabAttackAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/attack"), clawPosition, ATTACK_ANIM_SPEED);
+            AttackAnimation = new CrabAttackAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/attack"), Position, ATTACK_ANIM_SPEED);
             game.Components.Add(AttackAnimation);
 
             animationWidth = IdleAnimation.frames[0].Width;
             animationHeight = IdleAnimation.frames[0].Height;
         }
 
+        public void Initialize()
+        {
+            AttackAnimation.Player = this;
+        }
+
         public void Update()
         {
             IdleAnimation.UpdatePosition(Position);
             WalkAnimation.UpdatePosition(Position);
-            AttackAnimation.UpdatePosition(clawPosition);
+            AttackAnimation.UpdatePosition(Position);
 
             Move();
             Attack();
@@ -61,13 +66,21 @@ namespace FinalProject.Entities
 
         public void Draw()
         {
-            if (isMoving)
+            if (IsAttacking)
             {
+                // AttackAnimation.show();
+                WalkAnimation.hide();
                 IdleAnimation.hide();
+            }
+            else if (isMoving)
+            {
+                AttackAnimation.hide();
                 WalkAnimation.show();
+                IdleAnimation.hide();
             }
             else
             {
+                AttackAnimation.hide();
                 WalkAnimation.hide();
                 IdleAnimation.show();
             }
@@ -137,7 +150,7 @@ namespace FinalProject.Entities
         {
             KeyboardState keyboardState = Keyboard.GetState();
 
-            if (keyboardState.IsKeyDown(Keys.F))
+            if (keyboardState.IsKeyDown(Keys.F) && !IsAttacking)
             {
                 IsAttacking = true;
                 AttackAnimation.show();
