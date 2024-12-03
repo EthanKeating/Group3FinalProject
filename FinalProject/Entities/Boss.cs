@@ -1,7 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
-namespace FinalProject.Entities
+﻿namespace FinalProject.Entities
 {
     public class Boss : BasicEntity
     {

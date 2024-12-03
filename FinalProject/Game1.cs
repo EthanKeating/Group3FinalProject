@@ -1,10 +1,13 @@
-using FinalProject.Entities;
-using FinalProject.Managers;
-using FinalProject.Screens;
-using FinalProject.Animations;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+global using FinalProject.Entities;
+global using FinalProject.Managers;
+global using FinalProject.Screens;
+global using FinalProject.Animations;
+global using FinalProject.Utilities;
+global using Microsoft.Xna.Framework;
+global using Microsoft.Xna.Framework.Graphics;
+global using Microsoft.Xna.Framework.Audio;
+global using Microsoft.Xna.Framework.Input;
+global using System.Collections.Generic;
 using static System.Net.Mime.MediaTypeNames;
 using System.Xml.Linq;
 

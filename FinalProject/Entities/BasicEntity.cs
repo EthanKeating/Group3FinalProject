@@ -1,11 +1,8 @@
-﻿using FinalProject.Utilities;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
-namespace FinalProject.Entities
+﻿namespace FinalProject.Entities
 {
     public class BasicEntity
     {
+        public Vector2 StartingPosition { get; set; }
         public Vector2 Position { get; set; }
         public Hitbox Hitbox { get; set; }
         public Hitbox AttackHitbox { get; set; }
@@ -16,6 +13,7 @@ namespace FinalProject.Entities
         public BasicEntity(Vector2 position, int speed)
         {
             Position = position;
+            StartingPosition = position;
             Speed = speed;
         }
     }

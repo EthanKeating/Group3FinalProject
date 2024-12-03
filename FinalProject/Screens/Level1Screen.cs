@@ -1,11 +1,4 @@
-﻿using FinalProject.Animations;
-using FinalProject.Entities;
-using FinalProject.Managers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,13 +13,16 @@ namespace FinalProject.Screens
         private Texture2D backgroundSprite;
 
         private Player player;
-        private Enemy shark;
+        private Shark shark1;
+        private Shark shark2;
 
         private List<Enemy> enemies;
+        private List<Shark> sharks;
 
         public Vector2 backgroundPosition = new Vector2(0, 0);
         public Vector2 playerStartingPosition = new Vector2(20, Game1.ScreenHeight - 70);
-        public Vector2 sharkStartingPosition = new Vector2(Game1.ScreenWidth / 5 * 4, Game1.ScreenHeight - 200);
+        public Vector2 shark1StartingPosition = new Vector2(Game1.ScreenWidth / 5 * 4, Game1.ScreenHeight - 200);
+        public Vector2 shark2StartingPosition = new Vector2(Game1.ScreenWidth / 5 * 4 + Game1.ScreenWidth, Game1.ScreenHeight - 200);
 
         public Level1Screen(Game game, SpriteBatch spriteBatch)
         {
@@ -37,10 +33,14 @@ namespace FinalProject.Screens
             player = new Player(_game, spriteBatch, playerStartingPosition, 9);
             player.Initialize();
 
-            shark = new Enemy(_game, sharkStartingPosition, 2);
-            shark.Initialize();
+            shark1 = new Shark(_game, shark1StartingPosition, 2);
+            shark1.Initialize();
 
-            enemies = [shark];
+            shark2 = new Shark(_game, shark2StartingPosition, 2);
+            shark2.Initialize();
+
+            enemies = [shark1, shark2];
+            sharks = [shark1, shark2];
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -49,10 +49,14 @@ namespace FinalProject.Screens
 
             player.Draw();
 
-            if (!shark.IsDead)
+            foreach (Enemy enemy in enemies)
             {
-                spriteBatch.Draw(shark.Texture, shark.Position, shark.Texture.Bounds, Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 1f);
+                if (!enemy.IsDead)
+                {
+                    enemy.Draw(spriteBatch);
+                }
             }
+
         }
 
         public void Update(ScreenManager _screenManager, float delta)
@@ -61,7 +65,11 @@ namespace FinalProject.Screens
             int startX = (int)player.Position.X;
             player.Update();
             int deltaX = (int)player.Position.X - startX;
-            shark.Move();
+            
+            foreach (Enemy enemy in enemies)
+            {
+                enemy.Move();
+            }
 
             int rightBound = (int)Game1.ScreenWidth / 4;
 
@@ -72,7 +80,11 @@ namespace FinalProject.Screens
                 {
                     player.Position = new Vector2(startX, player.Position.Y);
                     backgroundPosition.X -= deltaX;
-                    shark.UpdateBounds(deltaX);
+                    
+                    foreach (Shark shark in sharks)
+                    {
+                        shark.UpdateBounds(deltaX);
+                    }
                 }
             }
 
@@ -94,7 +106,10 @@ namespace FinalProject.Screens
                 }
                 else
                 {
-                    shark.UpdateBounds(deltaX);
+                    foreach (Shark shark in sharks)
+                    {
+                        shark.UpdateBounds(deltaX);
+                    }
                 }
             }
 
@@ -125,8 +140,8 @@ namespace FinalProject.Screens
         {
             backgroundPosition = Vector2.Zero;
             player.Position = playerStartingPosition;
-            shark.Position = sharkStartingPosition;
-            shark.ResetBounds();
+            shark1.Position = shark1StartingPosition;
+            shark1.ResetBounds();
         }
     }
 }
