@@ -9,7 +9,7 @@ namespace FinalProject.Managers
     public class ScreenManager
     {
 
-        private IReadOnlyCollection<IScreen> _screens;
+        public IReadOnlyCollection<IScreen> _screens;
         private IScreen _activeScreen;
         private IScreen _nextScreen;
 
@@ -28,6 +28,16 @@ namespace FinalProject.Managers
 
             _activeScreen = _nextScreen;
             _activeScreen.Reset();
+        }
+
+        public Level1Screen GetActiveScreen()
+        {
+            if (_activeScreen is Level1Screen level1Screen)
+            {
+                return level1Screen;
+            }
+
+            return null;
         }
 
         public void Update(float delta)

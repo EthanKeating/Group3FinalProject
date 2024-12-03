@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 
 namespace FinalProject.Screens
 {
-    class Level1Screen : IScreen
+    public class Level1Screen : IScreen
     {
         public ScreenType ScreenType => ScreenType.Level1;
         private Game _game;
 
         private Texture2D backgroundSprite;
 
-        private Player player;
+        public Player Player { get; set; }
 
         private Shark shark1;
         private Shark shark2;
@@ -42,8 +42,8 @@ namespace FinalProject.Screens
 
             backgroundSprite = _game.Content.Load<Texture2D>("images/background");
 
-            player = new Player(_game, spriteBatch, playerStartingPosition, 9);
-            player.Initialize();
+            Player = new Player(_game, spriteBatch, playerStartingPosition, 9);
+            Player.Initialize();
 
             shark1 = new Shark(_game, shark1StartingPosition, 2);
             shark1.Initialize();
@@ -77,7 +77,7 @@ namespace FinalProject.Screens
         {
             spriteBatch.Draw(backgroundSprite, backgroundPosition, Color.White);
 
-            player.Draw();
+            Player.Draw();
 
             foreach (Enemy enemy in enemies)
             {
@@ -99,9 +99,9 @@ namespace FinalProject.Screens
         public void Update(ScreenManager _screenManager, float delta)
         {
             // Calculate how much background moves
-            int startX = (int)player.Position.X;
-            player.Update();
-            int deltaX = (int)player.Position.X - startX;
+            int startX = (int)Player.Position.X;
+            Player.Update();
+            int deltaX = (int)Player.Position.X - startX;
             
             foreach (Enemy enemy in enemies)
             {
@@ -111,11 +111,11 @@ namespace FinalProject.Screens
             int rightBound = (int)Game1.ScreenWidth / 4;
 
             // Move background
-            if (player.Position.X > rightBound)
+            if (Player.Position.X > rightBound)
             {
                 if (backgroundPosition.X > -backgroundSprite.Width + 1280)
                 {
-                    player.Position = new Vector2(startX, player.Position.Y);
+                    Player.Position = new Vector2(startX, Player.Position.Y);
                     backgroundPosition.X -= deltaX;
                     
                     foreach (Crab crab in crabs)
@@ -132,9 +132,9 @@ namespace FinalProject.Screens
             }
 
             // Move background backwards
-            if (player.Position.X < 0)
+            if (Player.Position.X < 0)
             {
-                player.Position = new Vector2(startX, player.Position.Y);
+                Player.Position = new Vector2(startX, Player.Position.Y);
                 backgroundPosition.X -= deltaX;
 
                 if (backgroundPosition.X > 0)
@@ -153,7 +153,7 @@ namespace FinalProject.Screens
             // Check for player / enemy collisions
             foreach (Enemy enemy in enemies)
             {
-                if (!enemy.IsDead && player.Hitbox.Intersects(enemy.AttackHitbox))
+                if (!enemy.IsDead && Player.Hitbox.Intersects(enemy.AttackHitbox))
                 {
                     _screenManager.SetScreen(ScreenType.GameOverMenu);
                     _screenManager.SwitchToNextScreen();
@@ -161,11 +161,11 @@ namespace FinalProject.Screens
             }
 
             // Check for player attack collisions
-            if (player.IsAttacking)
+            if (Player.IsAttacking)
             {
                 foreach (Enemy enemy in enemies)
                 {
-                    if (!enemy.IsDead && player.AttackHitbox.Intersects(enemy.Hitbox))
+                    if (!enemy.IsDead && Player.AttackHitbox.Intersects(enemy.Hitbox))
                     {
                         enemy.IsDead = true;
                     }
@@ -175,7 +175,7 @@ namespace FinalProject.Screens
             // Check for pearl collisions
             foreach (Pearl pearl in pearls)
             {
-                if (player.Hitbox.Intersects(pearl.Hitbox))
+                if (Player.Hitbox.Intersects(pearl.Hitbox))
                 {
                     pearl.IsCollected = true;
                 }
@@ -185,7 +185,7 @@ namespace FinalProject.Screens
         public void Reset()
         {
             backgroundPosition = Vector2.Zero;
-            player.Position = playerStartingPosition;
+            Player.Position = playerStartingPosition;
 
             foreach (Enemy enemy in enemies)
             {
