@@ -16,8 +16,17 @@ namespace FinalProject.Entities
         public Player (int speed) : base(new Vector2(20, Game1.ScreenHeight / 5 * 4), speed)
         {
             velocity = 0;
-            isJumping = true;
-            LockedToCenter = false;
+            isJumping = false;
+
+            IdleAnimation = new CrabIdleAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/idle"), Position, IDLE_ANIM_SPEED);
+            game.Components.Add(IdleAnimation);
+            WalkAnimation = new CrabWalkAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/walk"), Position, WALK_ANIM_SPEED);
+            game.Components.Add(WalkAnimation);
+            AttackAnimation = new CrabAttackAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/claw"), clawPosition, ATTACK_ANIM_SPEED);
+            game.Components.Add(AttackAnimation);
+
+            animationWidth = IdleAnimation.frames[0].Width;
+            animationHeight = IdleAnimation.frames[0].Height;
         }
 
         public void Move()

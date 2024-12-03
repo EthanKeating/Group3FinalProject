@@ -17,9 +17,6 @@ namespace FinalProject
         public ScreenManager _screenManager;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-
-        //private Player player = new Player(6);
-
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -48,7 +45,7 @@ namespace FinalProject
                 new MenuScreen(this, _spriteBatch),
                 new Level1Screen(this, _spriteBatch)
             });
-            _screenManager.SetScreen(ScreenType.Level1);
+            _screenManager.SetScreen(ScreenType.Cutscene);
             _screenManager.SwitchToNextScreen();
         }
 
