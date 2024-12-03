@@ -1,7 +1,4 @@
-﻿using FinalProject.Entities;
-using System.Drawing;
-
-namespace FinalProject.Utilities
+﻿namespace FinalProject.Utilities
 {
     public class Hitbox
     {
@@ -36,7 +33,7 @@ namespace FinalProject.Utilities
 
         public bool Intersects(Hitbox otherHitbox)
         {
-            return Bounds.IntersectsWith(otherHitbox.Bounds);
+            return Bounds.Intersects(otherHitbox.Bounds);
         }
     }
 }
