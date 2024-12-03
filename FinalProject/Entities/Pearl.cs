@@ -31,6 +31,7 @@ namespace FinalProject.Entities
                 return;
             }
 
+            pearlAnimation.Position = Position;
             pearlAnimation.show();
         }
     }

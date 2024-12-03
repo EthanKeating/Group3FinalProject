@@ -20,9 +20,12 @@ namespace FinalProject.Screens
         private Crab crab1;
         private Crab crab2;
 
+        private Boss seaHorseBoss;
+
         private List<Enemy> enemies;
         private List<Shark> sharks;
         private List<Crab> crabs;
+        private List<Boss> bosses;
 
         private Pearl pearl1;
         private Pearl pearl2;
@@ -36,6 +39,7 @@ namespace FinalProject.Screens
         public Vector2 playerStartingPosition = new Vector2(20, Game1.ScreenHeight - 70);
         public Vector2 shark1StartingPosition = new Vector2(Game1.ScreenWidth / 5 * 4, Game1.ScreenHeight - 200);
         public Vector2 shark2StartingPosition = new Vector2(Game1.ScreenWidth / 5 * 4 + Game1.ScreenWidth, Game1.ScreenHeight - 200);
+        public Vector2 seaHorseStartingPosition = new Vector2(Game1.ScreenWidth / 5 * 4 - 100, Game1.ScreenHeight - 600);
 
         public Level1Screen(Game game, SpriteBatch spriteBatch)
         {
@@ -45,6 +49,9 @@ namespace FinalProject.Screens
 
             player = new Player(_game, spriteBatch, playerStartingPosition, 9);
             player.Initialize();
+
+            seaHorseBoss = new Boss(_game, seaHorseStartingPosition, 9);
+            seaHorseBoss.Initialize();
 
             shark1 = new Shark(_game, shark1StartingPosition, 2);
             shark1.Initialize();
@@ -60,16 +67,17 @@ namespace FinalProject.Screens
             enemies = [shark1, shark2, crab1, crab2];
             sharks = [shark1, shark2];
             crabs = [crab1, crab2];
+            bosses = [seaHorseBoss];
 
-            pearl1 = new Pearl(_game, spriteBatch, new Vector2(100, 500));
+            pearl1 = new Pearl(_game, spriteBatch, new Vector2(300, 600));
             pearl1.Initialize();
-            pearl2 = new Pearl(_game, spriteBatch, new Vector2(200, 500));
+            pearl2 = new Pearl(_game, spriteBatch, new Vector2(500, 600));
             pearl2.Initialize();
-            pearl3 = new Pearl(_game, spriteBatch, new Vector2(300, 500));
+            pearl3 = new Pearl(_game, spriteBatch, new Vector2(3000, 600));
             pearl3.Initialize();
-            pearl4 = new Pearl(_game, spriteBatch, new Vector2(400, 500));
+            pearl4 = new Pearl(_game, spriteBatch, new Vector2(4500, 600));
             pearl4.Initialize();
-            pearl5 = new Pearl(_game, spriteBatch, new Vector2(500, 500));
+            pearl5 = new Pearl(_game, spriteBatch, new Vector2(6000, 600));
             pearl5.Initialize();
 
             pearls = [pearl1, pearl2, pearl3, pearl4, pearl5];
@@ -87,6 +95,10 @@ namespace FinalProject.Screens
                 {
                     enemy.Draw(spriteBatch);
                 }
+            }
+            foreach(Boss boss in bosses)
+            {
+                boss.Draw(spriteBatch);
             }
 
             foreach (Pearl pearl in pearls)
@@ -107,6 +119,11 @@ namespace FinalProject.Screens
                 enemy.Move();
             }
 
+            foreach(Boss boss in bosses)
+            {
+                boss.Update(delta);
+            }
+
             int rightBound = (int)Game1.ScreenWidth / 4;
 
             // Move background
@@ -116,6 +133,11 @@ namespace FinalProject.Screens
                 {
                     player.Position = new Vector2(startX, player.Position.Y);
                     backgroundPosition.X -= deltaX;
+
+                    foreach(Boss boss in bosses)
+                    {
+                        boss.Position =  new Vector2(boss.Position.X - deltaX, boss.Position.Y);
+                    }
 
                     foreach (Crab crab in crabs)
                     {
@@ -147,6 +169,10 @@ namespace FinalProject.Screens
                 }
                 else
                 {
+                    foreach (Boss boss in bosses)
+                    {
+                        boss.Position = new Vector2(boss.Position.X - deltaX, boss.Position.Y);
+                    }
                     foreach (Crab crab in crabs)
                     {
                         crab.UpdateBounds(deltaX);
@@ -208,6 +234,11 @@ namespace FinalProject.Screens
             foreach(Pearl pearl in pearls)
             {
                 pearl.Position = pearl.StartingPosition;
+            }
+
+            foreach(Boss boss in bosses)
+            {
+                boss.Position = boss.StartingPosition;
             }
         }
     }
