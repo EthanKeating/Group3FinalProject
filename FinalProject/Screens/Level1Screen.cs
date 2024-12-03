@@ -56,19 +56,19 @@ namespace FinalProject.Screens
             crab2 = new Crab(_game, spriteBatch, new Vector2(700, 400));
             crab2.Initialize();
 
-            enemies = [shark1, shark2];
+            enemies = [shark1, shark2, crab1, crab2];
             sharks = [shark1, shark2];
             crabs = [crab1, crab2];
 
-            pearl1 = new Pearl(new Vector2(100, 100));
-            pearl2 = new Pearl(new Vector2(200, 100));
-            pearl3 = new Pearl(new Vector2(300, 100));
-            pearl4 = new Pearl(new Vector2(400, 100));
-            pearl5 = new Pearl(new Vector2(500, 100));
+            pearl1 = new Pearl(_game, spriteBatch, new Vector2(100, 100));
             pearl1.Initialize();
+            pearl2 = new Pearl(_game, spriteBatch, new Vector2(200, 100));
             pearl2.Initialize();
+            pearl3 = new Pearl(_game, spriteBatch, new Vector2(300, 100));
             pearl3.Initialize();
+            pearl4 = new Pearl(_game, spriteBatch, new Vector2(400, 100));
             pearl4.Initialize();
+            pearl5 = new Pearl(_game, spriteBatch, new Vector2(500, 100));
             pearl5.Initialize();
 
             pearls = [pearl1, pearl2, pearl3, pearl4, pearl5];
