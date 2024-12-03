@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using FinalProject.Animations;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace FinalProject.Entities
 {
@@ -15,6 +16,9 @@ namespace FinalProject.Entities
             pearlAnimation = new PearlAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/pearl"), Position, 3);
             game.Components.Add(pearlAnimation);
             // set up PearlAnimation, Width and Height
+
+            Width = pearlAnimation.frames[0].Width / 2;
+            Height = pearlAnimation.frames[0].Height;
         }
 
         public void Initialize()
@@ -26,6 +30,12 @@ namespace FinalProject.Entities
         {
             if (IsCollected)
             {
+                if (!pearlAnimation.playedSound)
+                {
+                    pearlAnimation.pickupSound.Play();
+                    pearlAnimation.playedSound = true;
+                }
+
                 pearlAnimation.hide();
                 game.Components.Remove(pearlAnimation);
                 return;
