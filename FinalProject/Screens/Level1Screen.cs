@@ -1,4 +1,5 @@
 ﻿using FinalProject.Animations;
+using FinalProject.Entities;
 using FinalProject.Managers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,10 +17,10 @@ namespace FinalProject.Screens
         public ScreenType ScreenType => ScreenType.Level1;
         private Game _game;
 
-        Texture2D backgroundSprite;
-        Texture2D crab;
+        private Texture2D backgroundSprite;
 
-        CrabIdleAnimation idleCrab;
+        private Player player;
+        private Enemy shark;
 
         public Vector2 backgroundPosition = new Vector2(0, 0);
 
@@ -28,24 +29,64 @@ namespace FinalProject.Screens
             _game = game;
 
             backgroundSprite = _game.Content.Load<Texture2D>("images/background");
-            crab = _game.Content.Load<Texture2D>("images/idle");
 
-            idleCrab = new CrabIdleAnimation(this._game, spriteBatch, crab, new Vector2(400, 400), 10);
-            _game.Components.Add(idleCrab);
+            player = new Player(_game, spriteBatch, 9);
+            shark = new Enemy(new Vector2(Game1.ScreenWidth / 5 * 4, Game1.ScreenHeight - 200), 2);
+
+            shark.Texture = _game.Content.Load<Texture2D>("images/shark");
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(backgroundSprite, backgroundPosition, Color.White);
 
-            idleCrab.show();
+            player.Draw();
 
-            //spriteBatch.Draw(null, null, null);
+            spriteBatch.Draw(shark.Texture, shark.Position, shark.Texture.Bounds, Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 1f);
         }
 
-        public void Update(float delta)
+        public void Update(ScreenManager _screenManager, float delta)
         {
-            backgroundPosition.X -= delta * 20; //Temporary scroll speed (20 units per second)
+            // Calculate how much background moves
+            int startX = (int)player.Position.X;
+            player.Update();
+            int deltaX = (int)player.Position.X - startX;
+            shark.Move();
+
+            int rightBound = (int)Game1.ScreenWidth / 4;
+
+            // Move background
+            if (player.Position.X > rightBound)
+            {
+                if (backgroundPosition.X > -backgroundSprite.Width + 1280)
+                {
+                    player.Position = new Vector2(startX, player.Position.Y);
+                    backgroundPosition.X -= deltaX;
+                    shark.UpdateBounds(deltaX);
+                }
+            }
+
+            // Stop background from moving past end
+            if (backgroundPosition.X < -backgroundSprite.Width + 1280)
+            {
+                backgroundPosition.X = -backgroundSprite.Width + 1280;
+                //player.Position = new Vector2(startX, player.Position.Y);
+            }
+
+            if (player.Position.X < 0)
+            {
+                player.Position = new Vector2(startX, player.Position.Y);
+                backgroundPosition.X -= deltaX;
+
+                if (backgroundPosition.X > 0)
+                {
+                    backgroundPosition.X = 0;
+                }
+                else
+                {
+                    shark.UpdateBounds(deltaX);
+                }
+            }
         }
     }
 }
