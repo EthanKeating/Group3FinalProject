@@ -13,14 +13,23 @@ namespace FinalProject.Entities
         private float time = 0;
 
         public Texture2D Texture { get; set; }
+        public Texture2D HealthTexture { get; set; }
 
-        public Boss(Game game, Vector2 position, int speed) : base(position, speed)
+        public HealthAnimation HPAnimation { get; set; }
+        public Vector2 HPPosition { get; set; }
+
+        public Boss(Game game, SpriteBatch spriteBatch, Vector2 position, int speed) : base(position, speed)
         {
             Texture = game.Content.Load<Texture2D>("images/seaHorse");
+            HealthTexture = game.Content.Load<Texture2D>("images/health");
+            HPAnimation = new HealthAnimation(game, spriteBatch, HealthTexture, position, 10);
+            game.Components.Add(HPAnimation);
+            HPAnimation.frameIndex = 0;
             Width = Texture.Width / 2;
             Height = Texture.Height;
 
             baseYPosition = Position.Y;
+            HPPosition = new Vector2(position.X, position.Y - Height - HPAnimation.frames[0].Height * 2);
         }
 
         public void Initialize()
@@ -33,9 +42,11 @@ namespace FinalProject.Entities
         {
             time += delta;
 
-
             bobOffset = (float)Math.Sin(time * bobSpeed) * bobHeight;
             Position = new Vector2(Position.X, baseYPosition + bobOffset);
+
+            HPAnimation.show();
+            HPAnimation.UpdatePosition(new Vector2(Position.X, Position.Y - 60));
         }
 
         public void Draw(SpriteBatch spriteBatch)

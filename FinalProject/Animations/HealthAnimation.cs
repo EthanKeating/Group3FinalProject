@@ -8,31 +8,28 @@ using System.Threading.Tasks;
 
 namespace FinalProject.Animations
 {
-    public class PearlAnimation : DrawableGameComponent
+    public class HealthAnimation : DrawableGameComponent
     {
         private SpriteBatch sb;
         private Texture2D tex;
         private Vector2 position;
         private int delay;
 
-        public bool playedSound;
-        public SoundEffect pickupSound;
-
         private Vector2 dimension;
         public List<Rectangle> frames;
-        private int frameIndex = -1;
+        public int frameIndex = -1;
 
         private int delayCounter;
 
-        private const int ROWS = 1;
-        private const int COLS = 16;
+        private const int ROWS = 4;
+        private const int COLS = 1;
 
 
         public Vector2 Position { get => position; set => position = value; }
 
         private Game g;
 
-        public PearlAnimation(Game game, SpriteBatch sb,
+        public HealthAnimation(Game game, SpriteBatch sb,
             Texture2D tex, Vector2 position, int delay) : base(game)
         {
             this.g = game;
@@ -41,7 +38,6 @@ namespace FinalProject.Animations
             this.Position = position;
             this.delay = delay;
             this.dimension = new Vector2(tex.Width / COLS, tex.Height / ROWS);
-            pickupSound = game.Content.Load<SoundEffect>("soundEffects/pickup");
 
             createFrames();
             hide();
@@ -77,18 +73,6 @@ namespace FinalProject.Animations
 
         public override void Update(GameTime gameTime)
         {
-            delayCounter++;
-            if (delayCounter > delay)
-            {
-                frameIndex++;
-                if (frameIndex >= ROWS * COLS)
-                {
-                    frameIndex = 0;
-                }
-
-                delayCounter = 0;
-            }
-
             base.Update(gameTime);
         }
 

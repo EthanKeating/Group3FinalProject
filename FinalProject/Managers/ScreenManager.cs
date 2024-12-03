@@ -10,11 +10,13 @@ namespace FinalProject.Managers
     {
 
         public IReadOnlyCollection<IScreen> _screens;
+        private Game1 _game;
         private IScreen _activeScreen;
         private IScreen _nextScreen;
 
-        public ScreenManager(IReadOnlyCollection<IScreen> screens)
+        public ScreenManager(Game1 game, IReadOnlyCollection<IScreen> screens)
         {
+            _game = game;
             _screens = screens;
         }
 

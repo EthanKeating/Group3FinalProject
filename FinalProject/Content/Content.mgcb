@@ -68,6 +68,18 @@
 /processorParam:TextureFormat=Color
 /build:images/evilCrabHeadTalking.png
 
+#begin images/health.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:images/health.png
+
 #begin images/horseHeadClosed.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -199,6 +211,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:images/walk.png
+
+#begin soundEffects/pickup.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:soundEffects/pickup.wav
 
 #begin soundEffects/snap.wav
 /importer:WavImporter
