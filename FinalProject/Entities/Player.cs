@@ -41,7 +41,7 @@
         public void Initialize()
         {
             AttackAnimation.Player = this;
-            Hitbox = new Hitbox(this, 0, 20, 20, 0);
+            Hitbox = new Hitbox(this, 30, 20, 40, 0);
             AttackHitbox = new Hitbox(this, Width / 2, 0, ATTACK_WIDTH, 0);
         }
 
@@ -59,7 +59,6 @@
         {
             if (IsAttacking)
             {
-                // AttackAnimation.show();
                 WalkAnimation.hide();
                 IdleAnimation.hide();
             }
