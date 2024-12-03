@@ -52,7 +52,7 @@ namespace FinalProject.Screens
             Player = new Player(_game, spriteBatch, playerStartingPosition, 9);
             Player.Initialize();
 
-            seaHorseBoss = new Boss(_game, seaHorseStartingPosition, 9);
+            seaHorseBoss = new Boss(_game, spriteBatch, seaHorseStartingPosition, 9);
             seaHorseBoss.Initialize();
 
             shark1 = new Shark(_game, shark1StartingPosition, 2);
@@ -274,7 +274,10 @@ namespace FinalProject.Screens
             {
                 boss.Position = boss.StartingPosition;
             }
-
+            Player.AttackAnimation.hide();
+            Player.IdleAnimation.hide();
+            Player.WalkAnimation.hide();
+            seaHorseBoss.HPAnimation.hide();
             testBox.Position = testBox.StartingPosition;
         }
     }
