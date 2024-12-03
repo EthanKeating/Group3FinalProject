@@ -16,9 +16,12 @@ namespace FinalProject.Screens
 
         private Shark shark1;
         private Shark shark2;
+        private Crab crab1;
+        private Crab crab2;
 
         private List<Enemy> enemies;
         private List<Shark> sharks;
+        private List<Crab> crabs;
 
         private Pearl pearl1;
         private Pearl pearl2;
@@ -48,14 +51,25 @@ namespace FinalProject.Screens
             shark2 = new Shark(_game, shark2StartingPosition, 2);
             shark2.Initialize();
 
+            crab1 = new Crab(_game, spriteBatch, new Vector2(700, 400));
+            crab1.Initialize();
+            crab2 = new Crab(_game, spriteBatch, new Vector2(700, 400));
+            crab2.Initialize();
+
             enemies = [shark1, shark2];
             sharks = [shark1, shark2];
+            crabs = [crab1, crab2];
 
             pearl1 = new Pearl(new Vector2(100, 100));
             pearl2 = new Pearl(new Vector2(200, 100));
             pearl3 = new Pearl(new Vector2(300, 100));
             pearl4 = new Pearl(new Vector2(400, 100));
             pearl5 = new Pearl(new Vector2(500, 100));
+            pearl1.Initialize();
+            pearl2.Initialize();
+            pearl3.Initialize();
+            pearl4.Initialize();
+            pearl5.Initialize();
 
             pearls = [pearl1, pearl2, pearl3, pearl4, pearl5];
         }
@@ -105,9 +119,9 @@ namespace FinalProject.Screens
                     player.Position = new Vector2(startX, player.Position.Y);
                     backgroundPosition.X -= deltaX;
                     
-                    foreach (Shark shark in sharks)
+                    foreach (Crab crab in crabs)
                     {
-                        shark.UpdateBounds(deltaX);
+                        crab.UpdateBounds(deltaX);
                     }
                 }
             }
@@ -130,9 +144,9 @@ namespace FinalProject.Screens
                 }
                 else
                 {
-                    foreach (Shark shark in sharks)
+                    foreach (Crab crab in crabs)
                     {
-                        shark.UpdateBounds(deltaX);
+                        crab.UpdateBounds(deltaX);
                     }
                 }
             }
@@ -179,9 +193,9 @@ namespace FinalProject.Screens
                 enemy.Position = enemy.StartingPosition;
             }
 
-            foreach (Shark shark in sharks)
+            foreach (Crab crab in crabs)
             {
-                shark.ResetBounds();
+                crab.ResetBounds();
             }
         }
     }
