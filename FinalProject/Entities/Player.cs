@@ -15,7 +15,7 @@ namespace FinalProject.Entities
         public bool IsAttacking { get; set; }
 
         public override Rectangle Hitbox { get { return new Rectangle((int)Position.X, (int)Position.Y + 10, animationWidth - 10, animationHeight); } }
-        public Rectangle AttackHitbox { get { return new(); } }
+        public Rectangle AttackHitbox { get { return new Rectangle((int)Position.X + animationWidth / 2, (int)Position.Y, 50, animationHeight); } }
 
         private const int JUMP_HEIGHT = 25;
         private const int GRAVITY = 1;
@@ -42,7 +42,7 @@ namespace FinalProject.Entities
             game.Components.Add(IdleAnimation);
             WalkAnimation = new CrabWalkAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/walk"), Position, WALK_ANIM_SPEED);
             game.Components.Add(WalkAnimation);
-            AttackAnimation = new CrabAttackAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/claw"), clawPosition, ATTACK_ANIM_SPEED);
+            AttackAnimation = new CrabAttackAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/attack"), clawPosition, ATTACK_ANIM_SPEED);
             game.Components.Add(AttackAnimation);
 
             animationWidth = IdleAnimation.frames[0].Width;
