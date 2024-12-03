@@ -50,8 +50,7 @@ namespace FinalProject.Animations
                 {
                     int x = j * (int)dimension.X;
                     int y = i * (int)dimension.Y;
-                    Rectangle r = new Rectangle(x, y, (int)dimension.X,
-                        (int)dimension.Y);
+                    Rectangle r = new Rectangle(x, y, (int)dimension.X, (int)dimension.Y);
                     frames.Add(r);
 
                 }
@@ -62,13 +61,18 @@ namespace FinalProject.Animations
         {
             this.Enabled = false;
             this.Visible = false;
-
+            g.Components.Remove(this);
         }
 
         public void show()
         {
             this.Enabled = true;
             this.Visible = true;
+        }
+
+        public void UpdatePosition(Vector2 _position)
+        {
+            position = _position;
         }
 
         public override void Update(GameTime gameTime)

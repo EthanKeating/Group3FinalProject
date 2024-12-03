@@ -26,7 +26,12 @@
             spriteBatch.Draw(Texture, Position, Texture.Bounds, Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 1f);
         }
 
-        public override void Move()
+        public override void Update(int deltaX)
+        {
+            Move();
+        }
+
+        protected override void Move()
         {
             Game1 game = _game as Game1;
             Vector2 playerPosition = game._screenManager.GetActiveScreen().Player.Position;

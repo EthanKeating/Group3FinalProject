@@ -10,6 +10,7 @@
         }
 
         public abstract void Draw(SpriteBatch spriteBatch);
-        public abstract void Move();
+        public abstract void Update(int deltaX);
+        protected abstract void Move();
     }
 }
