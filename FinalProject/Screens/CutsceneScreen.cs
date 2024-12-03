@@ -87,7 +87,7 @@ namespace FinalProject.Screens
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if(_cutsceneCount == 0)
+            if (_cutsceneCount == 0)
             {
                 idleCrab.show();
                 idleEvilCrab.show();
@@ -109,7 +109,10 @@ namespace FinalProject.Screens
 
         }
 
+
+        public void Update(ScreenManager _screenManager, float delta)
         {
         }
     }
 }
+

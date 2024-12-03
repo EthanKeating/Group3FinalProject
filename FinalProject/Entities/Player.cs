@@ -42,7 +42,7 @@ namespace FinalProject.Entities
             game.Components.Add(IdleAnimation);
             WalkAnimation = new CrabWalkAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/walk"), Position, WALK_ANIM_SPEED);
             game.Components.Add(WalkAnimation);
-            AttackAnimation = new CrabAttackAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/claw"), clawPosition, ATTACK_ANIM_SPEED);
+            AttackAnimation = new CrabAttackAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/attack"), clawPosition, ATTACK_ANIM_SPEED);
             game.Components.Add(AttackAnimation);
 
             animationWidth = IdleAnimation.frames[0].Width;
