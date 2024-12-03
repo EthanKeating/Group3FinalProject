@@ -22,6 +22,8 @@ namespace FinalProject.Screens
         private Player player;
         private Enemy shark;
 
+        private List<Enemy> enemies;
+
         public Vector2 backgroundPosition = new Vector2(0, 0);
 
         public Level1Screen(Game game, SpriteBatch spriteBatch)
@@ -35,6 +37,8 @@ namespace FinalProject.Screens
 
             shark = new Enemy(new Vector2(Game1.ScreenWidth / 5 * 4, Game1.ScreenHeight - 200), 2);
             shark.Texture = _game.Content.Load<Texture2D>("images/shark");
+
+            enemies = [shark];
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -86,6 +90,29 @@ namespace FinalProject.Screens
                 else
                 {
                     shark.UpdateBounds(deltaX);
+                }
+            }
+
+            // Check for player / enemy collisions
+            foreach (Enemy enemy in enemies)
+            {
+                if (enemy.Hitbox.Contains(player.Hitbox))
+                {
+                    _screenManager.SetScreen(ScreenType.GameOverMenu);
+                    _screenManager.SwitchToNextScreen();
+                }
+            }
+
+            // Check for player attack collisions
+            if (player.IsAttacking)
+            {
+                foreach (Enemy enemy in enemies)
+                {
+                    if (enemy.Hitbox.Contains(player.AttackHitbox))
+                    {
+                        _screenManager.SetScreen(ScreenType.GameOverMenu);
+                        _screenManager.SwitchToNextScreen();
+                    }
                 }
             }
         }
