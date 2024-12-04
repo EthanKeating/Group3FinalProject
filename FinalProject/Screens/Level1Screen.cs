@@ -298,6 +298,15 @@ namespace FinalProject.Screens
             }
             Player.isJumping = !didCollide;
 
+            foreach (Pearl pearl in pearls)
+            {
+                if (!pearl.IsCollected)
+                {
+                    pearl.pearlAnimation.show();
+                    pearl.pearlAnimation.playedSound = false;
+                }
+            }
+
 
             if (Player.Hitbox.Intersects(winShell.Hitbox))
             {
