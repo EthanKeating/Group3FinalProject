@@ -2,6 +2,8 @@
 {
     public class BubblePopAnimation : DrawableGameComponent
     {
+        public BubbleAttack bubbleAttack;
+
         private SpriteBatch sb;
         private Texture2D tex;
         private Vector2 position;
@@ -14,7 +16,7 @@
         private int delayCounter;
 
         private const int ROWS = 1;
-        private const int COLS = 16;
+        private const int COLS = 10;
 
 
         public Vector2 Position { get => position; set => position = value; }
@@ -71,6 +73,8 @@
                 if (frameIndex >= ROWS * COLS)
                 {
                     frameIndex = 0;
+                    bubbleAttack.IsActive = false;
+                    bubbleAttack.IsPopped = false;
                 }
 
                 delayCounter = 0;

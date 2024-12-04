@@ -6,33 +6,44 @@
         public BubbleAnimation BubbleAnimation { get; set; }
         public BubblePopAnimation PopAnimation { get; set; }
         public bool IsActive { get; set; } = false;
+        public bool IsPopped { get; set; } = false;
+
         private Rectangle distance;
 
         public BubbleAttack(Game game, SpriteBatch spriteBatch, Vector2 position, int speed) : base(game, position, speed)
         {
             Texture = game.Content.Load<Texture2D>("images/bubble");
-            BubbleAnimation = new BubbleAnimation(game, spriteBatch, Texture, Position, 10);
-            PopAnimation = new BubblePopAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/pop"), Position, 10);
+            BubbleAnimation = new BubbleAnimation(game, spriteBatch, Texture, Position, 1);
             game.Components.Add(BubbleAnimation);
+            PopAnimation = new BubblePopAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/pop"), Position, 1);
+            game.Components.Add(PopAnimation);
             Width = Texture.Width / 16;
             Height = Texture.Height;
         }
 
         public void Initialize()
         {
-            Hitbox = new Hitbox(this, 0, 0, 0, 0);
-            AttackHitbox = new Hitbox(this, 0, 0, 0, 0);
+            Hitbox = new Hitbox(this, 10, 10, 10, 10);
+            AttackHitbox = new Hitbox(this, 10, 10, 10, 10);
+            PopAnimation.bubbleAttack = this;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (IsActive)
+            if (IsActive && !IsPopped)
             {
                 BubbleAnimation.show();
+                PopAnimation.hide();
+            }
+            else if (IsPopped)
+            {
+                BubbleAnimation.hide();
+                PopAnimation.show();
             }
             else
             {
                 BubbleAnimation.hide();
+                PopAnimation.hide();
             }
         }
 
@@ -40,16 +51,20 @@
         {
             Move();
             BubbleAnimation.UpdatePosition(Position);
+            PopAnimation.UpdatePosition(Position);
         }
 
         protected override void Move()
         {
-            Position = new Vector2(Position.X - distance.Width / Speed, Position.Y + distance.Height / Speed);
-
-            if (Position.Y > Game1.ScreenHeight)
+            if (!IsPopped)
             {
-                IsActive = false;
-                BubbleAnimation.hide();
+                Position = new Vector2(Position.X - distance.Width / Speed, Position.Y + distance.Height / Speed);
+
+                if (Position.Y > Game1.ScreenHeight || Position.X < 0)
+                {
+                    IsActive = false;
+                    BubbleAnimation.hide();
+                }
             }
         }
 
