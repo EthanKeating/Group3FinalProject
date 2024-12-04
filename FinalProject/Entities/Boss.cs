@@ -22,7 +22,6 @@ namespace FinalProject.Entities
         public Vector2 HPPosition { get; set; }
 
         private Game _game;
-        public bool IsAttacking { get; set; } = false;
         public BubbleAttack BubbleAttack { get; set; }
 
         public Boss(Game game, SpriteBatch spriteBatch, Vector2 position, int speed) : base(position, speed)
@@ -34,6 +33,7 @@ namespace FinalProject.Entities
             game.Components.Add(HPAnimation);
             HPAnimation.frameIndex = 0;
             BubbleAttack = new BubbleAttack(game, spriteBatch, Position, 3);
+            BubbleAttack.Initialize();
             Width = Texture.Width / 2;
             Height = Texture.Height;
 
@@ -59,6 +59,8 @@ namespace FinalProject.Entities
             HPAnimation.frameIndex = 3 - Math.Max(0, health);
             //HPAnimation.frameIndex = 2;
             HPAnimation.UpdatePosition(new Vector2(Position.X, Position.Y - 60));
+            Attack();
+            BubbleAttack.Update(0);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -70,6 +72,8 @@ namespace FinalProject.Entities
                 else
                     spriteBatch.Draw(Texture, Position, Texture.Bounds, Color.Red * 0.5f, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 1f);
             }
+            
+            BubbleAttack.Draw(spriteBatch);
         }
 
         public void Damage()
@@ -95,10 +99,11 @@ namespace FinalProject.Entities
             Game1 game = _game as Game1;
             Player player = game._screenManager.GetActiveScreen().Player;
             
-            if (!isDead() && !BubbleAttack.IsDead && Vector2.Distance(Position, player.Position) <= 400)
+            if (!isDead() && !BubbleAttack.IsActive && Vector2.Distance(Position, player.Position) <= 800)
             {
-                BubbleAttack.Position = Position;
+                BubbleAttack.Position = new Vector2(Game1.ScreenWidth - 100, 100);
                 BubbleAttack.Target = new Vector2(player.Position.X + player.Width / 2, player.Position.Y + player.Height / 2);
+                BubbleAttack.IsActive = true;
             }
         }
     }
