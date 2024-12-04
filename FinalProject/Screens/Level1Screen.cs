@@ -76,36 +76,52 @@ namespace FinalProject.Screens
             Texture2D TileTexture = game.Content.Load<Texture2D>("images/bubble");
             platforms = [
 
-                new Tile(_game, spriteBatch, new Vector2(2000, 500)),
-                new Tile(_game, spriteBatch, new Vector2(2000 + TileTexture.Width / 16, 500)),
-                new Tile(_game, spriteBatch, new Vector2(2000 + (TileTexture.Width / 16 * 2), 500)),
-                new Tile(_game, spriteBatch, new Vector2(2000 + (TileTexture.Width / 16 * 3), 500)),
+                new Tile(_game, spriteBatch, new Vector2(2000, 440)),
+                new Tile(_game, spriteBatch, new Vector2(2000 + TileTexture.Width / 16, 440)),
+                new Tile(_game, spriteBatch, new Vector2(2000 + (TileTexture.Width / 16 * 2), 440)),
+                new Tile(_game, spriteBatch, new Vector2(2000 + (TileTexture.Width / 16 * 3), 440)),
 
-                new Tile(_game, spriteBatch, new Vector2(2200, 300)),
-                new Tile(_game, spriteBatch, new Vector2(2200 + TileTexture.Width / 16, 300)),
-                new Tile(_game, spriteBatch, new Vector2(2200 + (TileTexture.Width / 16 * 2), 300)),
-                new Tile(_game, spriteBatch, new Vector2(2200 + (TileTexture.Width / 16 * 3), 300)),
+                new Tile(_game, spriteBatch, new Vector2(2200, 230)),
+                new Tile(_game, spriteBatch, new Vector2(2200 + TileTexture.Width / 16, 230)),
+                new Tile(_game, spriteBatch, new Vector2(2200 + (TileTexture.Width / 16 * 2), 230)),
+                new Tile(_game, spriteBatch, new Vector2(2200 + (TileTexture.Width / 16 * 3), 230)),
 
-                new Tile(_game, spriteBatch, new Vector2(4000, 500)),
-                new Tile(_game, spriteBatch, new Vector2(4000 + TileTexture.Width / 16, 500)),
-                new Tile(_game, spriteBatch, new Vector2(4000 + (TileTexture.Width / 16 * 2), 500)),
-                new Tile(_game, spriteBatch, new Vector2(4000 + (TileTexture.Width / 16 * 3), 500)),
+                new Tile(_game, spriteBatch, new Vector2(3000, 440)),
+                new Tile(_game, spriteBatch, new Vector2(3000 + TileTexture.Width / 16, 440)),
+                new Tile(_game, spriteBatch, new Vector2(3000 + (TileTexture.Width / 16 * 2), 440)),
+                new Tile(_game, spriteBatch, new Vector2(3000 + (TileTexture.Width / 16 * 3), 440)),
 
-                new Tile(_game, spriteBatch, new Vector2(4200, 300)),
-                new Tile(_game, spriteBatch, new Vector2(4200 + TileTexture.Width / 16, 300)),
-                new Tile(_game, spriteBatch, new Vector2(4200 + (TileTexture.Width / 16 * 2), 300)),
-                new Tile(_game, spriteBatch, new Vector2(4200 + (TileTexture.Width / 16 * 3), 300)),
+                new Tile(_game, spriteBatch, new Vector2(3200, 230)),
+                new Tile(_game, spriteBatch, new Vector2(3200 + TileTexture.Width / 16, 230)),
+                new Tile(_game, spriteBatch, new Vector2(3200 + (TileTexture.Width / 16 * 2), 230)),
+                new Tile(_game, spriteBatch, new Vector2(3200 + (TileTexture.Width / 16 * 3), 230)),
 
-                new Tile(_game, spriteBatch, new Vector2(6000, 500)),
-                new Tile(_game, spriteBatch, new Vector2(6000 + TileTexture.Width / 16, 500)),
-                new Tile(_game, spriteBatch, new Vector2(6000 + (TileTexture.Width / 16 * 2), 500)),
-                new Tile(_game, spriteBatch, new Vector2(6000 + (TileTexture.Width / 16 * 3), 500))
+                new Tile(_game, spriteBatch, new Vector2(3000, 440)),
+                new Tile(_game, spriteBatch, new Vector2(3000 + TileTexture.Width / 16, 440)),
+                new Tile(_game, spriteBatch, new Vector2(3000 + (TileTexture.Width / 16 * 2), 440)),
+                new Tile(_game, spriteBatch, new Vector2(3000 + (TileTexture.Width / 16 * 3), 440)),
+
+                new Tile(_game, spriteBatch, new Vector2(4200, 230)),
+                new Tile(_game, spriteBatch, new Vector2(4200 + TileTexture.Width / 16, 230)),
+                new Tile(_game, spriteBatch, new Vector2(4200 + (TileTexture.Width / 16 * 2), 230)),
+                new Tile(_game, spriteBatch, new Vector2(4200 + (TileTexture.Width / 16 * 3), 230)),
+
+                new Tile(_game, spriteBatch, new Vector2(4000, 440)),
+                new Tile(_game, spriteBatch, new Vector2(4000 + TileTexture.Width / 16, 440)),
+                new Tile(_game, spriteBatch, new Vector2(4000 + (TileTexture.Width / 16 * 2), 440)),
+                new Tile(_game, spriteBatch, new Vector2(4000 + (TileTexture.Width / 16 * 3), 440)),
+
+                new Tile(_game, spriteBatch, new Vector2(5200, 230)),
+                new Tile(_game, spriteBatch, new Vector2(5200 + TileTexture.Width / 16, 230)),
+                new Tile(_game, spriteBatch, new Vector2(5200 + (TileTexture.Width / 16 * 2), 230)),
+                new Tile(_game, spriteBatch, new Vector2(5200 + (TileTexture.Width / 16 * 3), 230)),
                 ];
             platforms.ForEach(p => p.Initialize());
 
             pearls = [new Pearl(_game, spriteBatch, new Vector2(300, 600)),
                 new Pearl(_game, spriteBatch, new Vector2(500, 600)),
-                new Pearl(_game, spriteBatch, new Vector2(2300, 160)),
+                new Pearl(_game, spriteBatch, new Vector2(2270, 180)),
+                new Pearl(_game, spriteBatch, new Vector2(2270, 500)),
                 new Pearl(_game, spriteBatch, new Vector2(3000, 600)),
                 new Pearl(_game, spriteBatch, new Vector2(4500, 600)),
                 new Pearl(_game, spriteBatch, new Vector2(6000, 600))
