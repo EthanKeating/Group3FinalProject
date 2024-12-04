@@ -4,6 +4,8 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Formats.Asn1.AsnWriter;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace FinalProject.Screens
 {
@@ -41,6 +43,7 @@ namespace FinalProject.Screens
         private Pearl pearl5;
 
         private List<Pearl> pearls;
+        public SpriteFont _font;
 
         public Vector2 backgroundPosition = new Vector2(0, 0);
         public Vector2 playerStartingPosition = new Vector2(20, Game1.ScreenHeight - 70);
@@ -53,6 +56,7 @@ namespace FinalProject.Screens
             _game = game;
 
             backgroundSprite = _game.Content.Load<Texture2D>("images/background");
+            _font = _game.Content.Load<SpriteFont>("PearlFont");
 
             Player = new Player(_game, spriteBatch, playerStartingPosition, 9);
             Player.Initialize();
@@ -102,6 +106,7 @@ namespace FinalProject.Screens
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(backgroundSprite, backgroundPosition, Color.White);
+            spriteBatch.DrawString(_font, "Pearls Collected: " + pearls.Count(pearl => pearl.IsCollected), Vector2.Zero, Color.WhiteSmoke, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0f);
 
             Player.Draw();
 
@@ -236,8 +241,7 @@ namespace FinalProject.Screens
                     didCollide = true;
                 }
             }
-            if (didCollide)
-                Player.isJumping = false;
+            Player.isJumping = !didCollide;
 
             // Check for player / enemy collisions
             foreach (Enemy enemy in enemies)
@@ -284,8 +288,6 @@ namespace FinalProject.Screens
                     pearl.IsCollected = true;
                 }
             }
-
-            
         }
 
         public void Reset()

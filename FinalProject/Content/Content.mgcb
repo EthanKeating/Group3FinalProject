@@ -224,6 +224,13 @@
 /processorParam:TextureFormat=Color
 /build:images/walk.png
 
+#begin PearlFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:PearlFont.spritefont
+
 #begin soundEffects/pickup.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
