@@ -11,6 +11,9 @@ namespace FinalProject.Entities
         private float bobHeight = 10f;
 
         private float time = 0;
+        public int health = 3;
+
+        public DateTime nextDamage = DateTime.Now;
 
         public Texture2D Texture { get; set; }
         public Texture2D HealthTexture { get; set; }
@@ -34,8 +37,8 @@ namespace FinalProject.Entities
 
         public void Initialize()
         {
-            Hitbox = new Hitbox(this, 15, 80, 60, 0);
-            AttackHitbox = new Hitbox(this, 20, 80, 80, 0);
+            Hitbox = new Hitbox(this, 0, 0, 0, 0);
+            AttackHitbox = new Hitbox(this, 0, 0, 0, 0);
         }
 
         public void Update(float delta)
@@ -45,13 +48,42 @@ namespace FinalProject.Entities
             bobOffset = (float)Math.Sin(time * bobSpeed) * bobHeight;
             Position = new Vector2(Position.X, baseYPosition + bobOffset);
 
-            HPAnimation.show();
+            if (!isDead())
+                HPAnimation.show();
+            HPAnimation.frameIndex = 3 - Math.Max(0, health);
+            //HPAnimation.frameIndex = 2;
             HPAnimation.UpdatePosition(new Vector2(Position.X, Position.Y - 60));
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, Position, Texture.Bounds, Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 1f);
+            if (!isDead())
+            {
+                if (nextDamage < DateTime.Now)
+                    spriteBatch.Draw(Texture, Position, Texture.Bounds, Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 1f);
+                else
+                    spriteBatch.Draw(Texture, Position, Texture.Bounds, Color.Red * 0.5f, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 1f);
+            }
+        }
+
+        public void Damage()
+        {
+            if (nextDamage < DateTime.Now)
+            {
+                health--;
+                nextDamage = DateTime.Now.AddSeconds(1);
+            }
+
+            if (isDead())
+            {
+                HPAnimation.hide();
+
+            }
+        }
+
+        public bool isDead()
+        {
+            return health <= 0;
         }
     }
 }

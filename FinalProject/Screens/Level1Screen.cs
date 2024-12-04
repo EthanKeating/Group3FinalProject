@@ -216,10 +216,25 @@ namespace FinalProject.Screens
                     _screenManager.SwitchToNextScreen();
                 }
             }
+            foreach (Boss boss in bosses)
+            {
+                if (!boss.isDead() && Player.Hitbox.Intersects(boss.AttackHitbox))
+                {
+                    _screenManager.SetScreen(ScreenType.GameOverMenu);
+                    _screenManager.SwitchToNextScreen();
+                }
+            }
 
             // Check for player attack collisions
             if (Player.IsAttacking)
             {
+                foreach(Boss boss in bosses)
+                {
+                    if (Player.AttackHitbox.Intersects(boss.Hitbox))
+                    {
+                        boss.Damage();
+                    }
+                }
                 foreach (Enemy enemy in enemies)
                 {
                     if (!enemy.IsDead && Player.AttackHitbox.Intersects(enemy.Hitbox))
