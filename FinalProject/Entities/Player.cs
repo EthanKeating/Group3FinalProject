@@ -8,7 +8,7 @@
 
         public bool IsAttacking { get; set; }
 
-        private const int JUMP_HEIGHT = 27;
+        private const int JUMP_HEIGHT = 21;
         private const int GRAVITY = 1;
         private const int FLOOR_HEIGHT = 70;
         private const int IDLE_ANIM_SPEED = 30;
