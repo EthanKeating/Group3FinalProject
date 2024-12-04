@@ -79,6 +79,7 @@ namespace FinalProject.Screens
         public Vector2 textboxPosition = new Vector2(175, 100);
         public Vector2 textLinePosition = new Vector2(525, 175);
 
+
         public CutsceneScreen(Game game, SpriteBatch spriteBatch)
         {
             //Dependency injections
@@ -243,12 +244,29 @@ namespace FinalProject.Screens
         {
             KeyboardState keyboardState = Keyboard.GetState();
 
-                spriteBatch.DrawString(_font, _cutsceneText[0], textLine1Position, Color.Black);
-                spriteBatch.DrawString(_font, _cutsceneText[1], textLine2Position, Color.Black);
-                spriteBatch.DrawString(_font, _cutsceneText[2], textLine3Position, Color.Black);
-                spriteBatch.DrawString(_font, _cutsceneText[3], textLine4Position, Color.Black);
+            if (keyboardState.IsKeyDown(Keys.Enter))
+            {
+                if (_textDelay < DateTime.Now)
+                {
+                    //Sends you to next screen
+                    if (_textBoxCount + 4 > _cutsceneText.Count - 1)
+                    {
+                        game1._screenManager.SetScreen(ScreenType.Level1);
+                        game1._screenManager.SwitchToNextScreen();
 
-            }
+                        idleCrab.hide();
+                        idleEvilCrab.hide();
+                        talkingEvilCrab.hide();
+                        talkingCrab.hide();
+                        talkingHorse.hide();
+
+                        _cutsceneCount += 1;
+                        _textBoxCount = -1;
+                    }
+                    else
+                    {
+                        _textBoxCount += 3;
+                    }
 
                     _textDelay = DateTime.Now.AddSeconds(1);
                 }
