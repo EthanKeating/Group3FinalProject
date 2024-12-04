@@ -226,19 +226,18 @@ namespace FinalProject.Screens
             }
 
             // Player / platform collisions
+            bool didCollide = false;
             foreach (Tile tile in platforms)
             {
                 if (Player.Hitbox.Intersects(tile.Hitbox))
                 {
                     Player.Position = new Vector2(Player.Position.X, tile.Position.Y - Player.Height);
-                    Player.isJumping = false;
                     Player.velocity = 0;
-                }
-                else
-                {
-                    Player.isJumping = true;
+                    didCollide = true;
                 }
             }
+            if (didCollide)
+                Player.isJumping = false;
 
             // Check for player / enemy collisions
             foreach (Enemy enemy in enemies)
