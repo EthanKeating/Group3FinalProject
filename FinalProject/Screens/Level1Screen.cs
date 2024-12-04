@@ -23,11 +23,15 @@ namespace FinalProject.Screens
 
         private Boss seaHorseBoss;
 
-        private Tile platform1;
         private List<Enemy> enemies;
         private List<Shark> sharks;
         private List<Crab> crabs;
         private List<Boss> bosses;
+
+        private Tile platform1;
+        private Tile platform2;
+        private Tile platform3;
+        private Tile platform4;
         private List<Tile> platforms;
 
         private Pearl pearl1;
@@ -66,14 +70,20 @@ namespace FinalProject.Screens
             crab2 = new Crab(_game, spriteBatch, new Vector2(2000, 600));
             crab2.Initialize();
 
-            platform1 = new Tile(_game, new Vector2(200, 600));
+            platform1 = new Tile(_game, spriteBatch, new Vector2(200, 400));
             platform1.Initialize();
+            platform2 = new Tile(_game, spriteBatch, new Vector2(200 + platform1.Width, 400));
+            platform2.Initialize();
+            platform3 = new Tile(_game, spriteBatch, new Vector2(200 + (platform2.Width * 2), 400));
+            platform3.Initialize();
+            platform4 = new Tile(_game, spriteBatch, new Vector2(200 + (platform3.Width * 3), 400));
+            platform4.Initialize();
 
             enemies = [shark1, shark2, crab1, crab2];
             sharks = [shark1, shark2];
             crabs = [crab1, crab2];
             bosses = [seaHorseBoss];
-            platforms = [platform1];
+            platforms = [platform1, platform2, platform3, platform4];
 
             pearl1 = new Pearl(_game, spriteBatch, new Vector2(300, 600));
             pearl1.Initialize();
@@ -165,7 +175,7 @@ namespace FinalProject.Screens
 
                     foreach(Tile tile in platforms)
                     {
-                        tile.Position = new Vector2(tile.Position.X - deltaX, tile.Position.Y);
+                        tile.Update(deltaX);
                     }
                 }
             }
@@ -207,9 +217,10 @@ namespace FinalProject.Screens
                     {
                         pearl.Position = new Vector2(pearl.Position.X - deltaX, pearl.Position.Y);
                     }
+
                     foreach (Tile tile in platforms)
                     {
-                        tile.Position = new Vector2(tile.Position.X - deltaX, tile.Position.Y);
+                        tile.Update(deltaX);
                     }
                 }
             }
