@@ -77,7 +77,6 @@ namespace FinalProject.Entities
             if (isDead())
             {
                 HPAnimation.hide();
-
             }
         }
 
