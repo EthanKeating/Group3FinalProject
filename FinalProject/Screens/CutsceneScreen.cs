@@ -309,7 +309,7 @@ namespace FinalProject.Screens
                         talkingCrab.hide();
                         talkingHorse.hide();
 
-                        _cutsceneCount++;
+                        _cutsceneCount = 1;
                         _textBoxCount = -1;
 
                         game1._screenManager.SetScreen(ScreenType.Level1);

@@ -49,6 +49,11 @@ namespace FinalProject.Managers
             return null;
         }
 
+        public IScreen GetScreenBy(ScreenType screenType)
+        {
+            return _screens.First(screen => screen.ScreenType == screenType);
+        }
+
         public void Update(float delta)
         {
             _activeScreen.Update(this, delta);

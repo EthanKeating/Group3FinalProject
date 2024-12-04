@@ -156,7 +156,7 @@ namespace FinalProject.Screens
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(backgroundSprite, backgroundPosition, Color.White);
-            spriteBatch.DrawString(_font, "Pearls Collected: " + pearls.Count(pearl => pearl.IsCollected), Vector2.Zero, Color.WhiteSmoke, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0f);
+            spriteBatch.DrawString(_font, "Pearls Collected: " + pearls.Count(pearl => pearl.IsCollected) + "/" + pearls.Count, Vector2.Zero, Color.WhiteSmoke, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0f);
 
             Player.Draw();
             winShell.Draw(spriteBatch);
@@ -374,12 +374,12 @@ namespace FinalProject.Screens
                     pearl.IsCollected = true;
                 }
             }
-            if (Vector2.Distance(Player.Position, seaHorseBoss.Position) < 800)
+            if (Vector2.Distance(Player.Position, seaHorseBoss.Position) < 1100)
             {
                 if (!bossCutsceneTriggered)
                 {
                     _game._screenManager.SetScreen(ScreenType.Cutscene);
-                    _game._screenManager.SwitchToNextScreenWithoutReset();
+                    _game._screenManager.SwitchToNextScreen();
                 }
                 bossCutsceneTriggered = true;
             }

@@ -34,7 +34,7 @@ namespace FinalProject.Entities
             HPAnimation.frameIndex = 0;
             BubbleAttack = new BubbleAttack(game, spriteBatch, Position, 75);
             BubbleAttack.Initialize();
-            Width = Texture.Width / 2;
+            Width = Texture.Width / 3;
             Height = Texture.Height;
 
             baseYPosition = Position.Y;
