@@ -447,7 +447,7 @@ namespace FinalProject.Screens
                 {
                     //JON Run cutscreen here.
                     _game._screenManager.SetScreen(ScreenType.Cutscene);
-                    _game._screenManager.SwitchToNextScreen();
+                    _game._screenManager.SwitchToNextScreenWithoutReset();
                 }
                 bossCutsceneTriggered = true;
             }
