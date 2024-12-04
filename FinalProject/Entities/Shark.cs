@@ -5,7 +5,7 @@
         public bool IsHoming { get; set; }
 
         private Game _game;
-        private const int HOMING_DISTANCE = 500;
+        private const int HOMING_DISTANCE = 700;
 
         public Shark(Game game, Vector2 position, int speed) : base(game, position, speed)
         {
