@@ -217,15 +217,15 @@ namespace FinalProject.Screens
             // Player / platform collisions
             foreach (Tile tile in platforms)
             {
-                if (player.Hitbox.Intersects(tile.Hitbox))
+                if (Player.Hitbox.Intersects(tile.Hitbox))
                 {
-                    player.Position = new Vector2(player.Position.X, tile.Position.Y - player.Height);
-                    player.isJumping = false;
-                    player.velocity = 0;
+                    Player.Position = new Vector2(Player.Position.X, tile.Position.Y - Player.Height);
+                    Player.isJumping = false;
+                    Player.velocity = 0;
                 }
                 else
                 {
-                    player.isJumping = true;
+                    Player.isJumping = true;
                 }
             }
 
