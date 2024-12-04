@@ -35,8 +35,6 @@ namespace FinalProject.Screens
 
         private List<Pearl> pearls;
 
-        private TestBox testBox;
-
         public Vector2 backgroundPosition = new Vector2(0, 0);
         public Vector2 playerStartingPosition = new Vector2(20, Game1.ScreenHeight - 70);
         public Vector2 shark1StartingPosition = new Vector2(Game1.ScreenWidth / 5 * 4, Game1.ScreenHeight - 200);
@@ -82,9 +80,6 @@ namespace FinalProject.Screens
             pearl5.Initialize();
 
             pearls = [pearl1, pearl2, pearl3, pearl4, pearl5];
-
-            testBox = new TestBox(_game, new Vector2(400, 600), 0);
-            testBox.Initialize();
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -95,10 +90,7 @@ namespace FinalProject.Screens
 
             foreach (Enemy enemy in enemies)
             {
-                if (!enemy.IsDead)
-                {
-                    enemy.Draw(spriteBatch);
-                }
+                enemy.Draw(spriteBatch);
             }
 
             foreach(Boss boss in bosses)
@@ -110,8 +102,6 @@ namespace FinalProject.Screens
             {
                 pearl.Draw();
             }
-
-            testBox.Draw(spriteBatch);
         }
 
         public void Update(ScreenManager _screenManager, float delta)
@@ -160,8 +150,6 @@ namespace FinalProject.Screens
                     {
                         pearl.Position = new Vector2(pearl.Position.X - deltaX, pearl.Position.Y);
                     }
-
-                    testBox.Position = new Vector2(testBox.Position.X - deltaX, testBox.Position.Y);
                 }
             }
 
@@ -202,8 +190,6 @@ namespace FinalProject.Screens
                     {
                         pearl.Position = new Vector2(pearl.Position.X - deltaX, pearl.Position.Y);
                     }
-
-                    testBox.Position = new Vector2(testBox.Position.X - deltaX, testBox.Position.Y);
                 }
             }
 
@@ -244,11 +230,6 @@ namespace FinalProject.Screens
                 }
             }
 
-            if (Player.IsAttacking && !testBox.IsDead && Player.AttackHitbox.Intersects(testBox.Hitbox))
-            {
-                testBox.IsDead = true;
-            }
-
             // Check for pearl collisions
             foreach (Pearl pearl in pearls)
             {
@@ -256,12 +237,6 @@ namespace FinalProject.Screens
                 {
                     pearl.IsCollected = true;
                 }
-            }
-
-            if (!testBox.IsDead && Player.Hitbox.Intersects(testBox.Hitbox))
-            {
-                _screenManager.SetScreen(ScreenType.GameOverMenu);
-                _screenManager.SwitchToNextScreen();
             }
         }
 
@@ -293,7 +268,6 @@ namespace FinalProject.Screens
             Player.IdleAnimation.hide();
             Player.WalkAnimation.hide();
             seaHorseBoss.HPAnimation.hide();
-            testBox.Position = testBox.StartingPosition;
         }
     }
 }
