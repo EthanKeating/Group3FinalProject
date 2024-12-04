@@ -12,7 +12,7 @@ namespace FinalProject.Screens
     public class Level1Screen : IScreen
     {
         public ScreenType ScreenType => ScreenType.Level1;
-        private Game _game;
+        private Game1 _game;
 
         private Texture2D backgroundSprite;
 
@@ -24,6 +24,7 @@ namespace FinalProject.Screens
         private Crab crab2;
 
         private Boss seaHorseBoss;
+        public bool bossCutsceneTriggered = false;
 
         private List<Enemy> enemies;
         private List<Shark> sharks;
@@ -41,7 +42,7 @@ namespace FinalProject.Screens
 
         public Level1Screen(Game game, SpriteBatch spriteBatch)
         {
-            _game = game;
+            _game = game as Game1;
 
             backgroundSprite = _game.Content.Load<Texture2D>("images/background");
             _font = _game.Content.Load<SpriteFont>("PearlFont");
@@ -377,7 +378,6 @@ namespace FinalProject.Screens
             {
                 if (!bossCutsceneTriggered)
                 {
-                    //JON Run cutscreen here.
                     _game._screenManager.SetScreen(ScreenType.Cutscene);
                     _game._screenManager.SwitchToNextScreenWithoutReset();
                 }
