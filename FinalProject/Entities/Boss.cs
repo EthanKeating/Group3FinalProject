@@ -71,9 +71,9 @@ namespace FinalProject.Entities
                     spriteBatch.Draw(Texture, Position, Texture.Bounds, Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 1f);
                 else
                     spriteBatch.Draw(Texture, Position, Texture.Bounds, Color.Red * 0.5f, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 1f);
-
-                BubbleAttack.Draw(spriteBatch);
             }
+            
+            BubbleAttack.Draw(spriteBatch);
         }
 
         public void Damage()
@@ -99,11 +99,11 @@ namespace FinalProject.Entities
             Game1 game = _game as Game1;
             Player player = game._screenManager.GetActiveScreen().Player;
             
-            if (!isDead() && BubbleAttack.IsDead && Vector2.Distance(Position, player.Position) <= 800)
+            if (!isDead() && !BubbleAttack.IsActive && Vector2.Distance(Position, player.Position) <= 800)
             {
                 BubbleAttack.Position = new Vector2(Game1.ScreenWidth - 100, 100);
                 BubbleAttack.Target = new Vector2(player.Position.X + player.Width / 2, player.Position.Y + player.Height / 2);
-                BubbleAttack.IsDead = false;
+                BubbleAttack.IsActive = true;
             }
         }
     }
