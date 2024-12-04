@@ -65,14 +65,14 @@
 
             if (keyboardState.IsKeyDown(Keys.Enter))
             {
-                _screenManager.SetScreen(ScreenType.StartMenu);
+                _screenManager.SetScreen(ScreenType.Level1);
                 _screenManager.SwitchToNextScreen();
             }
             else if (mouseState.LeftButton == ButtonState.Pressed && !mouseDown)
             {
                 if (replayButtonBounds.Contains(mouseState.Position))
                 {
-                    _screenManager.SetScreen(ScreenType.StartMenu);
+                    _screenManager.SetScreen(ScreenType.Level1);
                     _screenManager.SwitchToNextScreen();
                 }
 
