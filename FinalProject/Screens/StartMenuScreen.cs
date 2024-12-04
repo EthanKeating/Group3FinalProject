@@ -64,7 +64,7 @@ namespace FinalProject.Screens
 
             if (keyboardState.IsKeyDown(Keys.Enter))
             {
-                _screenManager.SetScreen(ScreenType.Level1);
+                _screenManager.SetScreen(ScreenType.Cutscene);
                 _screenManager.SwitchToNextScreen();
             }
             
@@ -72,7 +72,7 @@ namespace FinalProject.Screens
             {
                 if (playButtonBounds.Contains(mouseState.Position))
                 {
-                    _screenManager.SetScreen(ScreenType.Level1);
+                    _screenManager.SetScreen(ScreenType.Cutscene);
                     _screenManager.SwitchToNextScreen();
                 }
 
