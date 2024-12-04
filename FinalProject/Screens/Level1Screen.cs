@@ -373,6 +373,16 @@ namespace FinalProject.Screens
                     pearl.IsCollected = true;
                 }
             }
+            if (Vector2.Distance(Player.Position, seaHorseBoss.Position) < 800)
+            {
+                if (!bossCutsceneTriggered)
+                {
+                    //JON Run cutscreen here.
+                    _game._screenManager.SetScreen(ScreenType.Cutscene);
+                    _game._screenManager.SwitchToNextScreenWithoutReset();
+                }
+                bossCutsceneTriggered = true;
+            }
         }
 
         public void Reset()

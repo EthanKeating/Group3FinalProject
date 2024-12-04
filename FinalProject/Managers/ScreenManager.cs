@@ -32,6 +32,13 @@ namespace FinalProject.Managers
             _activeScreen.Reset();
         }
 
+        public void SwitchToNextScreenWithoutReset()
+        {
+            if (_nextScreen == null) return;
+
+            _activeScreen = _nextScreen;
+        }
+
         public Level1Screen GetActiveScreen()
         {
             if (_activeScreen is Level1Screen level1Screen)
