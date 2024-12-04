@@ -60,7 +60,7 @@ namespace FinalProject.Screens
             winShell = new Shell(_game, new Vector2(backgroundSprite.Width - 100, Game1.ScreenHeight - 200));
             winShell.Initialize();
 
-            seaHorseBoss = new Boss(_game, spriteBatch, new Vector2(backgroundSprite.Width - 1000, Game1.ScreenHeight - 600), 9);
+            seaHorseBoss = new Boss(_game, spriteBatch, new Vector2(/*backgroundSprite.Width -*/ 1000, Game1.ScreenHeight - 600), 9);
             seaHorseBoss.Initialize();
 
             shark1 = new Shark(_game, new Vector2(Game1.ScreenWidth / 5 * 4, Game1.ScreenHeight - 200), 3);
@@ -276,7 +276,7 @@ namespace FinalProject.Screens
                     _screenManager.SwitchToNextScreen();
                 }
 
-                if (!boss.isDead() && Player.Hitbox.Intersects(boss.BubbleAttack.AttackHitbox))
+                if (!boss.isDead() && !boss.BubbleAttack.IsPopped && Player.Hitbox.Intersects(boss.BubbleAttack.AttackHitbox))
                 {
                     Reset();
                     _screenManager.SetScreen(ScreenType.GameOverMenu);
@@ -295,9 +295,7 @@ namespace FinalProject.Screens
                     }
                     if (Player.AttackHitbox.Intersects(boss.BubbleAttack.Hitbox))
                     {
-                        boss.BubbleAttack.IsActive = false;
-                        boss.BubbleAttack.Position = boss.BubbleAttack.StartingPosition;
-                        boss.BubbleAttack.BubbleAnimation.hide();
+                        boss.BubbleAttack.IsPopped = true;
                     }
                 }
                 foreach (Enemy enemy in enemies)
@@ -349,6 +347,7 @@ namespace FinalProject.Screens
                 boss.health = 3;
                 boss.Position = boss.StartingPosition;
                 boss.BubbleAttack.IsActive = false;
+                boss.BubbleAttack.IsPopped = false;
                 boss.BubbleAttack.Position = boss.BubbleAttack.StartingPosition;
                 boss.BubbleAttack.BubbleAnimation.hide();
             }
