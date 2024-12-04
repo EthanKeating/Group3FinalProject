@@ -14,7 +14,7 @@
         private const int IDLE_ANIM_SPEED = 30;
         private const int WALK_ANIM_SPEED = 5;
         private const int ATTACK_ANIM_SPEED = 10;
-        private const int ATTACK_WIDTH = -20;
+        private const int ATTACK_WIDTH = -15;
 
         public readonly int FloorHeight = Game1.ScreenHeight - FLOOR_HEIGHT;
 
