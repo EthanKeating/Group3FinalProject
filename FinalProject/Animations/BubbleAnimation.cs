@@ -9,7 +9,7 @@
 
         private Vector2 dimension;
         public List<Rectangle> frames;
-        private int frameIndex = -1;
+        private int frameIndex = 0;
 
         private int delayCounter;
 
@@ -46,7 +46,6 @@
                     int y = i * (int)dimension.Y;
                     Rectangle r = new Rectangle(x, y, (int)dimension.X, (int)dimension.Y);
                     frames.Add(r);
-
                 }
             }
         }
