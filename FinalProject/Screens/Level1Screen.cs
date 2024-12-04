@@ -30,14 +30,7 @@ namespace FinalProject.Screens
         private List<Crab> crabs;
         private List<Boss> bosses;
 
-        private Tile platform1;
         private List<Tile> platforms;
-
-        private Pearl pearl1;
-        private Pearl pearl2;
-        private Pearl pearl3;
-        private Pearl pearl4;
-        private Pearl pearl5;
 
         private Shell winShell;
 
@@ -82,10 +75,17 @@ namespace FinalProject.Screens
             
             Texture2D TileTexture = game.Content.Load<Texture2D>("images/bubble");
             platforms = [
-                new Tile(_game, spriteBatch, new Vector2(2000, 400)),
-                new Tile(_game, spriteBatch, new Vector2(2000 + TileTexture.Width / 16, 400)),
-                new Tile(_game, spriteBatch, new Vector2(2000 + (TileTexture.Width / 16 * 2), 400)),
-                new Tile(_game, spriteBatch, new Vector2(2000 + (TileTexture.Width / 16 * 3), 400)),
+
+                new Tile(_game, spriteBatch, new Vector2(2000, 500)),
+                new Tile(_game, spriteBatch, new Vector2(2000 + TileTexture.Width / 16, 500)),
+                new Tile(_game, spriteBatch, new Vector2(2000 + (TileTexture.Width / 16 * 2), 500)),
+                new Tile(_game, spriteBatch, new Vector2(2000 + (TileTexture.Width / 16 * 3), 500)),
+
+                new Tile(_game, spriteBatch, new Vector2(2200, 200)),
+                new Tile(_game, spriteBatch, new Vector2(2200 + TileTexture.Width / 16, 200)),
+                new Tile(_game, spriteBatch, new Vector2(2200 + (TileTexture.Width / 16 * 2), 200)),
+                new Tile(_game, spriteBatch, new Vector2(2200 + (TileTexture.Width / 16 * 3), 200)),
+
                 new Tile(_game, spriteBatch, new Vector2(4000, 400)),
                 new Tile(_game, spriteBatch, new Vector2(4000 + TileTexture.Width / 16, 400)),
                 new Tile(_game, spriteBatch, new Vector2(4000 + (TileTexture.Width / 16 * 2), 400)),
@@ -99,6 +99,7 @@ namespace FinalProject.Screens
 
             pearls = [new Pearl(_game, spriteBatch, new Vector2(300, 600)),
                 new Pearl(_game, spriteBatch, new Vector2(500, 600)),
+                new Pearl(_game, spriteBatch, new Vector2(2300, 160)),
                 new Pearl(_game, spriteBatch, new Vector2(3000, 600)),
                 new Pearl(_game, spriteBatch, new Vector2(4500, 600)),
                 new Pearl(_game, spriteBatch, new Vector2(6000, 600))
@@ -338,6 +339,8 @@ namespace FinalProject.Screens
                 tile.Position = tile.StartingPosition;
                 tile.Update(0);
             }
+
+            winShell.Position = winShell.StartingPosition;
 
             Player.AttackAnimation.hide();
             Player.IdleAnimation.hide();
