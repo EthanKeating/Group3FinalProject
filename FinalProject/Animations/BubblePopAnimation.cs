@@ -2,6 +2,8 @@
 {
     public class BubblePopAnimation : DrawableGameComponent
     {
+        public BubbleAttack bubbleAttack;
+
         private SpriteBatch sb;
         private Texture2D tex;
         private Vector2 position;
@@ -11,10 +13,12 @@
         public List<Rectangle> frames;
         private int frameIndex = 0;
 
+        private SoundEffect popSound;
+
         private int delayCounter;
 
         private const int ROWS = 1;
-        private const int COLS = 16;
+        private const int COLS = 10;
 
 
         public Vector2 Position { get => position; set => position = value; }
@@ -30,6 +34,8 @@
             this.Position = position;
             this.delay = delay;
             this.dimension = new Vector2(tex.Width / COLS, tex.Height / ROWS);
+
+            popSound = game.Content.Load<SoundEffect>("soundEffects/pop");
 
             createFrames();
             hide();
@@ -68,9 +74,14 @@
             if (delayCounter > delay)
             {
                 frameIndex++;
+
+                if (frameIndex == 0) popSound.Play();
+
                 if (frameIndex >= ROWS * COLS)
                 {
                     frameIndex = 0;
+                    bubbleAttack.IsActive = false;
+                    bubbleAttack.IsPopped = false;
                 }
 
                 delayCounter = 0;

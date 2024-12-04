@@ -32,7 +32,7 @@ namespace FinalProject.Entities
             HPAnimation = new HealthAnimation(game, spriteBatch, HealthTexture, position, 10);
             game.Components.Add(HPAnimation);
             HPAnimation.frameIndex = 0;
-            BubbleAttack = new BubbleAttack(game, spriteBatch, Position, 100);
+            BubbleAttack = new BubbleAttack(game, spriteBatch, Position, 75);
             BubbleAttack.Initialize();
             Width = Texture.Width / 2;
             Height = Texture.Height;
@@ -102,7 +102,7 @@ namespace FinalProject.Entities
             if (!isDead() && !BubbleAttack.IsActive && Vector2.Distance(Position, player.Position) <= 800)
             {
                 BubbleAttack.Position = new Vector2(Position.X, Position.Y + 135);
-                BubbleAttack.SetTarget( new Vector2(player.Position.X + player.Width / 2, player.Position.Y + player.Height / 2));
+                BubbleAttack.SetTarget( new Vector2(player.Position.X, player.Position.Y + player.Height / 2));
                 BubbleAttack.IsActive = true;
             }
         }
