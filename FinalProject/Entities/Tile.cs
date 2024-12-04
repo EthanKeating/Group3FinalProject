@@ -8,6 +8,7 @@ namespace FinalProject.Entities
 {
     public class Tile : BasicEntity
     {
+
         public Texture2D Texture { get; set; }
         public BubbleAnimation BubbleAnimation { get; set; }
 
