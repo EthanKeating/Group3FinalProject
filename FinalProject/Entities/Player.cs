@@ -18,8 +18,8 @@
 
         public readonly int FloorHeight = Game1.ScreenHeight - FLOOR_HEIGHT;
 
-        private float velocity;
-        private bool isJumping;
+        public float velocity;
+        public bool isJumping;
         private bool isMoving;
 
         public Player(Game game, SpriteBatch spriteBatch, Vector2 startingPosition, int speed) : base(startingPosition, speed)
@@ -130,7 +130,7 @@
             // Move player vertically
             if (isJumping)
             {
-                isMoving = true;
+                //isMoving = true;
                 Position = new Vector2(Position.X, Position.Y - velocity);
                 velocity -= GRAVITY;
             }

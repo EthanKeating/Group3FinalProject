@@ -1,4 +1,5 @@
 ﻿using FinalProject.Entities;
+using System;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
@@ -22,10 +23,12 @@ namespace FinalProject.Screens
 
         private Boss seaHorseBoss;
 
+        private Tile platform1;
         private List<Enemy> enemies;
         private List<Shark> sharks;
         private List<Crab> crabs;
         private List<Boss> bosses;
+        private List<Tile> platforms;
 
         private Pearl pearl1;
         private Pearl pearl2;
@@ -63,10 +66,14 @@ namespace FinalProject.Screens
             crab2 = new Crab(_game, spriteBatch, new Vector2(2000, 600));
             crab2.Initialize();
 
+            platform1 = new Tile(_game, new Vector2(200, 600));
+            platform1.Initialize();
+
             enemies = [shark1, shark2, crab1, crab2];
             sharks = [shark1, shark2];
             crabs = [crab1, crab2];
             bosses = [seaHorseBoss];
+            platforms = [platform1];
 
             pearl1 = new Pearl(_game, spriteBatch, new Vector2(300, 600));
             pearl1.Initialize();
@@ -101,6 +108,11 @@ namespace FinalProject.Screens
             foreach (Pearl pearl in pearls)
             {
                 pearl.Draw();
+            }
+
+            foreach (Tile tile in platforms)
+            {
+                tile.Draw(spriteBatch);
             }
         }
 
@@ -150,6 +162,11 @@ namespace FinalProject.Screens
                     {
                         pearl.Position = new Vector2(pearl.Position.X - deltaX, pearl.Position.Y);
                     }
+
+                    foreach(Tile tile in platforms)
+                    {
+                        tile.Position = new Vector2(tile.Position.X - deltaX, tile.Position.Y);
+                    }
                 }
             }
 
@@ -190,6 +207,25 @@ namespace FinalProject.Screens
                     {
                         pearl.Position = new Vector2(pearl.Position.X - deltaX, pearl.Position.Y);
                     }
+                    foreach (Tile tile in platforms)
+                    {
+                        tile.Position = new Vector2(tile.Position.X - deltaX, tile.Position.Y);
+                    }
+                }
+            }
+
+            // Player / platform collisions
+            foreach (Tile tile in platforms)
+            {
+                if (player.Hitbox.Intersects(tile.Hitbox))
+                {
+                    player.Position = new Vector2(player.Position.X, tile.Position.Y - player.Height);
+                    player.isJumping = false;
+                    player.velocity = 0;
+                }
+                else
+                {
+                    player.isJumping = true;
                 }
             }
 
@@ -238,6 +274,8 @@ namespace FinalProject.Screens
                     pearl.IsCollected = true;
                 }
             }
+
+            
         }
 
         public void Reset()
@@ -259,8 +297,7 @@ namespace FinalProject.Screens
             {
                 pearl.Position = pearl.StartingPosition;
             }
-
-            foreach(Boss boss in bosses)
+            foreach (Boss boss in bosses)
             {
                 boss.Position = boss.StartingPosition;
             }
@@ -268,6 +305,11 @@ namespace FinalProject.Screens
             Player.IdleAnimation.hide();
             Player.WalkAnimation.hide();
             seaHorseBoss.HPAnimation.hide();
+
+            foreach (Tile tile in platforms)
+            {
+                tile.Position = tile.StartingPosition;
+            }
         }
     }
 }
