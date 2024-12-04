@@ -24,14 +24,12 @@ namespace FinalProject.Screens
         private Crab crab2;
 
         private Boss seaHorseBoss;
-        private bool bossCutsceneTriggered = false;
+        public bool bossCutsceneTriggered = false;
 
         private List<Enemy> enemies;
         private List<Shark> sharks;
         private List<Crab> crabs;
         private List<Boss> bosses;
-
-        private Trigger cutScreenTrigger;
 
         private List<Tile> platforms;
 
@@ -136,60 +134,8 @@ namespace FinalProject.Screens
                 new Tile(_game, spriteBatch, new Vector2(5200 + (TileTexture.Width / 16 * 6), 230)),
                 new Tile(_game, spriteBatch, new Vector2(5200 + (TileTexture.Width / 16 * 7), 230)),
                 new Tile(_game, spriteBatch, new Vector2(5200 + (TileTexture.Width / 16 * 8), 230)),
-
-                //
-                new Tile(_game, spriteBatch, new Vector2(6000, 440)),
-                new Tile(_game, spriteBatch, new Vector2(6000 + TileTexture.Width / 16, 440)),
-                new Tile(_game, spriteBatch, new Vector2(6000 + (TileTexture.Width / 16 * 2), 440)),
-                new Tile(_game, spriteBatch, new Vector2(6000 + (TileTexture.Width / 16 * 3), 440)),
-
-                new Tile(_game, spriteBatch, new Vector2(6200, 230)),
-                new Tile(_game, spriteBatch, new Vector2(6200 + TileTexture.Width / 16, 230)),
-                new Tile(_game, spriteBatch, new Vector2(6200 + (TileTexture.Width / 16 * 2), 230)),
-                new Tile(_game, spriteBatch, new Vector2(6200 + (TileTexture.Width / 16 * 3), 230)),
-
-                new Tile(_game, spriteBatch, new Vector2(7000, 440)),
-                new Tile(_game, spriteBatch, new Vector2(7000 + TileTexture.Width / 16, 440)),
-                new Tile(_game, spriteBatch, new Vector2(7000 + (TileTexture.Width / 16 * 2), 440)),
-                new Tile(_game, spriteBatch, new Vector2(7000 + (TileTexture.Width / 16 * 3), 440)),
-
-                new Tile(_game, spriteBatch, new Vector2(7200, 230)),
-                new Tile(_game, spriteBatch, new Vector2(7200 + TileTexture.Width / 16, 230)),
-                new Tile(_game, spriteBatch, new Vector2(7200 + (TileTexture.Width / 16 * 2), 230)),
-                new Tile(_game, spriteBatch, new Vector2(7200 + (TileTexture.Width / 16 * 3), 230)),
-
-                new Tile(_game, spriteBatch, new Vector2(8200, 440)),
-                new Tile(_game, spriteBatch, new Vector2(8200 + TileTexture.Width / 16, 440)),
-                new Tile(_game, spriteBatch, new Vector2(8200 + (TileTexture.Width / 16 * 2), 440)),
-                new Tile(_game, spriteBatch, new Vector2(8200 + (TileTexture.Width / 16 * 3), 440)),
-
-                new Tile(_game, spriteBatch, new Vector2(8000, 230)),
-                new Tile(_game, spriteBatch, new Vector2(8000 + TileTexture.Width / 16, 230)),
-                new Tile(_game, spriteBatch, new Vector2(8000 + (TileTexture.Width / 16 * 2), 230)),
-                new Tile(_game, spriteBatch, new Vector2(8000 + (TileTexture.Width / 16 * 3), 230)),
-
-                new Tile(_game, spriteBatch, new Vector2(9600, 500)),
-                new Tile(_game, spriteBatch, new Vector2(9600 + TileTexture.Width / 16, 500)),
-                new Tile(_game, spriteBatch, new Vector2(9600 + (TileTexture.Width / 16 * 2), 500)),
-                new Tile(_game, spriteBatch, new Vector2(9600 + (TileTexture.Width / 16 * 3), 500)),
-
-                //new Tile(_game, spriteBatch, new Vector2(9800, 280)),
-                //new Tile(_game, spriteBatch, new Vector2(9900 + TileTexture.Width / 16, 280)),
-
-                new Tile(_game, spriteBatch, new Vector2(9200, 230)),
-                new Tile(_game, spriteBatch, new Vector2(9200 + TileTexture.Width / 16, 230)),
-                new Tile(_game, spriteBatch, new Vector2(9200 + (TileTexture.Width / 16 * 2), 230)),
-                new Tile(_game, spriteBatch, new Vector2(9200 + (TileTexture.Width / 16 * 3), 230)),
-                new Tile(_game, spriteBatch, new Vector2(9200 + (TileTexture.Width / 16 * 4), 230)),
-                new Tile(_game, spriteBatch, new Vector2(9200 + (TileTexture.Width / 16 * 5), 230)),
-                new Tile(_game, spriteBatch, new Vector2(9200 + (TileTexture.Width / 16 * 6), 230)),
-                new Tile(_game, spriteBatch, new Vector2(9200 + (TileTexture.Width / 16 * 7), 230)),
-                new Tile(_game, spriteBatch, new Vector2(9200 + (TileTexture.Width / 16 * 8), 230)),
                 ];
             platforms.ForEach(p => p.Initialize());
-
-            cutScreenTrigger = new Trigger(_game, spriteBatch, new Vector2(9800, 720));
-            cutScreenTrigger.Initialize();
 
             pearls = [new Pearl(_game, spriteBatch, new Vector2(300, 600)),
                 new Pearl(_game, spriteBatch, new Vector2(500, 600)),
@@ -203,17 +149,6 @@ namespace FinalProject.Screens
                 new Pearl(_game, spriteBatch, new Vector2(5250 + TileTexture.Width / 8 * 1, 180)),
                 new Pearl(_game, spriteBatch, new Vector2(5250 + TileTexture.Width / 8 * 2, 180)),
                 new Pearl(_game, spriteBatch, new Vector2(5250 + TileTexture.Width / 8 * 3, 180)),
-
-                new Pearl(_game, spriteBatch, new Vector2(6270, 180)),
-                new Pearl(_game, spriteBatch, new Vector2(6270, 500)),
-                new Pearl(_game, spriteBatch, new Vector2(7000, 600)),
-                new Pearl(_game, spriteBatch, new Vector2(7500, 600)),
-                new Pearl(_game, spriteBatch, new Vector2(8000, 600)),
-
-                new Pearl(_game, spriteBatch, new Vector2(9250, 180)),
-                new Pearl(_game, spriteBatch, new Vector2(9250 + TileTexture.Width / 8 * 1, 180)),
-                new Pearl(_game, spriteBatch, new Vector2(9250 + TileTexture.Width / 8 * 2, 180)),
-                new Pearl(_game, spriteBatch, new Vector2(9250 + TileTexture.Width / 8 * 3, 180)),
                 ];
             pearls.ForEach(p => p.Initialize());
         }
@@ -301,7 +236,6 @@ namespace FinalProject.Screens
                     {
                         tile.Update(deltaX);
                     }
-                    cutScreenTrigger.Update(deltaX);
                 }
             }
 
@@ -348,7 +282,6 @@ namespace FinalProject.Screens
                     {
                         tile.Update(deltaX);
                     }
-                    cutScreenTrigger.Update(deltaX);
                 }
             }
 
@@ -445,7 +378,6 @@ namespace FinalProject.Screens
             {
                 if (!bossCutsceneTriggered)
                 {
-                    //JON Run cutscreen here.
                     _game._screenManager.SetScreen(ScreenType.Cutscene);
                     _game._screenManager.SwitchToNextScreenWithoutReset();
                 }
@@ -458,7 +390,6 @@ namespace FinalProject.Screens
             backgroundPosition = Vector2.Zero;
             Player.Position = Player.StartingPosition;
             winShell.Position = winShell.StartingPosition;
-            bossCutsceneTriggered = false;
 
             foreach (Enemy enemy in enemies)
             {
