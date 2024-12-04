@@ -50,7 +50,6 @@ namespace FinalProject.Screens
         public Vector2 textLine3Position = new Vector2(525, 225);
         public Vector2 textLine4Position = new Vector2(525, 250);
 
-
         public CutsceneScreen(Game game, SpriteBatch spriteBatch)
         {
             _game = game;
@@ -97,14 +96,12 @@ namespace FinalProject.Screens
                 spriteBatch.Draw(textBox, textboxPosition, Color.White);
 
                 //spriteBatch.Draw(evilCrab, otherStartPosition, Color.White);
-
                 //spriteBatch.Draw(evilCrab, otherStartPosition, null, Color.White, 0f, Vector2.Zero, 5, SpriteEffects.None, 0f);
 
                 spriteBatch.DrawString(_font, _cutsceneText[0], textLine1Position, Color.Black);
                 spriteBatch.DrawString(_font, _cutsceneText[1], textLine2Position, Color.Black);
                 spriteBatch.DrawString(_font, _cutsceneText[2], textLine3Position, Color.Black);
                 spriteBatch.DrawString(_font, _cutsceneText[3], textLine4Position, Color.Black);
-
             }
 
         }

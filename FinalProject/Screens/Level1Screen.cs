@@ -4,6 +4,8 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Formats.Asn1.AsnWriter;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace FinalProject.Screens
 {
@@ -29,17 +31,6 @@ namespace FinalProject.Screens
         private List<Boss> bosses;
 
         private Tile platform1;
-        private Tile platform2;
-        private Tile platform3;
-        private Tile platform4;
-        private Tile platform5;
-        private Tile platform6;
-        private Tile platform7;
-        private Tile platform8;
-        private Tile platform9;
-        private Tile platform10;
-        private Tile platform11;
-        private Tile platform12;
         private List<Tile> platforms;
 
         private Pearl pearl1;
@@ -48,7 +39,10 @@ namespace FinalProject.Screens
         private Pearl pearl4;
         private Pearl pearl5;
 
+        private Shell winShell;
+
         private List<Pearl> pearls;
+        public SpriteFont _font;
 
         public Vector2 backgroundPosition = Vector2.Zero;
 
@@ -57,9 +51,14 @@ namespace FinalProject.Screens
             _game = game;
 
             backgroundSprite = _game.Content.Load<Texture2D>("images/background");
+            _font = _game.Content.Load<SpriteFont>("PearlFont");
 
             Player = new Player(_game, spriteBatch, new Vector2(20, Game1.ScreenHeight - 70), 9);
             Player.Initialize();
+
+            //winShell = new Shell(_game, new Vector2(backgroundSprite.Width - 500, Game1.ScreenHeight - 200));
+            winShell = new Shell(_game, new Vector2(backgroundSprite.Width - 100, Game1.ScreenHeight - 200));
+            winShell.Initialize();
 
             seaHorseBoss = new Boss(_game, spriteBatch, new Vector2(backgroundSprite.Width - 1000, Game1.ScreenHeight - 600), 9);
             seaHorseBoss.Initialize();
@@ -74,58 +73,46 @@ namespace FinalProject.Screens
             crab2 = new Crab(_game, spriteBatch, new Vector2(2000, 600));
             crab2.Initialize();
 
-            platform1 = new Tile(_game, spriteBatch, new Vector2(2000, 400));
-            platform1.Initialize();
-            platform2 = new Tile(_game, spriteBatch, new Vector2(2000 + platform1.Width, 400));
-            platform2.Initialize();
-            platform3 = new Tile(_game, spriteBatch, new Vector2(2000 + (platform1.Width * 2), 400));
-            platform3.Initialize();
-            platform4 = new Tile(_game, spriteBatch, new Vector2(2000 + (platform1.Width * 3), 400));
-            platform4.Initialize();
-
-            platform5 = new Tile(_game, spriteBatch, new Vector2(4000, 400));
-            platform5.Initialize();
-            platform6 = new Tile(_game, spriteBatch, new Vector2(4000 + platform1.Width, 400));
-            platform6.Initialize();
-            platform7 = new Tile(_game, spriteBatch, new Vector2(4000 + (platform1.Width * 2), 400));
-            platform7.Initialize();
-            platform8 = new Tile(_game, spriteBatch, new Vector2(4000 + (platform1.Width * 3), 400));
-            platform8.Initialize();
-
-            platform9 = new Tile(_game, spriteBatch, new Vector2(6000, 400));
-            platform9.Initialize();
-            platform10 = new Tile(_game, spriteBatch, new Vector2(6000 + platform1.Width, 400));
-            platform10.Initialize();
-            platform11 = new Tile(_game, spriteBatch, new Vector2(6000 + (platform1.Width * 2), 400));
-            platform11.Initialize();
-            platform12 = new Tile(_game, spriteBatch, new Vector2(6000 + (platform1.Width * 3), 400));
-            platform12.Initialize();
 
             enemies = [shark1, shark2, crab1, crab2];
             sharks = [shark1, shark2];
             crabs = [crab1, crab2];
             bosses = [seaHorseBoss];
-            platforms = [platform1, platform2, platform3, platform4, platform5, platform6, platform7, platform8, platform9, platform10, platform11, platform12];
 
-            pearl1 = new Pearl(_game, spriteBatch, new Vector2(300, 600));
-            pearl1.Initialize();
-            pearl2 = new Pearl(_game, spriteBatch, new Vector2(500, 600));
-            pearl2.Initialize();
-            pearl3 = new Pearl(_game, spriteBatch, new Vector2(3000, 600));
-            pearl3.Initialize();
-            pearl4 = new Pearl(_game, spriteBatch, new Vector2(4500, 600));
-            pearl4.Initialize();
-            pearl5 = new Pearl(_game, spriteBatch, new Vector2(6000, 600));
-            pearl5.Initialize();
+            
+            Texture2D TileTexture = game.Content.Load<Texture2D>("images/bubble");
+            platforms = [
+                new Tile(_game, spriteBatch, new Vector2(2000, 400)),
+                new Tile(_game, spriteBatch, new Vector2(2000 + TileTexture.Width / 16, 400)),
+                new Tile(_game, spriteBatch, new Vector2(2000 + (TileTexture.Width / 16 * 2), 400)),
+                new Tile(_game, spriteBatch, new Vector2(2000 + (TileTexture.Width / 16 * 3), 400)),
+                new Tile(_game, spriteBatch, new Vector2(4000, 400)),
+                new Tile(_game, spriteBatch, new Vector2(4000 + TileTexture.Width / 16, 400)),
+                new Tile(_game, spriteBatch, new Vector2(4000 + (TileTexture.Width / 16 * 2), 400)),
+                new Tile(_game, spriteBatch, new Vector2(4000 + (TileTexture.Width / 16 * 3), 400)),
+                new Tile(_game, spriteBatch, new Vector2(6000, 400)),
+                new Tile(_game, spriteBatch, new Vector2(6000 + TileTexture.Width / 16, 400)),
+                new Tile(_game, spriteBatch, new Vector2(6000 + (TileTexture.Width / 16 * 2), 400)),
+                new Tile(_game, spriteBatch, new Vector2(6000 + (TileTexture.Width / 16 * 3), 400))
+                ];
+            platforms.ForEach(p => p.Initialize());
 
-            pearls = [pearl1, pearl2, pearl3, pearl4, pearl5];
+            pearls = [new Pearl(_game, spriteBatch, new Vector2(300, 600)),
+                new Pearl(_game, spriteBatch, new Vector2(500, 600)),
+                new Pearl(_game, spriteBatch, new Vector2(3000, 600)),
+                new Pearl(_game, spriteBatch, new Vector2(4500, 600)),
+                new Pearl(_game, spriteBatch, new Vector2(6000, 600))
+                ];
+            pearls.ForEach(p => p.Initialize());
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(backgroundSprite, backgroundPosition, Color.White);
+            spriteBatch.DrawString(_font, "Pearls Collected: " + pearls.Count(pearl => pearl.IsCollected), Vector2.Zero, Color.WhiteSmoke, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0f);
 
             Player.Draw();
+            winShell.Draw(spriteBatch);
 
             foreach (Enemy enemy in enemies)
             {
@@ -173,6 +160,7 @@ namespace FinalProject.Screens
                 if (backgroundPosition.X > -backgroundSprite.Width + 1280)
                 {
                     Player.Position = new Vector2(startX, Player.Position.Y);
+                    winShell.Position = new Vector2(winShell.Position.X - deltaX, winShell.Position.Y);
                     backgroundPosition.X -= deltaX;
 
                     foreach (Boss boss in bosses)
@@ -260,6 +248,11 @@ namespace FinalProject.Screens
             }
 
             Player.isJumping = !didCollide;
+
+            if (Player.Hitbox.Intersects(winShell.Hitbox))
+            {
+                //Player WON!
+            }
 
             // Check for player / enemy collisions
             foreach (Enemy enemy in enemies)
