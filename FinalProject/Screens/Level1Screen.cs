@@ -30,14 +30,7 @@ namespace FinalProject.Screens
         private List<Crab> crabs;
         private List<Boss> bosses;
 
-        private Tile platform1;
         private List<Tile> platforms;
-
-        private Pearl pearl1;
-        private Pearl pearl2;
-        private Pearl pearl3;
-        private Pearl pearl4;
-        private Pearl pearl5;
 
         private Shell winShell;
 
@@ -82,26 +75,79 @@ namespace FinalProject.Screens
             
             Texture2D TileTexture = game.Content.Load<Texture2D>("images/bubble");
             platforms = [
-                new Tile(_game, spriteBatch, new Vector2(2000, 400)),
-                new Tile(_game, spriteBatch, new Vector2(2000 + TileTexture.Width / 16, 400)),
-                new Tile(_game, spriteBatch, new Vector2(2000 + (TileTexture.Width / 16 * 2), 400)),
-                new Tile(_game, spriteBatch, new Vector2(2000 + (TileTexture.Width / 16 * 3), 400)),
-                new Tile(_game, spriteBatch, new Vector2(4000, 400)),
-                new Tile(_game, spriteBatch, new Vector2(4000 + TileTexture.Width / 16, 400)),
-                new Tile(_game, spriteBatch, new Vector2(4000 + (TileTexture.Width / 16 * 2), 400)),
-                new Tile(_game, spriteBatch, new Vector2(4000 + (TileTexture.Width / 16 * 3), 400)),
-                new Tile(_game, spriteBatch, new Vector2(6000, 400)),
-                new Tile(_game, spriteBatch, new Vector2(6000 + TileTexture.Width / 16, 400)),
-                new Tile(_game, spriteBatch, new Vector2(6000 + (TileTexture.Width / 16 * 2), 400)),
-                new Tile(_game, spriteBatch, new Vector2(6000 + (TileTexture.Width / 16 * 3), 400))
+
+                new Tile(_game, spriteBatch, new Vector2(1000, 440)),
+                new Tile(_game, spriteBatch, new Vector2(1000 + TileTexture.Width / 16, 440)),
+                new Tile(_game, spriteBatch, new Vector2(1000 + (TileTexture.Width / 16 * 2), 440)),
+                new Tile(_game, spriteBatch, new Vector2(1000 + (TileTexture.Width / 16 * 3), 440)),
+
+                new Tile(_game, spriteBatch, new Vector2(1200, 230)),
+                new Tile(_game, spriteBatch, new Vector2(1200 + TileTexture.Width / 16, 230)),
+                new Tile(_game, spriteBatch, new Vector2(1200 + (TileTexture.Width / 16 * 2), 230)),
+                new Tile(_game, spriteBatch, new Vector2(1200 + (TileTexture.Width / 16 * 3), 230)),
+
+                new Tile(_game, spriteBatch, new Vector2(2000, 440)),
+                new Tile(_game, spriteBatch, new Vector2(2000 + TileTexture.Width / 16, 440)),
+                new Tile(_game, spriteBatch, new Vector2(2000 + (TileTexture.Width / 16 * 2), 440)),
+                new Tile(_game, spriteBatch, new Vector2(2000 + (TileTexture.Width / 16 * 3), 440)),
+
+                new Tile(_game, spriteBatch, new Vector2(2200, 230)),
+                new Tile(_game, spriteBatch, new Vector2(2200 + TileTexture.Width / 16, 230)),
+                new Tile(_game, spriteBatch, new Vector2(2200 + (TileTexture.Width / 16 * 2), 230)),
+                new Tile(_game, spriteBatch, new Vector2(2200 + (TileTexture.Width / 16 * 3), 230)),
+
+                new Tile(_game, spriteBatch, new Vector2(3200, 440)),
+                new Tile(_game, spriteBatch, new Vector2(3200 + TileTexture.Width / 16, 440)),
+                new Tile(_game, spriteBatch, new Vector2(3200 + (TileTexture.Width / 16 * 2), 440)),
+                new Tile(_game, spriteBatch, new Vector2(3200 + (TileTexture.Width / 16 * 3), 440)),
+
+                new Tile(_game, spriteBatch, new Vector2(3000, 230)),
+                new Tile(_game, spriteBatch, new Vector2(3000 + TileTexture.Width / 16, 230)),
+                new Tile(_game, spriteBatch, new Vector2(3000 + (TileTexture.Width / 16 * 2), 230)),
+                new Tile(_game, spriteBatch, new Vector2(3000 + (TileTexture.Width / 16 * 3), 230)),
+
+                new Tile(_game, spriteBatch, new Vector2(4000, 440)),
+                new Tile(_game, spriteBatch, new Vector2(4000 + TileTexture.Width / 16, 440)),
+                new Tile(_game, spriteBatch, new Vector2(4000 + (TileTexture.Width / 16 * 2), 440)),
+                new Tile(_game, spriteBatch, new Vector2(4000 + (TileTexture.Width / 16 * 3), 440)),
+
+                new Tile(_game, spriteBatch, new Vector2(4200, 230)),
+                new Tile(_game, spriteBatch, new Vector2(4200 + TileTexture.Width / 16, 230)),
+                new Tile(_game, spriteBatch, new Vector2(4200 + (TileTexture.Width / 16 * 2), 230)),
+                new Tile(_game, spriteBatch, new Vector2(4200 + (TileTexture.Width / 16 * 3), 230)),
+
+                new Tile(_game, spriteBatch, new Vector2(5600, 500)),
+                new Tile(_game, spriteBatch, new Vector2(5600 + TileTexture.Width / 16, 500)),
+                new Tile(_game, spriteBatch, new Vector2(5600 + (TileTexture.Width / 16 * 2), 500)),
+                new Tile(_game, spriteBatch, new Vector2(5600 + (TileTexture.Width / 16 * 3), 500)),
+
+                new Tile(_game, spriteBatch, new Vector2(5900, 280)),
+                new Tile(_game, spriteBatch, new Vector2(5900 + TileTexture.Width / 16, 280)),
+
+                new Tile(_game, spriteBatch, new Vector2(5200, 230)),
+                new Tile(_game, spriteBatch, new Vector2(5200 + TileTexture.Width / 16, 230)),
+                new Tile(_game, spriteBatch, new Vector2(5200 + (TileTexture.Width / 16 * 2), 230)),
+                new Tile(_game, spriteBatch, new Vector2(5200 + (TileTexture.Width / 16 * 3), 230)),
+                new Tile(_game, spriteBatch, new Vector2(5200 + (TileTexture.Width / 16 * 4), 230)),
+                new Tile(_game, spriteBatch, new Vector2(5200 + (TileTexture.Width / 16 * 5), 230)),
+                new Tile(_game, spriteBatch, new Vector2(5200 + (TileTexture.Width / 16 * 6), 230)),
+                new Tile(_game, spriteBatch, new Vector2(5200 + (TileTexture.Width / 16 * 7), 230)),
+                new Tile(_game, spriteBatch, new Vector2(5200 + (TileTexture.Width / 16 * 8), 230)),
                 ];
             platforms.ForEach(p => p.Initialize());
 
             pearls = [new Pearl(_game, spriteBatch, new Vector2(300, 600)),
                 new Pearl(_game, spriteBatch, new Vector2(500, 600)),
+                new Pearl(_game, spriteBatch, new Vector2(2270, 180)),
+                new Pearl(_game, spriteBatch, new Vector2(2270, 500)),
                 new Pearl(_game, spriteBatch, new Vector2(3000, 600)),
                 new Pearl(_game, spriteBatch, new Vector2(4500, 600)),
-                new Pearl(_game, spriteBatch, new Vector2(6000, 600))
+                new Pearl(_game, spriteBatch, new Vector2(6000, 600)),
+
+                new Pearl(_game, spriteBatch, new Vector2(5250, 180)),
+                new Pearl(_game, spriteBatch, new Vector2(5250 + TileTexture.Width / 8 * 1, 180)),
+                new Pearl(_game, spriteBatch, new Vector2(5250 + TileTexture.Width / 8 * 2, 180)),
+                new Pearl(_game, spriteBatch, new Vector2(5250 + TileTexture.Width / 8 * 3, 180)),
                 ];
             pearls.ForEach(p => p.Initialize());
         }
@@ -154,13 +200,14 @@ namespace FinalProject.Screens
 
             int rightBound = (int)Game1.ScreenWidth / 4;
 
+            winShell.Position = new Vector2(backgroundPosition.X + backgroundSprite.Width - 100, Game1.ScreenHeight - 200);
+
             // Move background
             if (Player.Position.X > rightBound)
             {
                 if (backgroundPosition.X > -backgroundSprite.Width + 1280)
                 {
                     Player.Position = new Vector2(startX, Player.Position.Y);
-                    winShell.Position = new Vector2(winShell.Position.X - deltaX, winShell.Position.Y);
                     backgroundPosition.X -= deltaX;
 
                     foreach (Boss boss in bosses)
@@ -241,6 +288,7 @@ namespace FinalProject.Screens
             bool didCollide = false;
             foreach (Tile tile in platforms)
             {
+
                 if (Player.Hitbox.Intersects(tile.Hitbox))
                 {
                     Player.Position = new Vector2(Player.Position.X, tile.Position.Y - Player.Height);
@@ -249,6 +297,16 @@ namespace FinalProject.Screens
                 }
             }
             Player.isJumping = !didCollide;
+
+            foreach (Pearl pearl in pearls)
+            {
+                if (!pearl.IsCollected)
+                {
+                    pearl.pearlAnimation.show();
+                    pearl.pearlAnimation.playedSound = false;
+                }
+            }
+
 
             if (Player.Hitbox.Intersects(winShell.Hitbox))
             {

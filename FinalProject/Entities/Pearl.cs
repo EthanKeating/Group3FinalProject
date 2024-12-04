@@ -36,7 +36,6 @@ namespace FinalProject.Entities
                 }
 
                 pearlAnimation.hide();
-                game.Components.Remove(pearlAnimation);
                 return;
             }
 
