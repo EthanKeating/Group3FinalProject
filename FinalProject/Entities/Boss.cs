@@ -21,13 +21,19 @@ namespace FinalProject.Entities
         public HealthAnimation HPAnimation { get; set; }
         public Vector2 HPPosition { get; set; }
 
+        private Game _game;
+        public bool IsAttacking { get; set; } = false;
+        public BubbleAttack BubbleAttack { get; set; }
+
         public Boss(Game game, SpriteBatch spriteBatch, Vector2 position, int speed) : base(position, speed)
         {
+            _game = game;
             Texture = game.Content.Load<Texture2D>("images/seaHorse");
             HealthTexture = game.Content.Load<Texture2D>("images/health");
             HPAnimation = new HealthAnimation(game, spriteBatch, HealthTexture, position, 10);
             game.Components.Add(HPAnimation);
             HPAnimation.frameIndex = 0;
+            BubbleAttack = new BubbleAttack(game, spriteBatch, Position, 3);
             Width = Texture.Width / 2;
             Height = Texture.Height;
 
@@ -82,6 +88,18 @@ namespace FinalProject.Entities
         public bool isDead()
         {
             return health <= 0;
+        }
+
+        public void Attack()
+        {
+            Game1 game = _game as Game1;
+            Player player = game._screenManager.GetActiveScreen().Player;
+            
+            if (!isDead() && !BubbleAttack.IsDead && Vector2.Distance(Position, player.Position) <= 400)
+            {
+                BubbleAttack.Position = Position;
+                BubbleAttack.Target = new Vector2(player.Position.X + player.Width / 2, player.Position.Y + player.Height / 2);
+            }
         }
     }
 }
