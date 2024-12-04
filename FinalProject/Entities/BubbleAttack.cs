@@ -4,6 +4,7 @@
     {
         public Vector2 Target { get; set; }
         public BubbleAnimation BubbleAnimation { get; set; }
+        public BubblePopAnimation PopAnimation { get; set; }
         public bool IsActive { get; set; } = false;
         private Rectangle distance;
 
@@ -11,6 +12,7 @@
         {
             Texture = game.Content.Load<Texture2D>("images/bubble");
             BubbleAnimation = new BubbleAnimation(game, spriteBatch, Texture, Position, 10);
+            PopAnimation = new BubblePopAnimation(game, spriteBatch, game.Content.Load<Texture2D>("images/pop"), Position, 10);
             game.Components.Add(BubbleAnimation);
             Width = Texture.Width / 16;
             Height = Texture.Height;
