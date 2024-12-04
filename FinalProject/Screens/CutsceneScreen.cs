@@ -44,6 +44,7 @@ namespace FinalProject.Screens
 
         Texture2D seaHorseIdle;
         Texture2D horseHead;
+        Texture2D bigSeaHorse;
 
         Texture2D textBox;
 
@@ -71,6 +72,7 @@ namespace FinalProject.Screens
         //Horse
         public Vector2 seaHorseStartPosition = new Vector2(900, 450);
         public Vector2 horseTalkingPosition = new Vector2(250, 100);
+        public Vector2 bigSeaHorseStartPosition = new Vector2(1050, 100);
 
         //Background
         public Vector2 backgroundPosition = new Vector2(0, 0);
@@ -101,6 +103,7 @@ namespace FinalProject.Screens
             textBox = _game.Content.Load<Texture2D>("images/textBox");
             shell = _game.Content.Load<Texture2D>("images/shell");
             seaHorseIdle = _game.Content.Load<Texture2D>("images/seaHorseIdle");
+            bigSeaHorse = _game.Content.Load<Texture2D>("images/seaHorse");
 
             //animations
             crab = _game.Content.Load<Texture2D>("images/idle");
@@ -220,9 +223,9 @@ namespace FinalProject.Screens
                 }
             }
 
+            //cutscene number 2
             if (_cutsceneCount == 1)
             {
-                idleCrab.show();
 
                 spriteBatch.Draw(backgroundSprite, backgroundPosition, Color.White);
                 spriteBatch.Draw(textBox, textboxPosition, Color.White);
@@ -235,6 +238,56 @@ namespace FinalProject.Screens
                 {
                     idleCrab.show();
                     idleEvilCrab.show();
+                    talkingEvilCrab.show();
+                }
+                else if (_textBoxCount < 8)
+                {
+                    talkingEvilCrab.hide();
+                    talkingCrab.show();
+                }
+                else if (_textBoxCount < 14)
+                {
+                    talkingCrab.hide();
+                    talkingEvilCrab.show();
+                }
+                else if (_textBoxCount < 17)
+                {
+                    idleEvilCrab.hide();
+                    talkingEvilCrab.hide();
+                    talkingHorse.show();
+                }
+                else if (_textBoxCount < 20)
+                {
+                    talkingHorse.hide();
+                    talkingCrab.show();
+                }
+                else if (_textBoxCount < 29)
+                {
+                    talkingCrab.hide();
+                    talkingHorse.show();
+                }
+                else if (_textBoxCount < 32)
+                {
+                    talkingHorse.hide();
+                    talkingCrab.show();
+                }
+                else if (_textBoxCount < 35)
+                {
+                    talkingCrab.hide();
+                    talkingHorse.show();
+                }
+                else if (_textBoxCount < 38)
+                {
+                    talkingHorse.hide();
+                    talkingCrab.show();
+                }
+
+                if (_textBoxCount < 14)
+                {
+                }
+                else
+                {
+                    spriteBatch.Draw(bigSeaHorse, bigSeaHorseStartPosition, bigSeaHorse.Bounds, Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 1f);
                 }
             }
         }
@@ -343,7 +396,7 @@ namespace FinalProject.Screens
                 _cutsceneText.Add("");
                 _cutsceneText.Add("(Neigh)");
                 _cutsceneText.Add("");
-            }
+            } //Cutscene 1
             if (_cutsceneCount == 1) //Cutscene 2
             {
                 _cutsceneText.Add("Aha!");
@@ -407,6 +460,7 @@ namespace FinalProject.Screens
 
         public void Reset()
         {
+            _textDelay = DateTime.Now.AddSeconds(1);
         }
     }
 }
