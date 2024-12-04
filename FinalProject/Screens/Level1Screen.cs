@@ -34,6 +34,10 @@ namespace FinalProject.Screens
         private Tile platform2;
         private Tile platform3;
         private Tile platform4;
+        private Tile platform5;
+        private Tile platform6;
+        private Tile platform7;
+        private Tile platform8;
         private List<Tile> platforms;
 
         private Pearl pearl1;
@@ -45,11 +49,7 @@ namespace FinalProject.Screens
         private List<Pearl> pearls;
         public SpriteFont _font;
 
-        public Vector2 backgroundPosition = new Vector2(0, 0);
-        public Vector2 playerStartingPosition = new Vector2(20, Game1.ScreenHeight - 70);
-        public Vector2 shark1StartingPosition = new Vector2(Game1.ScreenWidth / 5 * 4, Game1.ScreenHeight - 200);
-        public Vector2 shark2StartingPosition = new Vector2(Game1.ScreenWidth / 5 * 4 + Game1.ScreenWidth, Game1.ScreenHeight - 200);
-        public Vector2 seaHorseStartingPosition = new Vector2(Game1.ScreenWidth / 5 * 4 - 100, Game1.ScreenHeight - 600);
+        public Vector2 backgroundPosition = Vector2.Zero;
 
         public Level1Screen(Game game, SpriteBatch spriteBatch)
         {
@@ -58,15 +58,15 @@ namespace FinalProject.Screens
             backgroundSprite = _game.Content.Load<Texture2D>("images/background");
             _font = _game.Content.Load<SpriteFont>("PearlFont");
 
-            Player = new Player(_game, spriteBatch, playerStartingPosition, 9);
+            Player = new Player(_game, spriteBatch, new Vector2(20, Game1.ScreenHeight - 70), 9);
             Player.Initialize();
 
-            seaHorseBoss = new Boss(_game, spriteBatch, seaHorseStartingPosition, 9);
+            seaHorseBoss = new Boss(_game, spriteBatch, new Vector2(Game1.ScreenWidth / 5 * 4 - 100, Game1.ScreenHeight - 600), 9);
             seaHorseBoss.Initialize();
 
-            shark1 = new Shark(_game, shark1StartingPosition, 2);
+            shark1 = new Shark(_game, new Vector2(Game1.ScreenWidth / 5 * 4, Game1.ScreenHeight - 200), 2);
             shark1.Initialize();
-            shark2 = new Shark(_game, shark2StartingPosition, 2);
+            shark2 = new Shark(_game, new Vector2(Game1.ScreenWidth / 5 * 4 + Game1.ScreenWidth, Game1.ScreenHeight - 200), 2);
             shark2.Initialize();
 
             crab1 = new Crab(_game, spriteBatch, new Vector2(1700, 600));
@@ -74,20 +74,29 @@ namespace FinalProject.Screens
             crab2 = new Crab(_game, spriteBatch, new Vector2(2000, 600));
             crab2.Initialize();
 
-            platform1 = new Tile(_game, spriteBatch, new Vector2(200, 400));
+            platform1 = new Tile(_game, spriteBatch, new Vector2(2000, 400));
             platform1.Initialize();
-            platform2 = new Tile(_game, spriteBatch, new Vector2(200 + platform1.Width, 400));
+            platform2 = new Tile(_game, spriteBatch, new Vector2(2000 + platform1.Width, 400));
             platform2.Initialize();
-            platform3 = new Tile(_game, spriteBatch, new Vector2(200 + (platform2.Width * 2), 400));
+            platform3 = new Tile(_game, spriteBatch, new Vector2(2000 + (platform1.Width * 2), 400));
             platform3.Initialize();
-            platform4 = new Tile(_game, spriteBatch, new Vector2(200 + (platform3.Width * 3), 400));
+            platform4 = new Tile(_game, spriteBatch, new Vector2(2000 + (platform1.Width * 3), 400));
             platform4.Initialize();
+
+            platform5 = new Tile(_game, spriteBatch, new Vector2(4000, 400));
+            platform5.Initialize();
+            platform6 = new Tile(_game, spriteBatch, new Vector2(4000 + platform1.Width, 400));
+            platform6.Initialize();
+            platform7 = new Tile(_game, spriteBatch, new Vector2(4000 + (platform1.Width * 2), 400));
+            platform7.Initialize();
+            platform8 = new Tile(_game, spriteBatch, new Vector2(4000 + (platform1.Width * 3), 400));
+            platform8.Initialize();
 
             enemies = [shark1, shark2, crab1, crab2];
             sharks = [shark1, shark2];
             crabs = [crab1, crab2];
             bosses = [seaHorseBoss];
-            platforms = [platform1, platform2, platform3, platform4];
+            platforms = [platform1, platform2, platform3, platform4, platform5, platform6, platform7, platform8];
 
             pearl1 = new Pearl(_game, spriteBatch, new Vector2(300, 600));
             pearl1.Initialize();
@@ -241,6 +250,7 @@ namespace FinalProject.Screens
                     didCollide = true;
                 }
             }
+
             Player.isJumping = !didCollide;
 
             // Check for player / enemy collisions
@@ -248,6 +258,7 @@ namespace FinalProject.Screens
             {
                 if (!enemy.IsDead && Player.Hitbox.Intersects(enemy.AttackHitbox))
                 {
+                    Reset();
                     _screenManager.SetScreen(ScreenType.GameOverMenu);
                     _screenManager.SwitchToNextScreen();
                 }
@@ -256,6 +267,7 @@ namespace FinalProject.Screens
             {
                 if (!boss.isDead() && Player.Hitbox.Intersects(boss.AttackHitbox))
                 {
+                    Reset();
                     _screenManager.SetScreen(ScreenType.GameOverMenu);
                     _screenManager.SwitchToNextScreen();
                 }
@@ -293,35 +305,42 @@ namespace FinalProject.Screens
         public void Reset()
         {
             backgroundPosition = Vector2.Zero;
-            Player.Position = playerStartingPosition;
+            Player.Position = Player.StartingPosition;
 
             foreach (Enemy enemy in enemies)
             {
+                enemy.IsDead = false;
                 enemy.Position = enemy.StartingPosition;
             }
 
             foreach (Crab crab in crabs)
             {
                 crab.ResetBounds();
+                crab.IdleAnimation.hide();
             }
 
             foreach(Pearl pearl in pearls)
             {
+                pearl.IsCollected = false;
                 pearl.Position = pearl.StartingPosition;
             }
+
             foreach (Boss boss in bosses)
             {
+                boss.health = 3;
                 boss.Position = boss.StartingPosition;
             }
-            Player.AttackAnimation.hide();
-            Player.IdleAnimation.hide();
-            Player.WalkAnimation.hide();
-            seaHorseBoss.HPAnimation.hide();
 
             foreach (Tile tile in platforms)
             {
                 tile.Position = tile.StartingPosition;
+                tile.Update(0);
             }
+
+            Player.AttackAnimation.hide();
+            Player.IdleAnimation.hide();
+            Player.WalkAnimation.hide();
+            seaHorseBoss.HPAnimation.hide();
         }
     }
 }

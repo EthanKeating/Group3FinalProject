@@ -61,7 +61,6 @@ namespace FinalProject.Animations
         {
             this.Enabled = false;
             this.Visible = false;
-            g.Components.Remove(this);
         }
 
         public void show()
