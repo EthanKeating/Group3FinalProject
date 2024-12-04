@@ -236,7 +236,6 @@ namespace FinalProject.Screens
 
                 if (_textBoxCount < 2)
                 {
-                    idleCrab.show();
                     idleEvilCrab.show();
                     talkingEvilCrab.show();
                 }
