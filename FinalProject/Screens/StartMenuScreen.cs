@@ -64,14 +64,20 @@ namespace FinalProject.Screens
 
             if (keyboardState.IsKeyDown(Keys.Enter))
             {
+                CutsceneScreen screen = _screenManager.GetScreenBy(ScreenType.Cutscene) as CutsceneScreen;
+                screen._cutsceneCount = 0;
                 _screenManager.SetScreen(ScreenType.Cutscene);
                 _screenManager.SwitchToNextScreen();
+
             }
             
             if (mouseState.LeftButton == ButtonState.Pressed && !mouseDown)
             {
                 if (playButtonBounds.Contains(mouseState.Position))
                 {
+                    CutsceneScreen screen = _screenManager.GetScreenBy(ScreenType.Cutscene) as CutsceneScreen;
+                    screen._cutsceneCount = 0;
+
                     _screenManager.SetScreen(ScreenType.Cutscene);
                     _screenManager.SwitchToNextScreen();
                 }
