@@ -21,8 +21,8 @@
 
         public void Initialize()
         {
-            Hitbox = new Hitbox(this, 0, 0, 0, 0);
-            AttackHitbox = new Hitbox(this, 0, 0, 0, 0);
+            Hitbox = new Hitbox(this, 10, 10, 10, 10);
+            AttackHitbox = new Hitbox(this, 10, 10, 10, 10);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

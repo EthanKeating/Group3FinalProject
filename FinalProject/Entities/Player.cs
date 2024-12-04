@@ -14,7 +14,7 @@
         private const int IDLE_ANIM_SPEED = 30;
         private const int WALK_ANIM_SPEED = 5;
         private const int ATTACK_ANIM_SPEED = 10;
-        private const int ATTACK_WIDTH = -25;
+        private const int ATTACK_WIDTH = -15;
 
         public readonly int FloorHeight = Game1.ScreenHeight - FLOOR_HEIGHT;
 
@@ -41,7 +41,7 @@
         public void Initialize()
         {
             AttackAnimation.Player = this;
-            Hitbox = new Hitbox(this, 30, 20, 40, 0);
+            Hitbox = new Hitbox(this, 30, 50, 25, 0);
             AttackHitbox = new Hitbox(this, Width / 2, 0, ATTACK_WIDTH, 0);
         }
 
