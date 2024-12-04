@@ -9,6 +9,8 @@
         {
             Texture = game.Content.Load<Texture2D>("images/bubble");
             BubbleAnimation = new BubbleAnimation(game, spriteBatch, Texture, Position, 10);
+            game.Components.Add(BubbleAnimation);
+            IsDead = true;
             Width = Texture.Width / 16;
             Height = Texture.Height;
         }
@@ -39,11 +41,11 @@
         protected override void Move()
         {
             Vector2 distance = Position - Target;
-            Position = new Vector2(distance.X * Speed, distance.Y * Speed);
+            //Position = new Vector2(distance.X * Speed, distance.Y * Speed);
 
             if (Position == Target)
             {
-
+                IsDead = true;
             }
         }
     }
