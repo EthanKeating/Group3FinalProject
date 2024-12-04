@@ -200,13 +200,14 @@ namespace FinalProject.Screens
 
             int rightBound = (int)Game1.ScreenWidth / 4;
 
+            winShell.Position = new Vector2(backgroundPosition.X + backgroundSprite.Width - 100, Game1.ScreenHeight - 200);
+
             // Move background
             if (Player.Position.X > rightBound)
             {
                 if (backgroundPosition.X > -backgroundSprite.Width + 1280)
                 {
                     Player.Position = new Vector2(startX, Player.Position.Y);
-                    winShell.Position = new Vector2(winShell.Position.X - deltaX, winShell.Position.Y);
                     backgroundPosition.X -= deltaX;
 
                     foreach (Boss boss in bosses)
@@ -296,6 +297,7 @@ namespace FinalProject.Screens
                 }
             }
             Player.isJumping = !didCollide;
+
 
             if (Player.Hitbox.Intersects(winShell.Hitbox))
             {
@@ -404,11 +406,6 @@ namespace FinalProject.Screens
             {
                 tile.Position = tile.StartingPosition;
                 tile.Update(0);
-            }
-
-            for(int i = 0; i < 10; i++)
-            {
-                winShell.Position = new Vector2(backgroundSprite.Width - 100, Game1.ScreenHeight - 200);
             }
 
             Player.AttackAnimation.hide();
