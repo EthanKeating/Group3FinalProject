@@ -81,19 +81,25 @@ namespace FinalProject.Screens
                 new Tile(_game, spriteBatch, new Vector2(2000 + (TileTexture.Width / 16 * 2), 500)),
                 new Tile(_game, spriteBatch, new Vector2(2000 + (TileTexture.Width / 16 * 3), 500)),
 
-                new Tile(_game, spriteBatch, new Vector2(2200, 200)),
-                new Tile(_game, spriteBatch, new Vector2(2200 + TileTexture.Width / 16, 200)),
-                new Tile(_game, spriteBatch, new Vector2(2200 + (TileTexture.Width / 16 * 2), 200)),
-                new Tile(_game, spriteBatch, new Vector2(2200 + (TileTexture.Width / 16 * 3), 200)),
+                new Tile(_game, spriteBatch, new Vector2(2200, 300)),
+                new Tile(_game, spriteBatch, new Vector2(2200 + TileTexture.Width / 16, 300)),
+                new Tile(_game, spriteBatch, new Vector2(2200 + (TileTexture.Width / 16 * 2), 300)),
+                new Tile(_game, spriteBatch, new Vector2(2200 + (TileTexture.Width / 16 * 3), 300)),
 
-                new Tile(_game, spriteBatch, new Vector2(4000, 400)),
-                new Tile(_game, spriteBatch, new Vector2(4000 + TileTexture.Width / 16, 400)),
-                new Tile(_game, spriteBatch, new Vector2(4000 + (TileTexture.Width / 16 * 2), 400)),
-                new Tile(_game, spriteBatch, new Vector2(4000 + (TileTexture.Width / 16 * 3), 400)),
-                new Tile(_game, spriteBatch, new Vector2(6000, 400)),
-                new Tile(_game, spriteBatch, new Vector2(6000 + TileTexture.Width / 16, 400)),
-                new Tile(_game, spriteBatch, new Vector2(6000 + (TileTexture.Width / 16 * 2), 400)),
-                new Tile(_game, spriteBatch, new Vector2(6000 + (TileTexture.Width / 16 * 3), 400))
+                new Tile(_game, spriteBatch, new Vector2(4000, 500)),
+                new Tile(_game, spriteBatch, new Vector2(4000 + TileTexture.Width / 16, 500)),
+                new Tile(_game, spriteBatch, new Vector2(4000 + (TileTexture.Width / 16 * 2), 500)),
+                new Tile(_game, spriteBatch, new Vector2(4000 + (TileTexture.Width / 16 * 3), 500)),
+
+                new Tile(_game, spriteBatch, new Vector2(4200, 300)),
+                new Tile(_game, spriteBatch, new Vector2(4200 + TileTexture.Width / 16, 300)),
+                new Tile(_game, spriteBatch, new Vector2(4200 + (TileTexture.Width / 16 * 2), 300)),
+                new Tile(_game, spriteBatch, new Vector2(4200 + (TileTexture.Width / 16 * 3), 300)),
+
+                new Tile(_game, spriteBatch, new Vector2(6000, 500)),
+                new Tile(_game, spriteBatch, new Vector2(6000 + TileTexture.Width / 16, 500)),
+                new Tile(_game, spriteBatch, new Vector2(6000 + (TileTexture.Width / 16 * 2), 500)),
+                new Tile(_game, spriteBatch, new Vector2(6000 + (TileTexture.Width / 16 * 3), 500))
                 ];
             platforms.ForEach(p => p.Initialize());
 
@@ -240,12 +246,20 @@ namespace FinalProject.Screens
             bool didCollide = false;
             foreach (Tile tile in platforms)
             {
-                if (Player.Hitbox.Intersects(tile.Hitbox))
+
+                if (Player.Hitbox.Collides(tile.Hitbox) == CollisionSide.Top)
                 {
                     Player.Position = new Vector2(Player.Position.X, tile.Position.Y - Player.Height);
                     Player.velocity = 0;
                     didCollide = true;
                 }
+
+                //if (Player.Hitbox.Intersects(tile.Hitbox))
+                //{
+                //    Player.Position = new Vector2(Player.Position.X, tile.Position.Y - Player.Height);
+                //    Player.velocity = 0;
+                //    didCollide = true;
+                //}
             }
 
             Player.isJumping = !didCollide;
