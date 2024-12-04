@@ -48,6 +48,7 @@ namespace FinalProject
                 new StartMenuScreen(this, _spriteBatch),
                 new Level1Screen(this, _spriteBatch),
                 new GameOverMenuScreen(this, _spriteBatch),
+                new GameWinMenuScreen(this, _spriteBatch),
                 new CutsceneScreen(this, _spriteBatch)
 
             });
