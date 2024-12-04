@@ -27,6 +27,7 @@ namespace FinalProject
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            SoundEffect.MasterVolume = 0.5f;
         }
 
         protected override void Initialize()
@@ -37,12 +38,12 @@ namespace FinalProject
 
             base.Initialize();
         }
-
+        
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _screenManager = new ScreenManager(new IScreen[]
+            _screenManager = new ScreenManager(this, new IScreen[]
             {
                 new StartMenuScreen(this, _spriteBatch),
                 new Level1Screen(this, _spriteBatch),

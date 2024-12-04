@@ -11,7 +11,8 @@
         public Crab(Game game, SpriteBatch spriteBatch, Vector2 position) : base(game, position, 1)
         {
             Texture = game.Content.Load<Texture2D>("images/idleEvilCrab");
-            IdleAnimation = new EvilCrabIdleAnimation(game, spriteBatch, Texture, position, 100);
+            IdleAnimation = new EvilCrabIdleAnimation(game, spriteBatch, Texture, position, 10);
+            game.Components.Add(IdleAnimation);
             Width = Texture.Width / 2;
             Height = Texture.Height;
 
@@ -20,13 +21,20 @@
 
         public void Initialize()
         {
-            Hitbox = new Hitbox(this, 15, 80, 60, 0);
-            AttackHitbox = new Hitbox(this, 20, 80, 80, 0);
+            Hitbox = new Hitbox(this, 10, 10, 10, 10);
+            AttackHitbox = new Hitbox(this, 10, 10, 10, 10);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            IdleAnimation.show();
+            if (!IsDead)
+            {
+                IdleAnimation.show();
+            }
+            else
+            {
+                IdleAnimation.hide();
+            }
         }
 
         public void UpdateBounds(int delta)
@@ -42,7 +50,14 @@
             rightBounds = (int)StartingPosition.X;
         }
 
-        public override void Move()
+        public override void Update(int deltaX)
+        {
+            Move();
+
+            IdleAnimation.UpdatePosition(Position);
+        }
+
+        protected override void Move()
         {
             if (isMovingLeft)
             {

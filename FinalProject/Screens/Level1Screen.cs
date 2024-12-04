@@ -7,25 +7,27 @@ using System.Threading.Tasks;
 
 namespace FinalProject.Screens
 {
-    class Level1Screen : IScreen
+    public class Level1Screen : IScreen
     {
         public ScreenType ScreenType => ScreenType.Level1;
         private Game _game;
 
         private Texture2D backgroundSprite;
 
-        private Player player;
+        public Player Player { get; set; }
 
         private Shark shark1;
         private Shark shark2;
         private Crab crab1;
         private Crab crab2;
 
-        private Tile platform1;
+        private Boss seaHorseBoss;
 
+        private Tile platform1;
         private List<Enemy> enemies;
         private List<Shark> sharks;
         private List<Crab> crabs;
+        private List<Boss> bosses;
         private List<Tile> platforms;
 
         private Pearl pearl1;
@@ -40,6 +42,7 @@ namespace FinalProject.Screens
         public Vector2 playerStartingPosition = new Vector2(20, Game1.ScreenHeight - 70);
         public Vector2 shark1StartingPosition = new Vector2(Game1.ScreenWidth / 5 * 4, Game1.ScreenHeight - 200);
         public Vector2 shark2StartingPosition = new Vector2(Game1.ScreenWidth / 5 * 4 + Game1.ScreenWidth, Game1.ScreenHeight - 200);
+        public Vector2 seaHorseStartingPosition = new Vector2(Game1.ScreenWidth / 5 * 4 - 100, Game1.ScreenHeight - 600);
 
         public Level1Screen(Game game, SpriteBatch spriteBatch)
         {
@@ -47,18 +50,20 @@ namespace FinalProject.Screens
 
             backgroundSprite = _game.Content.Load<Texture2D>("images/background");
 
-            player = new Player(_game, spriteBatch, playerStartingPosition, 9);
-            player.Initialize();
+            Player = new Player(_game, spriteBatch, playerStartingPosition, 9);
+            Player.Initialize();
+
+            seaHorseBoss = new Boss(_game, spriteBatch, seaHorseStartingPosition, 9);
+            seaHorseBoss.Initialize();
 
             shark1 = new Shark(_game, shark1StartingPosition, 2);
             shark1.Initialize();
-
             shark2 = new Shark(_game, shark2StartingPosition, 2);
             shark2.Initialize();
 
-            crab1 = new Crab(_game, spriteBatch, new Vector2(7000, 400));
+            crab1 = new Crab(_game, spriteBatch, new Vector2(1700, 600));
             crab1.Initialize();
-            crab2 = new Crab(_game, spriteBatch, new Vector2(7000, 400));
+            crab2 = new Crab(_game, spriteBatch, new Vector2(2000, 600));
             crab2.Initialize();
 
             platform1 = new Tile(_game, new Vector2(200, 600));
@@ -67,17 +72,18 @@ namespace FinalProject.Screens
             enemies = [shark1, shark2, crab1, crab2];
             sharks = [shark1, shark2];
             crabs = [crab1, crab2];
+            bosses = [seaHorseBoss];
             platforms = [platform1];
 
-            pearl1 = new Pearl(_game, spriteBatch, new Vector2(100, 500));
+            pearl1 = new Pearl(_game, spriteBatch, new Vector2(300, 600));
             pearl1.Initialize();
-            pearl2 = new Pearl(_game, spriteBatch, new Vector2(200, 500));
+            pearl2 = new Pearl(_game, spriteBatch, new Vector2(500, 600));
             pearl2.Initialize();
-            pearl3 = new Pearl(_game, spriteBatch, new Vector2(300, 500));
+            pearl3 = new Pearl(_game, spriteBatch, new Vector2(3000, 600));
             pearl3.Initialize();
-            pearl4 = new Pearl(_game, spriteBatch, new Vector2(400, 500));
+            pearl4 = new Pearl(_game, spriteBatch, new Vector2(4500, 600));
             pearl4.Initialize();
-            pearl5 = new Pearl(_game, spriteBatch, new Vector2(500, 500));
+            pearl5 = new Pearl(_game, spriteBatch, new Vector2(6000, 600));
             pearl5.Initialize();
 
             pearls = [pearl1, pearl2, pearl3, pearl4, pearl5];
@@ -87,14 +93,16 @@ namespace FinalProject.Screens
         {
             spriteBatch.Draw(backgroundSprite, backgroundPosition, Color.White);
 
-            player.Draw();
+            Player.Draw();
 
             foreach (Enemy enemy in enemies)
             {
-                if (!enemy.IsDead)
-                {
-                    enemy.Draw(spriteBatch);
-                }
+                enemy.Draw(spriteBatch);
+            }
+
+            foreach(Boss boss in bosses)
+            {
+                boss.Draw(spriteBatch);
             }
 
             foreach (Pearl pearl in pearls)
@@ -111,24 +119,39 @@ namespace FinalProject.Screens
         public void Update(ScreenManager _screenManager, float delta)
         {
             // Calculate how much background moves
-            int startX = (int)player.Position.X;
-            player.Update();
-            int deltaX = (int)player.Position.X - startX;
+            int startX = (int)Player.Position.X;
+            Player.Update();
+            int deltaX = (int)Player.Position.X - startX;
             
             foreach (Enemy enemy in enemies)
             {
-                enemy.Move();
+                enemy.Update(deltaX);
+            }
+
+            foreach(Boss boss in bosses)
+            {
+                boss.Update(delta);
             }
 
             int rightBound = (int)Game1.ScreenWidth / 4;
 
             // Move background
-            if (player.Position.X > rightBound)
+            if (Player.Position.X > rightBound)
             {
                 if (backgroundPosition.X > -backgroundSprite.Width + 1280)
                 {
-                    player.Position = new Vector2(startX, player.Position.Y);
+                    Player.Position = new Vector2(startX, Player.Position.Y);
                     backgroundPosition.X -= deltaX;
+
+                    foreach (Boss boss in bosses)
+                    {
+                        boss.Position = new Vector2(boss.Position.X - deltaX, boss.Position.Y);
+                    }
+
+                    foreach (Shark shark in sharks)
+                    {
+                        shark.Position = new Vector2(shark.Position.X - deltaX, shark.Position.Y);
+                    }
 
                     foreach (Crab crab in crabs)
                     {
@@ -154,9 +177,9 @@ namespace FinalProject.Screens
             }
 
             // Move background backwards
-            if (player.Position.X < 0)
+            if (Player.Position.X < 0)
             {
-                player.Position = new Vector2(startX, player.Position.Y);
+                Player.Position = new Vector2(startX, Player.Position.Y);
                 backgroundPosition.X -= deltaX;
 
                 if (backgroundPosition.X > 0)
@@ -165,10 +188,21 @@ namespace FinalProject.Screens
                 }
                 else
                 {
+                    foreach (Boss boss in bosses)
+                    {
+                        boss.Position = new Vector2(boss.Position.X - deltaX, boss.Position.Y);
+                    }
+
+                    foreach (Shark shark in sharks)
+                    {
+                        shark.Position = new Vector2(shark.Position.X - deltaX, shark.Position.Y);
+                    }
+
                     foreach (Crab crab in crabs)
                     {
                         crab.UpdateBounds(deltaX);
                     }
+
                     foreach (Pearl pearl in pearls)
                     {
                         pearl.Position = new Vector2(pearl.Position.X - deltaX, pearl.Position.Y);
@@ -198,7 +232,7 @@ namespace FinalProject.Screens
             // Check for player / enemy collisions
             foreach (Enemy enemy in enemies)
             {
-                if (!enemy.IsDead && player.Hitbox.Intersects(enemy.AttackHitbox))
+                if (!enemy.IsDead && Player.Hitbox.Intersects(enemy.AttackHitbox))
                 {
                     _screenManager.SetScreen(ScreenType.GameOverMenu);
                     _screenManager.SwitchToNextScreen();
@@ -206,11 +240,11 @@ namespace FinalProject.Screens
             }
 
             // Check for player attack collisions
-            if (player.IsAttacking)
+            if (Player.IsAttacking)
             {
                 foreach (Enemy enemy in enemies)
                 {
-                    if (!enemy.IsDead && player.AttackHitbox.Intersects(enemy.Hitbox))
+                    if (!enemy.IsDead && Player.AttackHitbox.Intersects(enemy.Hitbox))
                     {
                         enemy.IsDead = true;
                     }
@@ -220,7 +254,7 @@ namespace FinalProject.Screens
             // Check for pearl collisions
             foreach (Pearl pearl in pearls)
             {
-                if (player.Hitbox.Intersects(pearl.Hitbox))
+                if (Player.Hitbox.Intersects(pearl.Hitbox))
                 {
                     pearl.IsCollected = true;
                 }
@@ -232,7 +266,7 @@ namespace FinalProject.Screens
         public void Reset()
         {
             backgroundPosition = Vector2.Zero;
-            player.Position = playerStartingPosition;
+            Player.Position = playerStartingPosition;
 
             foreach (Enemy enemy in enemies)
             {
@@ -248,6 +282,14 @@ namespace FinalProject.Screens
             {
                 pearl.Position = pearl.StartingPosition;
             }
+            foreach (Boss boss in bosses)
+            {
+                boss.Position = boss.StartingPosition;
+            }
+            Player.AttackAnimation.hide();
+            Player.IdleAnimation.hide();
+            Player.WalkAnimation.hide();
+            seaHorseBoss.HPAnimation.hide();
 
             foreach (Tile tile in platforms)
             {
