@@ -12,6 +12,9 @@ namespace FinalProject.Screens
         private Game _game;
         private SpriteBatch _spriteBatch;
 
+        private Vector2 logoPosition;
+        private Texture2D logoTexture;
+
         private Vector2 playButtonPosition;
         private Texture2D playButtonTexture;
         private Texture2D backgroundSprite;
@@ -31,9 +34,12 @@ namespace FinalProject.Screens
             _game = game;
             _spriteBatch = spriteBatch;
 
+            logoTexture = _game.Content.Load<Texture2D>("images/DarkShellsTitle");
+            logoPosition = new Vector2((Game1.ScreenWidth / 2) - (logoTexture.Width / 2), 0);
+
             playButtonTexture = _game.Content.Load<Texture2D>("images/play");
             backgroundSprite = _game.Content.Load<Texture2D>("images/background");
-            playButtonPosition = new Vector2((Game1.ScreenWidth / 2) - (playButtonTexture.Width / 2), Game1.ScreenHeight / 3 * 2);
+            playButtonPosition = new Vector2((Game1.ScreenWidth / 2) - (playButtonTexture.Width / 2), Game1.ScreenHeight / 5 * 4);
             playButtonBounds = new Rectangle((int)playButtonPosition.X, (int)playButtonPosition.Y, playButtonTexture.Width, playButtonTexture.Height);
 
             baseYPosition = playButtonPosition.Y;
@@ -43,6 +49,7 @@ namespace FinalProject.Screens
         {
             _spriteBatch.Draw(backgroundSprite, Vector2.Zero, Color.White);
             _spriteBatch.Draw(playButtonTexture, playButtonPosition, Color.White);
+            _spriteBatch.Draw(logoTexture, logoPosition, Color.White);
         }
 
         public void Update(ScreenManager _screenManager, float delta)
