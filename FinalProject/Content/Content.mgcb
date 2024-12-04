@@ -56,6 +56,18 @@
 /processorParam:TextureFormat=Color
 /build:images/background.png
 
+#begin images/crabHeadTalking.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:images/crabHeadTalking.png
+
 #begin images/evilCrabHeadTalking.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -68,7 +80,7 @@
 /processorParam:TextureFormat=Color
 /build:images/evilCrabHeadTalking.png
 
-#begin images/horseHeadClosed.jpg
+#begin images/horseHeadTalking.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -78,19 +90,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:images/horseHeadClosed.jpg
-
-#begin images/horseHeadOpen.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:images/horseHeadOpen.jpg
+/build:images/horseHeadTalking.png
 
 #begin images/idle.png
 /importer:TextureImporter
@@ -164,6 +164,18 @@
 /processorParam:TextureFormat=Color
 /build:images/seaHorse.png
 
+#begin images/seaHorseIdle.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:images/seaHorseIdle.png
+
 #begin images/shark.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -175,6 +187,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:images/shark.png
+
+#begin images/shell.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:images/shell.png
 
 #begin images/textBox.png
 /importer:TextureImporter
