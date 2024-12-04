@@ -272,12 +272,13 @@ namespace FinalProject.Screens
                     didCollide = true;
                 }
             }
-
             Player.isJumping = !didCollide;
 
             if (Player.Hitbox.Intersects(winShell.Hitbox))
             {
-                //Player WON!
+                Reset();
+                _screenManager.SetScreen(ScreenType.GameWinMenu);
+                _screenManager.SwitchToNextScreen();
             }
 
             // Check for player / enemy collisions
@@ -346,6 +347,7 @@ namespace FinalProject.Screens
         {
             backgroundPosition = Vector2.Zero;
             Player.Position = Player.StartingPosition;
+            winShell.Position = winShell.StartingPosition;
 
             foreach (Enemy enemy in enemies)
             {

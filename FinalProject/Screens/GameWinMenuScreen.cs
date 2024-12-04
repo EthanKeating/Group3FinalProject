@@ -1,17 +1,11 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using FinalProject.Managers;
-
-using System;
-
-namespace FinalProject.Screens
+﻿namespace FinalProject.Screens
 {
-    class GameOverMenuScreen : IScreen
+    public class GameWinMenuScreen : IScreen
     {
-        public ScreenType ScreenType => ScreenType.GameOverMenu;
-        private Game _game;
-        private SpriteBatch _spriteBatch;
+        public ScreenType ScreenType => ScreenType.GameWinMenu;
+
+        private Game game;
+        private SpriteBatch spriteBatch;
 
         private Texture2D gameOverSprite;
         private Vector2 gameOverPosition;
@@ -30,14 +24,15 @@ namespace FinalProject.Screens
 
         private float time = 0;
 
-        public GameOverMenuScreen(Game game, SpriteBatch spriteBatch)
+        public GameWinMenuScreen(Game _game, SpriteBatch _spriteBatch)
         {
-            _game = game;
-            _spriteBatch = spriteBatch;
+            game = _game;
+            spriteBatch = _spriteBatch;
 
-            replayButtonTexture = _game.Content.Load<Texture2D>("images/replay");
-            backgroundSprite = _game.Content.Load<Texture2D>("images/background");
-            gameOverSprite = _game.Content.Load<Texture2D>("images/gameover");
+            backgroundSprite = game.Content.Load<Texture2D>("images/background");
+            replayButtonTexture = game.Content.Load<Texture2D>("images/replay");
+            gameOverSprite = game.Content.Load<Texture2D>("images/youwon");
+
             replayButtonPosition = new Vector2((Game1.ScreenWidth / 2) - (replayButtonTexture.Width / 2), Game1.ScreenHeight / 3 * 2);
             gameOverPosition = new Vector2((Game1.ScreenWidth / 2) - (gameOverSprite.Width / 2), 100);
             replayButtonBounds = new Rectangle((int)replayButtonPosition.X, (int)replayButtonPosition.Y, replayButtonTexture.Width, replayButtonTexture.Height);
@@ -48,9 +43,13 @@ namespace FinalProject.Screens
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            _spriteBatch.Draw(backgroundSprite, Vector2.Zero, Color.White);
-            _spriteBatch.Draw(gameOverSprite, gameOverPosition, Color.White);
-            _spriteBatch.Draw(replayButtonTexture, replayButtonPosition, Color.White);
+            spriteBatch.Draw(backgroundSprite, Vector2.Zero, Color.White);
+            spriteBatch.Draw(gameOverSprite, gameOverPosition, Color.White);
+            spriteBatch.Draw(replayButtonTexture, replayButtonPosition, Color.White);
+        }
+
+        public void Reset()
+        {
         }
 
         public void Update(ScreenManager _screenManager, float delta)
@@ -83,10 +82,6 @@ namespace FinalProject.Screens
             {
                 mouseDown = false;
             }
-        }
-
-        public void Reset()
-        {
         }
     }
 }
