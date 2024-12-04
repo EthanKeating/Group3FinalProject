@@ -73,7 +73,6 @@ namespace FinalProject.Entities
                 health--;
                 nextDamage = DateTime.Now.AddSeconds(1);
             }
-
             if (isDead())
             {
                 HPAnimation.hide();
