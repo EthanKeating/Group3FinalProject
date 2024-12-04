@@ -15,6 +15,9 @@ namespace FinalProject.Animations
         private Vector2 position;
         private int delay;
 
+        public bool playedSound;
+        public SoundEffect pickupSound;
+
         private Vector2 dimension;
         public List<Rectangle> frames;
         private int frameIndex = -1;
@@ -23,6 +26,7 @@ namespace FinalProject.Animations
 
         private const int ROWS = 1;
         private const int COLS = 16;
+
 
         public Vector2 Position { get => position; set => position = value; }
 
@@ -37,6 +41,8 @@ namespace FinalProject.Animations
             this.Position = position;
             this.delay = delay;
             this.dimension = new Vector2(tex.Width / COLS, tex.Height / ROWS);
+            pickupSound = game.Content.Load<SoundEffect>("soundEffects/pickup");
+
             createFrames();
             hide();
         }

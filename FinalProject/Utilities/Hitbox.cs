@@ -1,4 +1,7 @@
-﻿namespace FinalProject.Utilities
+﻿using FinalProject.Entities;
+using System;
+
+namespace FinalProject.Utilities
 {
     public class Hitbox
     {
@@ -22,9 +25,9 @@
             }
         }
 
-        public Hitbox(BasicEntity _entitiy, int _leftOffset, int _topOffset, int _rightOffset, int _bottomOffset)
+        public Hitbox(BasicEntity _entity, int _leftOffset, int _topOffset, int _rightOffset, int _bottomOffset)
         {
-            entity = _entitiy;
+            entity = _entity;
             leftOffset = _leftOffset;
             rightOffset = _rightOffset;
             topOffset = _topOffset;

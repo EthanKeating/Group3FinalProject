@@ -1,14 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FinalProject.Animations
+﻿namespace FinalProject.Animations
 {
-    public class EvilCrabIdleAnimation : DrawableGameComponent
+    public class BubbleAnimation : DrawableGameComponent
     {
         private SpriteBatch sb;
         private Texture2D tex;
@@ -16,19 +8,20 @@ namespace FinalProject.Animations
         private int delay;
 
         private Vector2 dimension;
-        private List<Rectangle> frames;
-        private int frameIndex = -1;
+        public List<Rectangle> frames;
+        private int frameIndex = 0;
 
         private int delayCounter;
 
         private const int ROWS = 1;
-        private const int COLS = 2;
+        private const int COLS = 16;
+
 
         public Vector2 Position { get => position; set => position = value; }
 
         private Game g;
 
-        public EvilCrabIdleAnimation(Game game, SpriteBatch sb,
+        public BubbleAnimation(Game game, SpriteBatch sb,
             Texture2D tex, Vector2 position, int delay) : base(game)
         {
             this.g = game;
@@ -37,6 +30,7 @@ namespace FinalProject.Animations
             this.Position = position;
             this.delay = delay;
             this.dimension = new Vector2(tex.Width / COLS, tex.Height / ROWS);
+
             createFrames();
             hide();
         }
@@ -52,7 +46,6 @@ namespace FinalProject.Animations
                     int y = i * (int)dimension.Y;
                     Rectangle r = new Rectangle(x, y, (int)dimension.X, (int)dimension.Y);
                     frames.Add(r);
-
                 }
             }
         }
@@ -69,21 +62,26 @@ namespace FinalProject.Animations
             this.Visible = true;
         }
 
-        public void UpdatePosition(Vector2 _position)
-        {
-            position = _position;
-        }
-
         public override void Update(GameTime gameTime)
         {
             delayCounter++;
             if (delayCounter > delay)
             {
                 frameIndex++;
+                if (frameIndex >= ROWS * COLS)
+                {
+                    frameIndex = 0;
+                }
+
                 delayCounter = 0;
             }
 
             base.Update(gameTime);
+        }
+
+        public void UpdatePosition(Vector2 _position)
+        {
+            Position = _position;
         }
 
         public override void Draw(GameTime gameTime)
@@ -91,7 +89,7 @@ namespace FinalProject.Animations
             if (frameIndex >= 0)
             {
                 sb.Begin();
-                sb.Draw(tex, Position, frames[frameIndex % 2], Color.White);
+                sb.Draw(tex, Position, frames[frameIndex], Color.White);
                 sb.End();
             }
 

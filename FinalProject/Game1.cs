@@ -8,6 +8,7 @@ global using Microsoft.Xna.Framework.Graphics;
 global using Microsoft.Xna.Framework.Audio;
 global using Microsoft.Xna.Framework.Input;
 global using System.Collections.Generic;
+global using System;
 using static System.Net.Mime.MediaTypeNames;
 using System.Xml.Linq;
 
@@ -27,6 +28,7 @@ namespace FinalProject
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            SoundEffect.MasterVolume = 0.5f;
         }
 
         protected override void Initialize()
@@ -37,16 +39,17 @@ namespace FinalProject
 
             base.Initialize();
         }
-
+        
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _screenManager = new ScreenManager(new IScreen[]
+            _screenManager = new ScreenManager(this, new IScreen[]
             {
                 new StartMenuScreen(this, _spriteBatch),
                 new Level1Screen(this, _spriteBatch),
                 new GameOverMenuScreen(this, _spriteBatch),
+                new GameWinMenuScreen(this, _spriteBatch),
                 new CutsceneScreen(this, _spriteBatch)
 
             });

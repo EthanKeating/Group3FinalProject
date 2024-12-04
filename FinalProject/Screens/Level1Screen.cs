@@ -1,8 +1,11 @@
 ﻿using FinalProject.Entities;
+using System;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Formats.Asn1.AsnWriter;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace FinalProject.Screens
 {
@@ -27,37 +30,35 @@ namespace FinalProject.Screens
         private List<Crab> crabs;
         private List<Boss> bosses;
 
-        private Pearl pearl1;
-        private Pearl pearl2;
-        private Pearl pearl3;
-        private Pearl pearl4;
-        private Pearl pearl5;
+        private List<Tile> platforms;
+
+        private Shell winShell;
 
         private List<Pearl> pearls;
+        public SpriteFont _font;
 
-        private TestBox testBox;
-
-        public Vector2 backgroundPosition = new Vector2(0, 0);
-        public Vector2 playerStartingPosition = new Vector2(20, Game1.ScreenHeight - 70);
-        public Vector2 shark1StartingPosition = new Vector2(Game1.ScreenWidth / 5 * 4, Game1.ScreenHeight - 200);
-        public Vector2 shark2StartingPosition = new Vector2(Game1.ScreenWidth / 5 * 4 + Game1.ScreenWidth, Game1.ScreenHeight - 200);
-        public Vector2 seaHorseStartingPosition = new Vector2(Game1.ScreenWidth / 5 * 4 - 100, Game1.ScreenHeight - 600);
+        public Vector2 backgroundPosition = Vector2.Zero;
 
         public Level1Screen(Game game, SpriteBatch spriteBatch)
         {
             _game = game;
 
             backgroundSprite = _game.Content.Load<Texture2D>("images/background");
+            _font = _game.Content.Load<SpriteFont>("PearlFont");
 
-            Player = new Player(_game, spriteBatch, playerStartingPosition, 9);
+            Player = new Player(_game, spriteBatch, new Vector2(20, Game1.ScreenHeight - 70), 9);
             Player.Initialize();
 
-            seaHorseBoss = new Boss(_game, seaHorseStartingPosition, 9);
+            //winShell = new Shell(_game, new Vector2(backgroundSprite.Width - 500, Game1.ScreenHeight - 200));
+            winShell = new Shell(_game, new Vector2(backgroundSprite.Width - 100, Game1.ScreenHeight - 200));
+            winShell.Initialize();
+
+            seaHorseBoss = new Boss(_game, spriteBatch, new Vector2(backgroundSprite.Width - 1000, Game1.ScreenHeight - 600), 9);
             seaHorseBoss.Initialize();
 
-            shark1 = new Shark(_game, shark1StartingPosition, 2);
+            shark1 = new Shark(_game, new Vector2(Game1.ScreenWidth / 5 * 4, Game1.ScreenHeight - 200), 3);
             shark1.Initialize();
-            shark2 = new Shark(_game, shark2StartingPosition, 2);
+            shark2 = new Shark(_game, new Vector2(Game1.ScreenWidth * 2, Game1.ScreenHeight - 200), 3);
             shark2.Initialize();
 
             crab1 = new Crab(_game, spriteBatch, new Vector2(1700, 600));
@@ -65,40 +66,103 @@ namespace FinalProject.Screens
             crab2 = new Crab(_game, spriteBatch, new Vector2(2000, 600));
             crab2.Initialize();
 
+
             enemies = [shark1, shark2, crab1, crab2];
             sharks = [shark1, shark2];
             crabs = [crab1, crab2];
             bosses = [seaHorseBoss];
 
-            pearl1 = new Pearl(_game, spriteBatch, new Vector2(300, 600));
-            pearl1.Initialize();
-            pearl2 = new Pearl(_game, spriteBatch, new Vector2(500, 600));
-            pearl2.Initialize();
-            pearl3 = new Pearl(_game, spriteBatch, new Vector2(3000, 600));
-            pearl3.Initialize();
-            pearl4 = new Pearl(_game, spriteBatch, new Vector2(4500, 600));
-            pearl4.Initialize();
-            pearl5 = new Pearl(_game, spriteBatch, new Vector2(6000, 600));
-            pearl5.Initialize();
+            
+            Texture2D TileTexture = game.Content.Load<Texture2D>("images/bubble");
+            platforms = [
 
-            pearls = [pearl1, pearl2, pearl3, pearl4, pearl5];
+                new Tile(_game, spriteBatch, new Vector2(1000, 440)),
+                new Tile(_game, spriteBatch, new Vector2(1000 + TileTexture.Width / 16, 440)),
+                new Tile(_game, spriteBatch, new Vector2(1000 + (TileTexture.Width / 16 * 2), 440)),
+                new Tile(_game, spriteBatch, new Vector2(1000 + (TileTexture.Width / 16 * 3), 440)),
 
-            testBox = new TestBox(_game, new Vector2(400, 600), 0);
-            testBox.Initialize();
+                new Tile(_game, spriteBatch, new Vector2(1200, 230)),
+                new Tile(_game, spriteBatch, new Vector2(1200 + TileTexture.Width / 16, 230)),
+                new Tile(_game, spriteBatch, new Vector2(1200 + (TileTexture.Width / 16 * 2), 230)),
+                new Tile(_game, spriteBatch, new Vector2(1200 + (TileTexture.Width / 16 * 3), 230)),
+
+                new Tile(_game, spriteBatch, new Vector2(2000, 440)),
+                new Tile(_game, spriteBatch, new Vector2(2000 + TileTexture.Width / 16, 440)),
+                new Tile(_game, spriteBatch, new Vector2(2000 + (TileTexture.Width / 16 * 2), 440)),
+                new Tile(_game, spriteBatch, new Vector2(2000 + (TileTexture.Width / 16 * 3), 440)),
+
+                new Tile(_game, spriteBatch, new Vector2(2200, 230)),
+                new Tile(_game, spriteBatch, new Vector2(2200 + TileTexture.Width / 16, 230)),
+                new Tile(_game, spriteBatch, new Vector2(2200 + (TileTexture.Width / 16 * 2), 230)),
+                new Tile(_game, spriteBatch, new Vector2(2200 + (TileTexture.Width / 16 * 3), 230)),
+
+                new Tile(_game, spriteBatch, new Vector2(3200, 440)),
+                new Tile(_game, spriteBatch, new Vector2(3200 + TileTexture.Width / 16, 440)),
+                new Tile(_game, spriteBatch, new Vector2(3200 + (TileTexture.Width / 16 * 2), 440)),
+                new Tile(_game, spriteBatch, new Vector2(3200 + (TileTexture.Width / 16 * 3), 440)),
+
+                new Tile(_game, spriteBatch, new Vector2(3000, 230)),
+                new Tile(_game, spriteBatch, new Vector2(3000 + TileTexture.Width / 16, 230)),
+                new Tile(_game, spriteBatch, new Vector2(3000 + (TileTexture.Width / 16 * 2), 230)),
+                new Tile(_game, spriteBatch, new Vector2(3000 + (TileTexture.Width / 16 * 3), 230)),
+
+                new Tile(_game, spriteBatch, new Vector2(4000, 440)),
+                new Tile(_game, spriteBatch, new Vector2(4000 + TileTexture.Width / 16, 440)),
+                new Tile(_game, spriteBatch, new Vector2(4000 + (TileTexture.Width / 16 * 2), 440)),
+                new Tile(_game, spriteBatch, new Vector2(4000 + (TileTexture.Width / 16 * 3), 440)),
+
+                new Tile(_game, spriteBatch, new Vector2(4200, 230)),
+                new Tile(_game, spriteBatch, new Vector2(4200 + TileTexture.Width / 16, 230)),
+                new Tile(_game, spriteBatch, new Vector2(4200 + (TileTexture.Width / 16 * 2), 230)),
+                new Tile(_game, spriteBatch, new Vector2(4200 + (TileTexture.Width / 16 * 3), 230)),
+
+                new Tile(_game, spriteBatch, new Vector2(5600, 500)),
+                new Tile(_game, spriteBatch, new Vector2(5600 + TileTexture.Width / 16, 500)),
+                new Tile(_game, spriteBatch, new Vector2(5600 + (TileTexture.Width / 16 * 2), 500)),
+                new Tile(_game, spriteBatch, new Vector2(5600 + (TileTexture.Width / 16 * 3), 500)),
+
+                new Tile(_game, spriteBatch, new Vector2(5900, 280)),
+                new Tile(_game, spriteBatch, new Vector2(5900 + TileTexture.Width / 16, 280)),
+
+                new Tile(_game, spriteBatch, new Vector2(5200, 230)),
+                new Tile(_game, spriteBatch, new Vector2(5200 + TileTexture.Width / 16, 230)),
+                new Tile(_game, spriteBatch, new Vector2(5200 + (TileTexture.Width / 16 * 2), 230)),
+                new Tile(_game, spriteBatch, new Vector2(5200 + (TileTexture.Width / 16 * 3), 230)),
+                new Tile(_game, spriteBatch, new Vector2(5200 + (TileTexture.Width / 16 * 4), 230)),
+                new Tile(_game, spriteBatch, new Vector2(5200 + (TileTexture.Width / 16 * 5), 230)),
+                new Tile(_game, spriteBatch, new Vector2(5200 + (TileTexture.Width / 16 * 6), 230)),
+                new Tile(_game, spriteBatch, new Vector2(5200 + (TileTexture.Width / 16 * 7), 230)),
+                new Tile(_game, spriteBatch, new Vector2(5200 + (TileTexture.Width / 16 * 8), 230)),
+                ];
+            platforms.ForEach(p => p.Initialize());
+
+            pearls = [new Pearl(_game, spriteBatch, new Vector2(300, 600)),
+                new Pearl(_game, spriteBatch, new Vector2(500, 600)),
+                new Pearl(_game, spriteBatch, new Vector2(2270, 180)),
+                new Pearl(_game, spriteBatch, new Vector2(2270, 500)),
+                new Pearl(_game, spriteBatch, new Vector2(3000, 600)),
+                new Pearl(_game, spriteBatch, new Vector2(4500, 600)),
+                new Pearl(_game, spriteBatch, new Vector2(6000, 600)),
+
+                new Pearl(_game, spriteBatch, new Vector2(5250, 180)),
+                new Pearl(_game, spriteBatch, new Vector2(5250 + TileTexture.Width / 8 * 1, 180)),
+                new Pearl(_game, spriteBatch, new Vector2(5250 + TileTexture.Width / 8 * 2, 180)),
+                new Pearl(_game, spriteBatch, new Vector2(5250 + TileTexture.Width / 8 * 3, 180)),
+                ];
+            pearls.ForEach(p => p.Initialize());
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(backgroundSprite, backgroundPosition, Color.White);
+            spriteBatch.DrawString(_font, "Pearls Collected: " + pearls.Count(pearl => pearl.IsCollected), Vector2.Zero, Color.WhiteSmoke, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0f);
 
             Player.Draw();
+            winShell.Draw(spriteBatch);
 
             foreach (Enemy enemy in enemies)
             {
-                if (!enemy.IsDead)
-                {
-                    enemy.Draw(spriteBatch);
-                }
+                enemy.Draw(spriteBatch);
             }
 
             foreach(Boss boss in bosses)
@@ -111,7 +175,10 @@ namespace FinalProject.Screens
                 pearl.Draw();
             }
 
-            testBox.Draw(spriteBatch);
+            foreach (Tile tile in platforms)
+            {
+                tile.Draw(spriteBatch);
+            }
         }
 
         public void Update(ScreenManager _screenManager, float delta)
@@ -133,6 +200,8 @@ namespace FinalProject.Screens
 
             int rightBound = (int)Game1.ScreenWidth / 4;
 
+            winShell.Position = new Vector2(backgroundPosition.X + backgroundSprite.Width - 100, Game1.ScreenHeight - 200);
+
             // Move background
             if (Player.Position.X > rightBound)
             {
@@ -144,6 +213,7 @@ namespace FinalProject.Screens
                     foreach (Boss boss in bosses)
                     {
                         boss.Position = new Vector2(boss.Position.X - deltaX, boss.Position.Y);
+                        boss.BubbleAttack.Position = new Vector2(boss.BubbleAttack.Position.X - deltaX, boss.BubbleAttack.Position.Y);
                     }
 
                     foreach (Shark shark in sharks)
@@ -161,7 +231,10 @@ namespace FinalProject.Screens
                         pearl.Position = new Vector2(pearl.Position.X - deltaX, pearl.Position.Y);
                     }
 
-                    testBox.Position = new Vector2(testBox.Position.X - deltaX, testBox.Position.Y);
+                    foreach(Tile tile in platforms)
+                    {
+                        tile.Update(deltaX);
+                    }
                 }
             }
 
@@ -186,6 +259,7 @@ namespace FinalProject.Screens
                     foreach (Boss boss in bosses)
                     {
                         boss.Position = new Vector2(boss.Position.X - deltaX, boss.Position.Y);
+                        boss.BubbleAttack.Position = new Vector2(boss.BubbleAttack.Position.X - deltaX, boss.BubbleAttack.Position.Y);
                     }
 
                     foreach (Shark shark in sharks)
@@ -203,8 +277,33 @@ namespace FinalProject.Screens
                         pearl.Position = new Vector2(pearl.Position.X - deltaX, pearl.Position.Y);
                     }
 
-                    testBox.Position = new Vector2(testBox.Position.X - deltaX, testBox.Position.Y);
+                    foreach (Tile tile in platforms)
+                    {
+                        tile.Update(deltaX);
+                    }
                 }
+            }
+
+            // Player / platform collisions
+            bool didCollide = false;
+            foreach (Tile tile in platforms)
+            {
+
+                if (Player.Hitbox.Intersects(tile.Hitbox))
+                {
+                    Player.Position = new Vector2(Player.Position.X, tile.Position.Y - Player.Height);
+                    Player.velocity = 0;
+                    didCollide = true;
+                }
+            }
+            Player.isJumping = !didCollide;
+
+
+            if (Player.Hitbox.Intersects(winShell.Hitbox))
+            {
+                Reset();
+                _screenManager.SetScreen(ScreenType.GameWinMenu);
+                _screenManager.SwitchToNextScreen();
             }
 
             // Check for player / enemy collisions
@@ -212,6 +311,23 @@ namespace FinalProject.Screens
             {
                 if (!enemy.IsDead && Player.Hitbox.Intersects(enemy.AttackHitbox))
                 {
+                    Reset();
+                    _screenManager.SetScreen(ScreenType.GameOverMenu);
+                    _screenManager.SwitchToNextScreen();
+                }
+            }
+            foreach (Boss boss in bosses)
+            {
+                if (!boss.isDead() && Player.Hitbox.Intersects(boss.AttackHitbox))
+                {
+                    Reset();
+                    _screenManager.SetScreen(ScreenType.GameOverMenu);
+                    _screenManager.SwitchToNextScreen();
+                }
+
+                if (!boss.isDead() && Player.Hitbox.Intersects(boss.BubbleAttack.AttackHitbox))
+                {
+                    Reset();
                     _screenManager.SetScreen(ScreenType.GameOverMenu);
                     _screenManager.SwitchToNextScreen();
                 }
@@ -220,6 +336,19 @@ namespace FinalProject.Screens
             // Check for player attack collisions
             if (Player.IsAttacking)
             {
+                foreach(Boss boss in bosses)
+                {
+                    if (Player.AttackHitbox.Intersects(boss.Hitbox))
+                    {
+                        boss.Damage();
+                    }
+                    if (Player.AttackHitbox.Intersects(boss.BubbleAttack.Hitbox))
+                    {
+                        boss.BubbleAttack.IsActive = false;
+                        boss.BubbleAttack.Position = boss.BubbleAttack.StartingPosition;
+                        boss.BubbleAttack.BubbleAnimation.hide();
+                    }
+                }
                 foreach (Enemy enemy in enemies)
                 {
                     if (!enemy.IsDead && Player.AttackHitbox.Intersects(enemy.Hitbox))
@@ -227,11 +356,6 @@ namespace FinalProject.Screens
                         enemy.IsDead = true;
                     }
                 }
-            }
-
-            if (Player.IsAttacking && !testBox.IsDead && Player.AttackHitbox.Intersects(testBox.Hitbox))
-            {
-                testBox.IsDead = true;
             }
 
             // Check for pearl collisions
@@ -242,40 +366,52 @@ namespace FinalProject.Screens
                     pearl.IsCollected = true;
                 }
             }
-
-            if (!testBox.IsDead && Player.Hitbox.Intersects(testBox.Hitbox))
-            {
-                _screenManager.SetScreen(ScreenType.GameOverMenu);
-                _screenManager.SwitchToNextScreen();
-            }
         }
 
         public void Reset()
         {
             backgroundPosition = Vector2.Zero;
-            Player.Position = playerStartingPosition;
+            Player.Position = Player.StartingPosition;
+            winShell.Position = winShell.StartingPosition;
 
             foreach (Enemy enemy in enemies)
             {
+                enemy.IsDead = false;
                 enemy.Position = enemy.StartingPosition;
             }
 
             foreach (Crab crab in crabs)
             {
                 crab.ResetBounds();
+                crab.IdleAnimation.hide();
             }
 
             foreach(Pearl pearl in pearls)
             {
+                pearl.IsCollected = false;
                 pearl.Position = pearl.StartingPosition;
+                pearl.pearlAnimation.hide();
             }
 
-            foreach(Boss boss in bosses)
+            foreach (Boss boss in bosses)
             {
+                boss.health = 3;
                 boss.Position = boss.StartingPosition;
+                boss.BubbleAttack.IsActive = false;
+                boss.BubbleAttack.Position = boss.BubbleAttack.StartingPosition;
+                boss.BubbleAttack.BubbleAnimation.hide();
             }
 
-            testBox.Position = testBox.StartingPosition;
+            foreach (Tile tile in platforms)
+            {
+                tile.Position = tile.StartingPosition;
+                tile.Update(0);
+            }
+
+            Player.AttackAnimation.hide();
+            Player.IdleAnimation.hide();
+            Player.WalkAnimation.hide();
+            seaHorseBoss.HPAnimation.hide();
         }
     }
 }

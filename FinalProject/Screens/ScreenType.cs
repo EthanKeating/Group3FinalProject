@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FinalProject.Screens
+﻿namespace FinalProject.Screens
 {
     public enum ScreenType
     {
-        StartMenu, Level1, GameOverMenu, Cutscene
+        StartMenu, Level1, GameOverMenu, GameWinMenu, Cutscene
     }
 }
