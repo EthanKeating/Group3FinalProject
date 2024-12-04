@@ -56,9 +56,9 @@ namespace FinalProject.Screens
             seaHorseBoss = new Boss(_game, spriteBatch, new Vector2(backgroundSprite.Width - 1000, Game1.ScreenHeight - 600), 9);
             seaHorseBoss.Initialize();
 
-            shark1 = new Shark(_game, new Vector2(Game1.ScreenWidth / 5 * 4, Game1.ScreenHeight - 200), 2);
+            shark1 = new Shark(_game, new Vector2(Game1.ScreenWidth / 5 * 4, Game1.ScreenHeight - 200), 3);
             shark1.Initialize();
-            shark2 = new Shark(_game, new Vector2(Game1.ScreenWidth / 5 * 4 + Game1.ScreenWidth, Game1.ScreenHeight - 200), 2);
+            shark2 = new Shark(_game, new Vector2(Game1.ScreenWidth * 2, Game1.ScreenHeight - 200), 3);
             shark2.Initialize();
 
             crab1 = new Crab(_game, spriteBatch, new Vector2(1700, 600));
@@ -173,6 +173,7 @@ namespace FinalProject.Screens
                     foreach (Boss boss in bosses)
                     {
                         boss.Position = new Vector2(boss.Position.X - deltaX, boss.Position.Y);
+                        boss.BubbleAttack.Position = new Vector2(boss.BubbleAttack.Position.X - deltaX, boss.BubbleAttack.Position.Y);
                     }
 
                     foreach (Shark shark in sharks)
@@ -218,6 +219,7 @@ namespace FinalProject.Screens
                     foreach (Boss boss in bosses)
                     {
                         boss.Position = new Vector2(boss.Position.X - deltaX, boss.Position.Y);
+                        boss.BubbleAttack.Position = new Vector2(boss.BubbleAttack.Position.X - deltaX, boss.BubbleAttack.Position.Y);
                     }
 
                     foreach (Shark shark in sharks)
@@ -287,6 +289,13 @@ namespace FinalProject.Screens
                     _screenManager.SetScreen(ScreenType.GameOverMenu);
                     _screenManager.SwitchToNextScreen();
                 }
+
+                if (!boss.isDead() && Player.Hitbox.Intersects(boss.BubbleAttack.AttackHitbox))
+                {
+                    Reset();
+                    _screenManager.SetScreen(ScreenType.GameOverMenu);
+                    _screenManager.SwitchToNextScreen();
+                }
             }
 
             // Check for player attack collisions
@@ -297,6 +306,12 @@ namespace FinalProject.Screens
                     if (Player.AttackHitbox.Intersects(boss.Hitbox))
                     {
                         boss.Damage();
+                    }
+                    if (Player.AttackHitbox.Intersects(boss.BubbleAttack.Hitbox))
+                    {
+                        boss.BubbleAttack.IsActive = false;
+                        boss.BubbleAttack.Position = boss.BubbleAttack.StartingPosition;
+                        boss.BubbleAttack.BubbleAnimation.hide();
                     }
                 }
                 foreach (Enemy enemy in enemies)
@@ -346,6 +361,9 @@ namespace FinalProject.Screens
             {
                 boss.health = 3;
                 boss.Position = boss.StartingPosition;
+                boss.BubbleAttack.IsActive = false;
+                boss.BubbleAttack.Position = boss.BubbleAttack.StartingPosition;
+                boss.BubbleAttack.BubbleAnimation.hide();
             }
 
             foreach (Tile tile in platforms)

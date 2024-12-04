@@ -5,6 +5,7 @@
         public Vector2 Target { get; set; }
         public BubbleAnimation BubbleAnimation { get; set; }
         public bool IsActive { get; set; } = false;
+        private Rectangle distance;
 
         public BubbleAttack(Game game, SpriteBatch spriteBatch, Vector2 position, int speed) : base(game, position, speed)
         {
@@ -27,23 +28,33 @@
             {
                 BubbleAnimation.show();
             }
+            else
+            {
+                BubbleAnimation.hide();
+            }
         }
 
         public override void Update(int deltaX)
         {
             Move();
+            BubbleAnimation.UpdatePosition(Position);
         }
 
         protected override void Move()
         {
-            //Vector2 distance = Position - Target;
-            //Position = new Vector2(distance.X * Speed, distance.Y * Speed);
+            Position = new Vector2(Position.X - distance.Width / Speed, Position.Y + distance.Height / Speed);
 
-            //if (Position == Target)
-            //{
-            //    IsActive = false;
-            //    BubbleAnimation.hide();
-            //}
+            if (Position.Y > Game1.ScreenHeight)
+            {
+                IsActive = false;
+                BubbleAnimation.hide();
+            }
+        }
+
+        public void SetTarget(Vector2 _target)
+        {
+            Target = _target;
+            distance = new Rectangle((int)Target.X, (int)Position.Y, (int)(Position.X - Target.X), (int)(Target.Y - Position.Y));
         }
     }
 }
