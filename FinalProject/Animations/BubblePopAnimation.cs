@@ -13,6 +13,8 @@
         public List<Rectangle> frames;
         private int frameIndex = 0;
 
+        private SoundEffect popSound;
+
         private int delayCounter;
 
         private const int ROWS = 1;
@@ -32,6 +34,8 @@
             this.Position = position;
             this.delay = delay;
             this.dimension = new Vector2(tex.Width / COLS, tex.Height / ROWS);
+
+            popSound = game.Content.Load<SoundEffect>("soundEffects/pop");
 
             createFrames();
             hide();
@@ -70,6 +74,9 @@
             if (delayCounter > delay)
             {
                 frameIndex++;
+
+                if (frameIndex == 0) popSound.Play();
+
                 if (frameIndex >= ROWS * COLS)
                 {
                     frameIndex = 0;
