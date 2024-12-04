@@ -303,17 +303,17 @@ namespace FinalProject.Screens
                     //Sends you to next screen
                     if (_textBoxCount + 4 > _cutsceneText.Count - 1)
                     {
-                        game1._screenManager.SetScreen(ScreenType.Level1);
-                        game1._screenManager.SwitchToNextScreen();
-
                         idleCrab.hide();
                         idleEvilCrab.hide();
                         talkingEvilCrab.hide();
                         talkingCrab.hide();
                         talkingHorse.hide();
 
-                        _cutsceneCount += 1;
+                        _cutsceneCount++;
                         _textBoxCount = -1;
+
+                        game1._screenManager.SetScreen(ScreenType.Level1);
+                        game1._screenManager.SwitchToNextScreenWithoutReset();
                     }
                     else
                     {
@@ -398,6 +398,7 @@ namespace FinalProject.Screens
             } //Cutscene 1
             if (_cutsceneCount == 1) //Cutscene 2
             {
+                _cutsceneText.Clear();
                 _cutsceneText.Add("Aha!");
                 _cutsceneText.Add("You've found me! It is I...");
                 _cutsceneText.Add("Evil Crab!");
@@ -460,6 +461,7 @@ namespace FinalProject.Screens
         public void Reset()
         {
             _textDelay = DateTime.Now.AddSeconds(1);
+            PopulateText();
         }
     }
 }
