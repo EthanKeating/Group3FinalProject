@@ -53,7 +53,7 @@ namespace FinalProject.Screens
             winShell = new Shell(_game, new Vector2(backgroundSprite.Width - 100, Game1.ScreenHeight - 200));
             winShell.Initialize();
 
-            seaHorseBoss = new Boss(_game, spriteBatch, new Vector2(/*backgroundSprite.Width -*/ 1000, Game1.ScreenHeight - 600), 9);
+            seaHorseBoss = new Boss(_game, spriteBatch, new Vector2(backgroundSprite.Width - 1000, Game1.ScreenHeight - 600), 9);
             seaHorseBoss.Initialize();
 
             shark1 = new Shark(_game, new Vector2(Game1.ScreenWidth / 5 * 4, Game1.ScreenHeight - 200), 3);
