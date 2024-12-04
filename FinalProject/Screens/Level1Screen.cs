@@ -38,6 +38,10 @@ namespace FinalProject.Screens
         private Tile platform6;
         private Tile platform7;
         private Tile platform8;
+        private Tile platform9;
+        private Tile platform10;
+        private Tile platform11;
+        private Tile platform12;
         private List<Tile> platforms;
 
         private Pearl pearl1;
@@ -61,7 +65,7 @@ namespace FinalProject.Screens
             Player = new Player(_game, spriteBatch, new Vector2(20, Game1.ScreenHeight - 70), 9);
             Player.Initialize();
 
-            seaHorseBoss = new Boss(_game, spriteBatch, new Vector2(Game1.ScreenWidth / 5 * 4 - 100, Game1.ScreenHeight - 600), 9);
+            seaHorseBoss = new Boss(_game, spriteBatch, new Vector2(backgroundSprite.Width - 1000, Game1.ScreenHeight - 600), 9);
             seaHorseBoss.Initialize();
 
             shark1 = new Shark(_game, new Vector2(Game1.ScreenWidth / 5 * 4, Game1.ScreenHeight - 200), 2);
@@ -92,11 +96,20 @@ namespace FinalProject.Screens
             platform8 = new Tile(_game, spriteBatch, new Vector2(4000 + (platform1.Width * 3), 400));
             platform8.Initialize();
 
+            platform9 = new Tile(_game, spriteBatch, new Vector2(6000, 400));
+            platform9.Initialize();
+            platform10 = new Tile(_game, spriteBatch, new Vector2(6000 + platform1.Width, 400));
+            platform10.Initialize();
+            platform11 = new Tile(_game, spriteBatch, new Vector2(6000 + (platform1.Width * 2), 400));
+            platform11.Initialize();
+            platform12 = new Tile(_game, spriteBatch, new Vector2(6000 + (platform1.Width * 3), 400));
+            platform12.Initialize();
+
             enemies = [shark1, shark2, crab1, crab2];
             sharks = [shark1, shark2];
             crabs = [crab1, crab2];
             bosses = [seaHorseBoss];
-            platforms = [platform1, platform2, platform3, platform4, platform5, platform6, platform7, platform8];
+            platforms = [platform1, platform2, platform3, platform4, platform5, platform6, platform7, platform8, platform9, platform10, platform11, platform12];
 
             pearl1 = new Pearl(_game, spriteBatch, new Vector2(300, 600));
             pearl1.Initialize();
@@ -323,6 +336,7 @@ namespace FinalProject.Screens
             {
                 pearl.IsCollected = false;
                 pearl.Position = pearl.StartingPosition;
+                pearl.pearlAnimation.hide();
             }
 
             foreach (Boss boss in bosses)
