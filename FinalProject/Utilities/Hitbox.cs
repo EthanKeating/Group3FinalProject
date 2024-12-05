@@ -1,7 +1,4 @@
-﻿using FinalProject.Entities;
-using System;
-
-namespace FinalProject.Utilities
+﻿namespace FinalProject.Utilities
 {
     public class Hitbox
     {

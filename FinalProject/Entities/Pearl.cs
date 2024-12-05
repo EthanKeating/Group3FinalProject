@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-
-namespace FinalProject.Entities
+﻿namespace FinalProject.Entities
 {
     internal class Pearl : BasicEntity
     {
