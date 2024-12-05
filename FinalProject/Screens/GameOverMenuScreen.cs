@@ -1,11 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using FinalProject.Managers;
-
-using System;
-
-namespace FinalProject.Screens
+﻿namespace FinalProject.Screens
 {
     class GameOverMenuScreen : IScreen
     {

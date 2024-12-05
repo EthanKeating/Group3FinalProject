@@ -1,14 +1,4 @@
-﻿using FinalProject.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Formats.Asn1.AsnWriter;
-using static System.Net.Mime.MediaTypeNames;
-
-namespace FinalProject.Screens
+﻿namespace FinalProject.Screens
 {
     public class Level1Screen : IScreen
     {

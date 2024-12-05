@@ -1,8 +1,4 @@
-﻿using FinalProject.Managers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
-namespace FinalProject.Screens
+﻿namespace FinalProject.Screens
 {
     public interface IScreen
     {

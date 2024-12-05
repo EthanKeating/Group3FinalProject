@@ -9,8 +9,7 @@ global using Microsoft.Xna.Framework.Audio;
 global using Microsoft.Xna.Framework.Input;
 global using System.Collections.Generic;
 global using System;
-using static System.Net.Mime.MediaTypeNames;
-using System.Xml.Linq;
+global using System.Linq;
 
 namespace FinalProject
 {

@@ -1,10 +1,4 @@
-﻿using FinalProject.Screens;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace FinalProject.Managers
+﻿namespace FinalProject.Managers
 {
     public class ScreenManager
     {
