@@ -34,8 +34,8 @@ namespace FinalProject.Entities
             HPAnimation.frameIndex = 0;
             BubbleAttack = new BubbleAttack(game, spriteBatch, Position, 75);
             BubbleAttack.Initialize();
-            Width = Texture.Width / 3;
-            Height = Texture.Height;
+            Width = (int)(Texture.Width * 0.4);
+            Height = (int)(Texture.Height * 0.4);
 
             baseYPosition = Position.Y;
             HPPosition = new Vector2(position.X, position.Y - Height - HPAnimation.frames[0].Height * 2);
@@ -44,7 +44,7 @@ namespace FinalProject.Entities
         public void Initialize()
         {
             Hitbox = new Hitbox(this, 0, 0, 0, 0);
-            AttackHitbox = new Hitbox(this, 0, 0, 0, 0);
+            AttackHitbox = new Hitbox(this, 40, 0, 0, 0);
         }
 
         public void Update(float delta)
@@ -57,7 +57,6 @@ namespace FinalProject.Entities
             if (!isDead())
                 HPAnimation.show();
             HPAnimation.frameIndex = 3 - Math.Max(0, health);
-            //HPAnimation.frameIndex = 2;
             HPAnimation.UpdatePosition(new Vector2(Position.X, Position.Y - 60));
             BubbleAttack.Update(0);
             Attack();

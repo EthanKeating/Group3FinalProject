@@ -41,8 +41,8 @@
         public void Initialize()
         {
             AttackAnimation.Player = this;
-            Hitbox = new Hitbox(this, 30, 50, 25, 0);
-            AttackHitbox = new Hitbox(this, Width / 2, 0, ATTACK_WIDTH, 0);
+            Hitbox = new Hitbox(this, 30, 70, 25, 0);
+            AttackHitbox = new Hitbox(this, Width / 2, 50, ATTACK_WIDTH, 0);
         }
 
         public void Update()

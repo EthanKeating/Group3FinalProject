@@ -11,14 +11,14 @@
         {
             _game = game;
             Texture = game.Content.Load<Texture2D>("images/shark");
-            Width = Texture.Width / 2;
-            Height = Texture.Height;
+            Width = (int)(Texture.Width * 0.4);
+            Height = (int)(Texture.Height * 0.4);
         }
 
         public void Initialize()
         {
-            Hitbox = new Hitbox(this, 20, 80, 40, 0);
-            AttackHitbox = new Hitbox(this, 20, 80, 80, 0);
+            Hitbox = new Hitbox(this, 20, 80, 10, 40);
+            AttackHitbox = new Hitbox(this, 20, 80, 10, 40);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
