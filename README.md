@@ -1,6 +1,6 @@
 # Dark Shells
 
-Dark Shells is a side-scrolling game developed by **Martin Van Raay**, **Jon McDowell**, **Greg Grondin**, and **Ethan Keating**. This project was created as part of a school assignment and received an outstanding **100% grade** for its quality and storytelling.
+Dark Shells is a side-scrolling game developed by **Martin Van Raay**, **Jon McDowell**, **Greg Grondin**, and **Ethan Keating** in C# MonoGame. This project was created as part of a school assignment and received an outstanding **100% grade** for its quality and storytelling.
 
 The game includes intense action with hostile enemies & even a bossfight, along with an amazing storyline where a hermit crab has to steal back his shell from an evil crab, but something unusual happens on his journey.
 
