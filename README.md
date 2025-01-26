@@ -3,6 +3,13 @@
 Dark Shells is a side-scrolling game developed by **Martin Van Raay**, **Jon McDowell**, **Greg Grondin**, and **Ethan Keating**. This project was created as part of a school assignment and received an outstanding **100% grade** for its quality and storytelling.
 
 
+## Credits
+**Developed by:**
+- Martin Van Raay
+- Jon McDowell
+- Greg Grondin
+- Ethan Keating
+
 ---
 
 ## Screenshots
@@ -17,11 +24,3 @@ Dark Shells is a side-scrolling game developed by **Martin Van Raay**, **Jon McD
 
 ![Screenshot 5](FinalProject/Content/images/darkshells6.PNG)
 
----
-
-## Credits
-**Developed by:**
-- Martin Van Raay
-- Jon McDowell
-- Greg Grondin
-- Ethan Keating
